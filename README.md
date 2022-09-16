@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Metagame
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Front-end of the Metagame, a final project for a CS course.
 
 ## Available Scripts
 
