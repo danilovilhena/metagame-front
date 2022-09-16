@@ -1,7 +1,7 @@
-import Logo from '../assets/logo.svg';
-import styles from '../styles/HomeHeader.module.css';
-import PrimaryButton from './PrimaryButton';
-import TextButton from './TextButton';
+import Logo from 'assets/logo.svg';
+import styles from 'styles/HomeHeader.module.css';
+import PrimaryButton from 'components/PrimaryButton';
+import TextButton from 'components/TextButton';
 
 export default function HomeHeader() {
 	const links = [

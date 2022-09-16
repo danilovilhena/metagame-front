@@ -1,4 +1,4 @@
-import HomeHeader from '../components/HomeHeader';
+import HomeHeader from 'layout/HomeHeader';
 
 export default function Home() {
 	return (<>
