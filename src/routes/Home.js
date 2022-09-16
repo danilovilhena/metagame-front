@@ -1,7 +1,7 @@
+import HomeHeader from '../components/HomeHeader';
+
 export default function Home() {
-	return (
-		<div>
-			<p>Home</p>
-		</div>
-	);
+	return (<>
+		<HomeHeader />
+	</>);
 }

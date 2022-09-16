@@ -1,0 +1,13 @@
+.nav-link {
+  padding: .5rem;
+  transition: all .15s ease-in-out;
+}
+
+.nav-link:hover {
+  color: var(--secondary);
+  font-weight: bold;
+}
+
+.nav-link:not(:last-child) {
+  margin-right: 1.5rem;
+}
