@@ -1,4 +1,4 @@
-import { Flex, Box, Link, Button } from '@chakra-ui/react';
+import { Flex, Box, Link, Button, Image } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
 export default function Header() {
@@ -18,7 +18,7 @@ export default function Header() {
 			align="center"
 			fontSize="1em"
 		>
-			<img src="/logo.svg" alt="Metagame" />
+			<Image src="/logo.svg" alt="Metagame" />
 			<Flex as="nav" justifyContent="space-evenly" w="500px">
 				{links.map((link, idx) => (
 					<NextLink href={link.href} key={idx} passHref>
