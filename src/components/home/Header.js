@@ -1,3 +1,6 @@
+import { Flex, Box, Link, Button } from '@chakra-ui/react';
+import NextLink from 'next/link';
+
 export default function Header() {
 	const links = [
 		{ name: 'Como funciona?', href: '#' },
@@ -7,19 +10,38 @@ export default function Header() {
 	];
 
 	return (
-		<header>
+		<Flex
+			as="header"
+			justify="space-between"
+			mx="5em"
+			h="5em"
+			align="center"
+			fontSize="1em"
+		>
 			<img src="/logo.svg" alt="Metagame" />
-			<nav>
+			<Flex as="nav" justifyContent="space-evenly" w="500px">
 				{links.map((link, idx) => (
-					<a href={link.href} key={idx}>
-						{link.name}
-					</a>
+					<NextLink href={link.href} key={idx} passHref>
+						<Link>{link.name}</Link>
+					</NextLink>
 				))}
-			</nav>
-			<div>
-				<button>Entrar</button>
-				<button>Criar conta</button>
-			</div>
-		</header>
+			</Flex>
+			<Box>
+				<Button fontWeight="bold" background="none" mr="1em" _hover={{}}>
+					Entrar
+				</Button>
+				<Button
+					fontWeight="bold"
+					color="#FFFFFF"
+					bg="secondary"
+					_hover={{
+						filter: 'brightness(1.1)',
+						transition: 'filter 0.5s',
+					}}
+				>
+					Criar conta
+				</Button>
+			</Box>
+		</Flex>
 	);
 }
