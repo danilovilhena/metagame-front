@@ -1,15 +1,24 @@
-import { Flex, Text, Box, Highlight } from '@chakra-ui/react';
+import { Flex, Text, Highlight } from '@chakra-ui/react';
+import VerticalMovingCovers from './VerticalMovingCovers';
 
 export function Cover() {
 	return (
-		<Flex bg="primary" padding="5em" justify="space-around" color="white">
-			<Flex wrap="wrap" maxW="600px">
+		<Flex
+			bg="primary"
+			padding="5em"
+			justify="space-around"
+			align="center"
+			color="white"
+			maxH="calc(100vh - 80px)"
+			overflow="hidden"
+		>
+			<Flex wrap="wrap" maxW="600px" alignItems="center">
 				<Text fontWeight="bold" fontSize="3em">
 					<Highlight query="filmes" styles={{ color: 'secondary' }}>
 						Uma nova maneira de consumir os filmes que você sempre quis
 					</Highlight>
 				</Text>
-				<Flex mt="3em">
+				<Flex mt="2em">
 					<Flex flexDirection="column" mr="1em">
 						<Text
 							border="solid 2px white"
@@ -63,12 +72,7 @@ export function Cover() {
 					</Flex>
 				</Flex>
 			</Flex>
-			<Box maxW="456px" h="100%">
-				IMAGES HERE IMAGES HERE IMAGES HERE IMAGES HERE IMAGES HERE IMAGES HERE
-				IMAGES HERE IMAGES HERE IMAGES HERE IMAGES HERE IMAGES HERE IMAGES HERE
-				IMAGES HERE IMAGES HERE IMAGES HERE IMAGES HERE IMAGES HERE IMAGES HERE
-				IMAGES HERE IMAGES HERE
-			</Box>
+			<VerticalMovingCovers />
 		</Flex>
 	);
 }

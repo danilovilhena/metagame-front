@@ -2,7 +2,7 @@ import { Flex, Text, Box, Image, VStack } from '@chakra-ui/react';
 
 export function Info() {
 	return (
-		<Box color="#4E4C59" px="11.5em" pb="4em">
+		<Box color="primary" px="11.5em" pb="4em">
 			<Text
 				as="h1"
 				py="1em"
@@ -37,7 +37,7 @@ export function Info() {
 						nível, melhor será sua colocação no ranking geral!
 					</Text>
 				</VStack>
-				<Image src="/movie-cover.svg" width="360px" h="360px" alt="Cover" />
+				<Image src="/movie.svg" width="360px" h="360px" alt="Cover" />
 			</Flex>
 		</Box>
 	);

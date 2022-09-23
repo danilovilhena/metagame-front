@@ -1,0 +1,31 @@
+.row-animate {
+	animation: pulse 10s infinite;
+}
+
+.row-animate-i {
+	animation: pulse-i 10s infinite;
+}
+
+@keyframes pulse {
+	0% {
+		transform: translateY(50px);
+	}
+	50% {
+		transform: translateY(150px);
+	}
+	to {
+		transform: translateY(50px);
+	}
+}
+
+@keyframes pulse-i {
+	0% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-125px);
+	}
+	to {
+		transform: translateY(0);
+	}
+}
