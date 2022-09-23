@@ -1,6 +1,6 @@
 import { Flex, Text, Box, Image, VStack } from '@chakra-ui/react';
 
-export function Info() {
+export default function Info() {
 	return (
 		<Box color="primary" px="11.5em" pb="4em">
 			<Text

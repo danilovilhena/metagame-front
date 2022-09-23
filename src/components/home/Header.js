@@ -1,7 +1,7 @@
 import { Flex, Box, Link, Button, Image } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
-export function Header() {
+export default function Header() {
 	const links = [
 		{ name: 'Como funciona?', href: '#' },
 		{ name: 'Livros', href: '#' },

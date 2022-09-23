@@ -1,7 +1,7 @@
 import { Flex, Link, Text, Image } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
-export function Footer() {
+export default function Footer() {
 	const links = [
 		{ name: 'Políticas de Privacidade', href: '#' },
 		{ name: 'Termos e Condições', href: '#' },

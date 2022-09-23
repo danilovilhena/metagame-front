@@ -1,7 +1,7 @@
 import { Flex, Text, Highlight } from '@chakra-ui/react';
 import VerticalMovingCovers from './VerticalMovingCovers';
 
-export function Cover() {
+export default function Cover() {
 	return (
 		<Flex
 			bg="primary"

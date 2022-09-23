@@ -11,7 +11,7 @@ import {
 	GridItem,
 } from '@chakra-ui/react';
 
-export function TabsComponent() {
+export default function TabsComponent() {
 	return (
 		<Box bg="primary" padding="5em" color="white" px="11.5em">
 			<Text mb="1em">
