@@ -1,6 +1,17 @@
-import { Flex, Text, Box, Image, VStack } from '@chakra-ui/react';
+import {
+	Flex,
+	Text,
+	Box,
+	Image,
+	VStack,
+	useBreakpointValue,
+} from '@chakra-ui/react';
 
 export default function Info() {
+	const isWideVersion = useBreakpointValue({
+		base: false,
+		lg: true,
+	});
 	return (
 		<Box color="primary" px="11.5em" pb="4em">
 			<Text
@@ -12,7 +23,11 @@ export default function Info() {
 			>
 				Consuma o que você quiser.
 			</Text>
-			<Flex justify="space-around">
+			<Flex
+				flexDir={!isWideVersion && 'column'}
+				justify={isWideVersion && 'space-around'}
+				alignItems={!isWideVersion && 'center'}
+			>
 				<VStack maxWidth="550px" spacing="1em">
 					<Text fontWeight="bold" fontSize="1.5em">
 						Não fique só falando sobre os filmes que quer assistir, mas
