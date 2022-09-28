@@ -81,7 +81,7 @@ export default function Header() {
 				<SideBarDrawer>
 					<VStack
 						as="nav"
-						fontSize={28}
+						fontSize="1.5rem"
 						alignItems="start"
 						mt="50px"
 						fontWeight="bold"
@@ -96,7 +96,7 @@ export default function Header() {
 						<Button
 							variant="unstyled"
 							onClick={() => setIsLogInModalOpen(true)}
-							fontSize={28}
+							fontSize="1.5rem"
 							padding={0}
 						>
 							Entrar
@@ -110,7 +110,7 @@ export default function Header() {
 							variant="unstyled"
 							buttonText="Criar conta"
 							onClick={() => setIsSignUpModalOpen(true)}
-							fontSize={28}
+							fontSize="1.5rem"
 							padding={0}
 							color="secondary"
 						>

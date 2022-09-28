@@ -8,7 +8,10 @@ export function Button({ variant, children, ...rest }) {
 					fontWeight="bold"
 					background="none"
 					mr="1em"
-					_hover={{}}
+					_hover={{
+						backgroundColor: '#f8f8ff',
+						transition: 'background-color 0.5s',
+					}}
 					{...rest}
 				>
 					{children}

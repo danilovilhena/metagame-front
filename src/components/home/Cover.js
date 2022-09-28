@@ -9,7 +9,7 @@ export default function Cover() {
 			justify="space-around"
 			align="center"
 			color="white"
-			maxH="calc(100vh - 80px)"
+			maxH="656px"
 			overflow="hidden"
 		>
 			<Flex wrap="wrap" maxW="600px" alignItems="center">
