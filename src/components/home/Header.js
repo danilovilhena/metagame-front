@@ -1,5 +1,17 @@
-import { Flex, Box, Link, Button, Image } from '@chakra-ui/react';
+import {
+	Flex,
+	Box,
+	Link,
+	Image,
+	Button,
+	Icon,
+	VStack,
+	Text,
+} from '@chakra-ui/react';
 import NextLink from 'next/link';
+import { Modal } from '../common/Modal';
+import { IoLogoGoogle, IoLogoApple } from 'react-icons/io';
+import { useState } from 'react';
 
 export default function Header() {
 	const links = [
@@ -8,6 +20,9 @@ export default function Header() {
 		{ name: 'Filmes', href: '#' },
 		{ name: 'Jogos', href: '#' },
 	];
+
+	const [openLoginModal, setOpenLoginModal] = useState(false);
+	const [openSignUpModalOpen, setOpenSignUpModalOpen] = useState(false);
 
 	return (
 		<Flex
@@ -27,20 +42,142 @@ export default function Header() {
 				))}
 			</Flex>
 			<Box>
-				<Button fontWeight="bold" background="none" mr="1em" _hover={{}}>
-					Entrar
-				</Button>
-				<Button
-					fontWeight="bold"
-					color="#FFFFFF"
-					bg="secondary"
-					_hover={{
-						filter: 'brightness(1.1)',
-						transition: 'filter 0.5s',
-					}}
+				<Modal
+					variant="unstyled"
+					buttonText="Entrar"
+					ModalTitle="Login"
+					isOpen={openLoginModal}
+					setIsOpen={setOpenLoginModal}
 				>
-					Criar conta
-				</Button>
+					<VStack textAlign="center" spacing="16px" mb="16px">
+						<VStack color="white" width="100%">
+							<Button
+								bg="secondary"
+								_hover={{
+									filter: 'brightness(0.9)',
+									transition: 'filter 0.5s',
+								}}
+								width="100%"
+							>
+								<Icon as={IoLogoGoogle} mr="8px" fontSize={22} />
+								Continuar com Google
+							</Button>
+							<Button
+								bg="secondary"
+								_hover={{
+									filter: 'brightness(0.9)',
+									transition: 'filter 0.5s',
+								}}
+								width="100%"
+							>
+								<Icon as={IoLogoApple} mr="8px" fontSize={22} />
+								Continuar com Apple
+							</Button>
+							<Button
+								bg="secondary"
+								_hover={{
+									filter: 'brightness(0.9)',
+									transition: 'filter 0.5s',
+								}}
+								width="100%"
+							>
+								Continuar com E-mail
+							</Button>
+						</VStack>
+						<Text fontSize="14px" display="flex" alignItems="center">
+							Não possui conta?
+							<Button
+								variant="ghost"
+								px="8px"
+								cursor="pointer"
+								_hover={{}}
+								as="strong"
+								onClick={() => {
+									setOpenLoginModal(false);
+									setOpenSignUpModalOpen(true);
+								}}
+							>
+								Faça seu cadastro.
+							</Button>
+						</Text>
+						<Text fontSize="14px">
+							Ao continuar, você concorda com os nossos{' '}
+							<Text as="strong">
+								Termos de Serviço e Política de Privacidade.
+							</Text>
+						</Text>
+					</VStack>
+				</Modal>
+				<Modal
+					variant="styled"
+					buttonText="Criar conta"
+					ModalTitle="Cadastro"
+					isOpen={openSignUpModalOpen}
+					setIsOpen={setOpenSignUpModalOpen}
+				>
+					<VStack textAlign="center" spacing="16px" mb="16px">
+						<VStack color="white" width="100%">
+							<Button
+								bg="secondary"
+								_hover={{
+									filter: 'brightness(0.9)',
+									transition: 'filter 0.5s',
+								}}
+								width="100%"
+							>
+								<Icon as={IoLogoGoogle} mr="8px" fontSize={22} />
+								Continuar com Google
+							</Button>
+							<Button
+								bg="secondary"
+								_hover={{
+									filter: 'brightness(0.9)',
+									transition: 'filter 0.5s',
+								}}
+								width="100%"
+							>
+								<Icon as={IoLogoApple} mr="8px" fontSize={22} />
+								Continuar com Apple
+							</Button>
+							<Button
+								bg="secondary"
+								_hover={{
+									filter: 'brightness(0.9)',
+									transition: 'filter 0.5s',
+								}}
+								width="100%"
+							>
+								Continuar com E-mail
+							</Button>
+						</VStack>
+						<Text fontSize="14px" display="flex" alignItems="center">
+							Não possui conta?
+							<Button
+								variant="ghost"
+								px="8px"
+								cursor="pointer"
+								_hover={{}}
+								as="strong"
+								onClick={() => {
+									setOpenSignUpModalOpen(false);
+									setOpenLoginModal(true);
+								}}
+							>
+								Faça seu login.
+							</Button>
+						</Text>
+						<Text fontSize="14px">
+							Ao continuar, você concorda com os nossos{' '}
+							<Text as="strong">
+								Termos de Serviço e Política de Privacidade.
+							</Text>
+						</Text>
+					</VStack>
+				</Modal>
+				{/* <Modal
+					variant="icon"
+					icon={IoMdAddCircleOutline}
+				/> */}
 			</Box>
 		</Flex>
 	);
