@@ -2,6 +2,7 @@ import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
 import { Icon, VStack, Text } from '@chakra-ui/react';
 import { IoLogoGoogle, IoLogoApple } from 'react-icons/io';
+import { signIn } from 'next-auth/react';
 
 export function LogInModal({
 	isLogInModalOpen,
@@ -11,14 +12,17 @@ export function LogInModal({
 	return (
 		<Modal
 			variant="unstyled"
-			buttonText="Entrar"
 			ModalTitle="Login"
 			isOpen={isLogInModalOpen}
 			setIsOpen={setIsLogInModalOpen}
 		>
 			<VStack textAlign="center" spacing="16px" mb="16px">
 				<VStack color="white" width="100%">
-					<Button variant="styled" width="100%">
+					<Button
+						variant="styled"
+						width="100%"
+						onClick={() => signIn('google')}
+					>
 						<Icon as={IoLogoGoogle} mr="8px" fontSize={22} />
 						Continuar com Google
 					</Button>

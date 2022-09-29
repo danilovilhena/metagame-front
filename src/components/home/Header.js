@@ -64,11 +64,7 @@ export default function Header() {
 							setIsLogInModalOpen={setIsLogInModalOpen}
 							setIsSignUpModalOpen={setIsSignUpModalOpen}
 						/>
-						<Button
-							variant="styled"
-							buttonText="Criar conta"
-							onClick={() => setIsSignUpModalOpen(true)}
-						>
+						<Button variant="styled" onClick={() => setIsSignUpModalOpen(true)}>
 							Criar conta
 						</Button>
 						<SignUpModal
@@ -109,7 +105,6 @@ export default function Header() {
 						/>
 						<Button
 							variant="unstyled"
-							buttonText="Criar conta"
 							onClick={() => setIsSignUpModalOpen(true)}
 							fontSize="1.5rem"
 							padding={0}

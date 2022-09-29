@@ -9,32 +9,19 @@ import {
 	useDisclosure,
 	Icon,
 } from '@chakra-ui/react';
-import { useRef } from 'react';
 import { IoMdMenu } from 'react-icons/io';
 
 import { Button } from '../common/Button';
 
 export function SideBarDrawer({ children }) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const btnRef = useRef();
 
 	return (
 		<>
-			<Button
-				variant="unstyled"
-				padding={0}
-				margin={0}
-				ref={btnRef}
-				onClick={onOpen}
-			>
+			<Button variant="unstyled" padding={0} margin={0} onClick={onOpen}>
 				<Icon as={IoMdMenu} fontSize={32} />
 			</Button>
-			<Drawer
-				isOpen={isOpen}
-				placement="right"
-				onClose={onClose}
-				finalFocusRef={btnRef}
-			>
+			<Drawer isOpen={isOpen} placement="right" onClose={onClose}>
 				<DrawerOverlay />
 				<DrawerContent>
 					<DrawerCloseButton fontSize={22} mt="10px" mr="10px" />
