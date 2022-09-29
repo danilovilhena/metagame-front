@@ -36,7 +36,7 @@ export default function Header() {
 		<Flex
 			as="header"
 			justify="space-between"
-			mx="5em"
+			mx={['1em', '2.5em', '5em']}
 			h="5em"
 			align="center"
 			fontSize="1em"
