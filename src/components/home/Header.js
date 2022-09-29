@@ -6,6 +6,7 @@ import {
 	VStack,
 	Divider,
 	useBreakpointValue,
+	Stack,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
@@ -44,13 +45,13 @@ export default function Header() {
 
 			{isWideVersion ? (
 				<>
-					<Flex as="nav" justifyContent="space-evenly" w="500px">
+					<Stack as="nav" spacing="8" direction="row">
 						{links.map((link, idx) => (
 							<NextLink href={link.href} key={idx} passHref>
 								<Link>{link.name}</Link>
 							</NextLink>
 						))}
-					</Flex>
+					</Stack>
 					<Box>
 						<Button
 							variant="unstyled"

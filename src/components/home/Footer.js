@@ -1,4 +1,4 @@
-import { Flex, Link, Text, Image } from '@chakra-ui/react';
+import { Link, Text, Image, Stack } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
 export default function Footer() {
@@ -8,23 +8,31 @@ export default function Footer() {
 	];
 
 	return (
-		<Flex
+		<Stack
 			as="footer"
 			justify="space-between"
-			mx="15rem"
+			direction={{ base: 'column', lg: 'row' }}
+			spacing={{ base: '1rem', lg: '0' }}
+			mx={{ base: '5%', sm: '10%', xl: '15rem' }}
 			align="center"
 			fontSize="1em"
-			py="6"
+			pt="1rem"
+			pb="2rem"
 		>
 			<Image src="/logo.svg" alt="Metagame" />
-			<Flex as="nav" justifyContent="space-evenly" w="500px">
+			<Stack
+				as="nav"
+				justifyContent="space-evenly"
+				spacing="2rem"
+				direction="row"
+			>
 				{links.map((link, idx) => (
 					<NextLink href={link.href} key={idx} passHref>
-						<Link>{link.name}</Link>
+						<Link textAlign="center">{link.name}</Link>
 					</NextLink>
 				))}
-			</Flex>
+			</Stack>
 			<Text>© 2022 Metagame</Text>
-		</Flex>
+		</Stack>
 	);
 }

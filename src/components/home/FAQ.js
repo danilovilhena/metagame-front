@@ -37,20 +37,31 @@ export default function FAQ() {
 	return (
 		<>
 			<Stack
-				mx="10rem"
-				direction="row"
+				mx={{ base: '2rem', xl: '10rem' }}
+				direction={{ base: 'column', md: 'row' }}
 				justify="space-evenly"
-				align="center"
+				align={{ base: 'flex-start', md: 'center' }}
 				color="primary"
-				py="16"
+				py="3rem"
+				spacing={{ base: '2rem', md: '0' }}
 			>
-				<Flex align="flex-start" justify="center" flexDir="column" maxW="40%">
+				<Flex
+					align="flex-start"
+					justify="center"
+					flexDir="column"
+					maxW={{ base: '100%', md: '40%' }}
+				>
 					<Text>Perguntas frequentes</Text>
-					<Text as="h2" fontWeight="bold" fontSize="3em" textAlign="left  ">
+					<Text
+						as="h2"
+						fontWeight="bold"
+						fontSize={{ base: '2em', lg: '3em' }}
+						textAlign="left"
+					>
 						Ficou com alguma dúvida?
 					</Text>
 				</Flex>
-				<Accordion w="50%">
+				<Accordion w={{ base: '100%', md: '50%' }}>
 					{faqs.map((faq, index) => (
 						<AccordionItem key={index} border="none">
 							<AccordionButton py="4">

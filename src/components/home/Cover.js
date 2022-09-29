@@ -5,11 +5,11 @@ export default function Cover() {
 	return (
 		<Flex
 			bg="primary"
-			padding="5em"
+			padding={{ base: '2em', lg: '5em' }}
 			justify="space-around"
 			align="center"
 			color="white"
-			maxH="656px"
+			maxH={{ base: '100vh', lg: '656px' }}
 			overflow="hidden"
 		>
 			<Flex wrap="wrap" maxW="600px" alignItems="center">

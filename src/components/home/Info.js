@@ -10,25 +10,25 @@ import {
 export default function Info() {
 	const isWideVersion = useBreakpointValue({
 		base: false,
-		lg: true,
+		md: true,
 	});
 	return (
-		<Box color="primary" px="11.5em" pb="4em">
+		<Box color="primary" px={{ base: '2rem', xl: '11.5em' }} py="3rem">
 			<Text
 				as="h1"
-				py="1em"
+				pb="1em"
 				fontWeight="bold"
-				fontSize="3em"
+				fontSize={{ base: '2em', lg: '3em' }}
 				textAlign="center"
 			>
 				Consuma o que você quiser.
 			</Text>
 			<Flex
-				flexDir={!isWideVersion && 'column'}
+				flexDir={!isWideVersion && 'column-reverse'}
 				justify={isWideVersion && 'space-around'}
-				alignItems={!isWideVersion && 'center'}
+				alignItems="center"
 			>
-				<VStack maxWidth="550px" spacing="1em">
+				<VStack maxWidth="550px" spacing="1em" mr={isWideVersion && '2rem'}>
 					<Text fontWeight="bold" fontSize="1.5em">
 						Não fique só falando sobre os filmes que quer assistir, mas
 						assista-os.
