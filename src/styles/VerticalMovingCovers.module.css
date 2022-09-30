@@ -29,3 +29,37 @@
 		transform: translateY(0);
 	}
 }
+
+@keyframes pulse-x {
+	0% {
+		transform: translateX(-25px);
+	}
+	50% {
+		transform: translateX(50px);
+	}
+	to {
+		transform: translateX(-25px);
+	}
+}
+
+@keyframes pulse-x-i {
+	0% {
+		transform: translateX(25px);
+	}
+	50% {
+		transform: translateX(-125px);
+	}
+	to {
+		transform: translateX(25px);
+	}
+}
+
+@media (max-width: 62em) {
+	.row-animate {
+		animation: pulse-x 10s infinite;
+	}
+
+	.row-animate-i {
+		animation: pulse-x-i 10s infinite;
+	}
+}

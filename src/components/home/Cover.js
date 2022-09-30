@@ -5,21 +5,36 @@ export default function Cover() {
 	return (
 		<Flex
 			bg="primary"
-			padding={{ base: '2em', lg: '5em' }}
+			padding={{ base: '0', xl: '5em' }}
 			justify="space-around"
 			align="center"
 			color="white"
-			maxH={{ base: '100vh', lg: '656px' }}
+			maxH={{ base: 'none', lg: '656px' }}
 			overflow="hidden"
+			flexDirection={{ base: 'column', lg: 'row' }}
 		>
-			<Flex wrap="wrap" maxW="600px" alignItems="center">
-				<Text fontWeight="bold" fontSize="3em">
+			<Flex
+				wrap="wrap"
+				maxW="600px"
+				alignItems="center"
+				mt={{ base: '2rem', lg: 0 }}
+				px={{ base: '1rem', md: 0 }}
+			>
+				<Text
+					fontWeight="bold"
+					fontSize={{ base: '2em', sm: '3em' }}
+					align={{ base: 'center', lg: 'left' }}
+				>
 					<Highlight query="filmes" styles={{ color: 'secondary' }}>
 						Uma nova maneira de consumir os filmes que você sempre quis
 					</Highlight>
 				</Text>
-				<Flex mt="2em">
-					<Flex flexDirection="column" mr="1em">
+				<Flex mt="2em" flexDirection={{ base: 'column', md: 'row' }}>
+					<Flex
+						flexDirection="column"
+						mr={{ base: 0, sm: '1em' }}
+						mb={{ base: '1em', sm: 0 }}
+					>
 						<Text
 							border="solid 2px white"
 							borderRadius="50%"
@@ -36,7 +51,11 @@ export default function Cover() {
 							jogos
 						</Text>
 					</Flex>
-					<Flex flexDirection="column" mr="1em">
+					<Flex
+						flexDirection="column"
+						mr={{ base: 0, sm: '1em' }}
+						mb={{ base: '1em', sm: 0 }}
+					>
 						<Text
 							border="solid 2px white"
 							borderRadius="50%"
@@ -48,10 +67,7 @@ export default function Cover() {
 						>
 							2
 						</Text>
-						<Text>
-							Crie listas ou por busque por listas populares de livros, filmes e
-							jogos
-						</Text>
+						<Text>Defina em quanto tempo você deseja completar essa lista</Text>
 					</Flex>
 					<Flex flexDirection="column">
 						<Text
@@ -66,8 +82,8 @@ export default function Cover() {
 							3
 						</Text>
 						<Text>
-							Crie listas ou por busque por listas populares de livros, filmes e
-							jogos
+							A cada livro, filme ou jogo consumido, acompanhe seu progresso na
+							lista
 						</Text>
 					</Flex>
 				</Flex>
