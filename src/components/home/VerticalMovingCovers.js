@@ -1,11 +1,28 @@
 import { Box, Stack, Image, useBreakpointValue } from '@chakra-ui/react';
 import styles from 'styles/VerticalMovingCovers.module.css';
 
-export default function VerticalMovingCovers() {
+export default function VerticalMovingCovers(props) {
 	const isWideVersion = useBreakpointValue({
 		base: false,
 		xl: true,
 	});
+
+	const getCover = (row, index) => {
+		switch (row) {
+			case 0:
+				return `https://image.tmdb.org/t/p/w500/${props.data.movies[index].poster_path}`;
+			case 1:
+				return props.data.games[index].background_image;
+			case 2:
+				return props.data.books[index].volumeInfo.imageLinks.smallThumbnail;
+			case 3:
+				return `https://image.tmdb.org/t/p/w500/${
+					props.data.movies[index + 9].poster_path
+				}`;
+			default:
+				return 'movie-cover.svg';
+		}
+	};
 
 	return (
 		<Box
@@ -26,11 +43,18 @@ export default function VerticalMovingCovers() {
 					>
 						{[...Array(10)].map((_, innerIdx) => (
 							<Image
-								boxSize="100px"
-								src="movie-cover.svg"
+								w="100px"
+								minH="150px"
+								objectFit="cover"
+								src={getCover(idx, innerIdx)}
 								alt="cover"
 								mb="0.5em"
+								borderRadius="0.5rem"
 								key={`cover-movie-${innerIdx}`}
+								onError={() => {
+									this.onerror = null;
+									this.src = 'movie-cover.svg';
+								}}
 							/>
 						))}
 					</Stack>
