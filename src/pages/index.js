@@ -37,7 +37,8 @@ export async function getServerSideProps({ req, res }) {
 	const res1 = await api.get(
 		'https://api.themoviedb.org/3/discover/movie/?api_key=' +
 			process.env.TMDB_KEY +
-			'&language=pt-BR&sort_by=popularity.desc&vote_average.gte=7&include_adult=false&include_video=false&page=1'
+			'&language=pt-BR&sort_by=popularity.desc&vote_average.gte=7&include_adult=false&include_video=false&page=' +
+			Math.random() * 25
 	);
 
 	const res2 = await api.get(
