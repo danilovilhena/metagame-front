@@ -31,7 +31,7 @@ export default function Cover(props) {
 				</Text>
 				<Flex mt="2em" flexDirection={{ base: 'column', md: 'row' }}>
 					<Flex
-						flexDirection="column"
+						flexDirection={{ base: 'row', md: 'column' }}
 						mr={{ base: 0, sm: '1em' }}
 						mb={{ base: '1em', sm: 0 }}
 					>
@@ -43,16 +43,17 @@ export default function Cover(props) {
 							textAlign="center"
 							fontWeight="bold"
 							mb="0.5em"
+							mr=".5em"
 						>
 							1
 						</Text>
-						<Text>
+						<Text flex="1">
 							Crie listas ou por busque por listas populares de livros, filmes e
 							jogos
 						</Text>
 					</Flex>
 					<Flex
-						flexDirection="column"
+						flexDirection={{ base: 'row', md: 'column' }}
 						mr={{ base: 0, sm: '1em' }}
 						mb={{ base: '1em', sm: 0 }}
 					>
@@ -64,12 +65,15 @@ export default function Cover(props) {
 							textAlign="center"
 							fontWeight="bold"
 							mb="0.5em"
+							mr=".5em"
 						>
 							2
 						</Text>
-						<Text>Defina em quanto tempo você deseja completar essa lista</Text>
+						<Text flex="1">
+							Defina em quanto tempo você deseja completar essa lista
+						</Text>
 					</Flex>
-					<Flex flexDirection="column">
+					<Flex flexDirection={{ base: 'row', md: 'column' }}>
 						<Text
 							border="solid 2px white"
 							borderRadius="50%"
@@ -78,10 +82,11 @@ export default function Cover(props) {
 							textAlign="center"
 							fontWeight="bold"
 							mb="0.5em"
+							mr=".5em"
 						>
 							3
 						</Text>
-						<Text>
+						<Text flex="1">
 							A cada livro, filme ou jogo consumido, acompanhe seu progresso na
 							lista
 						</Text>
