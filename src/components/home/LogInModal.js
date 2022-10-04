@@ -31,7 +31,7 @@ export function LogInModal({
 						Continuar com Apple
 					</Button>
 					<Button variant="styled" width="100%">
-						Continuar com E-mail
+						Continuar com e-mail
 					</Button>
 				</VStack>
 				<Text fontSize="14px" display="flex" alignItems="center">
