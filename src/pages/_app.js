@@ -5,6 +5,7 @@ import '../styles/globals.css';
 const colors = {
 	primary: '#2B2D42',
 	secondary: '#DD6E42',
+	grey: '#4E4C59',
 };
 
 const theme = extendTheme({ colors });
