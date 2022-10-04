@@ -6,8 +6,10 @@ import FAQ from 'components/home/FAQ';
 import Footer from 'components/home/Footer';
 import randomWords from 'random-words';
 import { api } from '../services/api';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from './api/auth/[...nextauth]';
 
-export default function Home(props) {
+export default function Index(props) {
 	return (
 		<>
 			<Header />
@@ -20,7 +22,18 @@ export default function Home(props) {
 	);
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req, res }) {
+	const session = await unstable_getServerSession(req, res, authOptions);
+	console.log(session);
+	if (session) {
+		return {
+			redirect: {
+				destination: '/home',
+				permanent: false,
+			},
+		};
+	}
+
 	const res1 = await api.get(
 		'https://api.themoviedb.org/3/discover/movie/?api_key=' +
 			process.env.TMDB_KEY +

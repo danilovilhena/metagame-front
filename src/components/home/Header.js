@@ -90,33 +90,36 @@ export default function Header() {
 							</NextLink>
 						))}
 						<Divider borderWidth="2px" />
-						<Button
-							variant="unstyled"
-							onClick={() => setIsLogInModalOpen(true)}
-							fontSize="1.5rem"
-							padding={0}
-						>
-							Entrar
-						</Button>
-						<LogInModal
-							isLogInModalOpen={isLogInModalOpen}
-							setIsLogInModalOpen={setIsLogInModalOpen}
-							setIsSignUpModalOpen={setIsSignUpModalOpen}
-						/>
-						<Button
-							variant="unstyled"
-							onClick={() => setIsSignUpModalOpen(true)}
-							fontSize="1.5rem"
-							padding={0}
-							color="secondary"
-						>
-							Criar conta
-						</Button>
-						<SignUpModal
-							isSignUpModalOpen={isSignUpModalOpen}
-							setIsSignUpModalOpen={setIsSignUpModalOpen}
-							setIsLogInModalOpen={setIsLogInModalOpen}
-						/>
+
+						<>
+							<Button
+								variant="unstyled"
+								onClick={() => setIsLogInModalOpen(true)}
+								fontSize="1.5rem"
+								padding={0}
+							>
+								Entrar
+							</Button>
+							<LogInModal
+								isLogInModalOpen={isLogInModalOpen}
+								setIsLogInModalOpen={setIsLogInModalOpen}
+								setIsSignUpModalOpen={setIsSignUpModalOpen}
+							/>
+							<Button
+								variant="unstyled"
+								onClick={() => setIsSignUpModalOpen(true)}
+								fontSize="1.5rem"
+								padding={0}
+								color="secondary"
+							>
+								Criar conta
+							</Button>
+							<SignUpModal
+								isSignUpModalOpen={isSignUpModalOpen}
+								setIsSignUpModalOpen={setIsSignUpModalOpen}
+								setIsLogInModalOpen={setIsLogInModalOpen}
+							/>
+						</>
 					</VStack>
 				</SideBarDrawer>
 			)}
