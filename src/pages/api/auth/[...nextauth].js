@@ -38,5 +38,11 @@ export const authOptions = {
 			return true;
 		},
 	},
+	events: {
+		async signOut({ token }) {
+			// Props of this function are : token
+			console.log(token);
+		},
+	},
 };
 export default NextAuth(authOptions);

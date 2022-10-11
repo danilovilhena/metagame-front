@@ -7,11 +7,19 @@ import {
 	Icon,
 	HStack,
 	Avatar,
+	Menu,
+	MenuButton,
+	MenuList,
+	MenuItem,
+	Divider,
 } from '@chakra-ui/react';
 import { IoMdSearch, IoMdAddCircleOutline } from 'react-icons/io';
 import { AiOutlineFire } from 'react-icons/ai';
 import { MdHome, MdOutlineHome } from 'react-icons/md';
+import { BsPerson } from 'react-icons/bs';
+import { FiMoon } from 'react-icons/fi';
 import { Button } from 'components/common/Button';
+import { signOut } from 'next-auth/react';
 
 import { useRouter } from 'next/router';
 
@@ -34,7 +42,7 @@ export function HeaderComponent() {
 				alignItems="center"
 			>
 				<InputLeftElement pointerEvents="none">
-					<Icon as={IoMdSearch} />
+					<Icon boxSize={5} as={IoMdSearch} />
 				</InputLeftElement>
 
 				<Input type="text" placeholder="Buscar" fontSize="1em" />
@@ -64,9 +72,21 @@ export function HeaderComponent() {
 						fontSize={22}
 					/>
 				</Button>
-				<Button variant="unstyled">
-					<Avatar name="Jon Doe" src="" size="sm" />
-				</Button>
+				<Menu isLazy>
+					<MenuButton>
+						<Avatar name="Jon Doe" size="sm" />
+					</MenuButton>
+					<MenuList color="gray">
+						<MenuItem icon={<Icon boxSize={5} display="flex" as={BsPerson} />}>
+							Perfil
+						</MenuItem>
+						<MenuItem icon={<Icon boxSize={5} display="flex" as={FiMoon} />}>
+							Modo escuro
+						</MenuItem>
+						<Divider opacity="1" my="2" borderBottomWidth="2px" />
+						<MenuItem onClick={() => signOut()}>Sair da conta</MenuItem>
+					</MenuList>
+				</Menu>
 			</HStack>
 		</Flex>
 	);
