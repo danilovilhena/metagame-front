@@ -5,19 +5,31 @@ import {
 	VStack,
 	Text,
 	FormControl,
-	FormLabel,
 	Input,
+	InputGroup,
+	InputRightElement,
+	keyframes,
 } from '@chakra-ui/react';
-import { IoLogoGoogle, IoLogoApple } from 'react-icons/io';
+import { IoLogoGoogle, IoLogoApple, IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import { signIn } from 'next-auth/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function LogInModal({
 	isLogInModalOpen,
 	setIsLogInModalOpen,
 	setIsSignUpModalOpen,
 }) {
+	const easeIn = keyframes`
+	from {opacity: 0}
+	to {opacity: 1}
+  `;
 	const [showEmailInputs, setShowEmailInputs] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
+	useEffect(() => {
+		if (!isLogInModalOpen) {
+			setShowEmailInputs(false);
+		}
+	}, [isLogInModalOpen]);
 
 	return (
 		<Modal
@@ -26,12 +38,49 @@ export function LogInModal({
 			isOpen={isLogInModalOpen}
 			setIsOpen={setIsLogInModalOpen}
 		>
-			<VStack textAlign="center" spacing="16px" mb="16px">
+			<VStack
+				textAlign="center"
+				spacing={showEmailInputs ? '0px' : '16px'}
+				mb="16px"
+			>
 				<VStack color="white" width="100%">
 					{showEmailInputs ? (
-						<FormControl isRequired>
-							<FormLabel>First name</FormLabel>
-							<Input placeholder="First name" />
+						<FormControl isRequired animation={`${easeIn} 1s`}>
+							<VStack spacing="16px" color="gray">
+								<Input placeholder="E-mail ou nome de usuário" />
+								<InputGroup>
+									<Input
+										placeholder="Senha"
+										type={showPassword ? 'text' : 'password'}
+									/>
+									<InputRightElement>
+										<Button
+											variant="unstyled"
+											_hover={{}}
+											onClick={() => setShowPassword(!showPassword)}
+										>
+											<Icon
+												as={showPassword ? IoMdEyeOff : IoMdEye}
+												fontSize={22}
+											/>
+										</Button>
+									</InputRightElement>
+								</InputGroup>
+								<Button variant="styled" width="100%">
+									Entrar
+								</Button>
+							</VStack>
+							<Text
+								color="black"
+								display="flex"
+								justifyContent="center"
+								alignItems="center"
+							>
+								Esqueceu senha?
+								<Button variant="unstyled" fontWeight="bold" hover={{}} px="1">
+									Recupere-a
+								</Button>
+							</Text>
 						</FormControl>
 					) : (
 						<>
@@ -57,7 +106,7 @@ export function LogInModal({
 						</>
 					)}
 				</VStack>
-				<Text fontSize="14px" display="flex" alignItems="center">
+				<Text display="flex" alignItems="center" justifyContent="center">
 					Não possui conta?
 					<Button
 						variant="unstyled"
@@ -66,6 +115,7 @@ export function LogInModal({
 							setIsLogInModalOpen(false);
 							setIsSignUpModalOpen(true);
 						}}
+						hover={{}}
 					>
 						Faça seu cadastro.
 					</Button>
