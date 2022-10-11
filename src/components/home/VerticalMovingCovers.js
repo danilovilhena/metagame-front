@@ -1,4 +1,10 @@
-import { Box, Stack, Image, useBreakpointValue } from '@chakra-ui/react';
+import {
+	Box,
+	Stack,
+	Image,
+	useBreakpointValue,
+	keyframes,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import styles from 'styles/VerticalMovingCovers.module.css';
 import { api } from 'services/api';
@@ -10,6 +16,11 @@ export default function VerticalMovingCovers() {
 		base: false,
 		xl: true,
 	});
+
+	const easeIn = keyframes`
+	from {opacity: 0}
+	to {opacity: 1}
+  `;
 
 	useEffect(() => {
 		const fetchMovies = async () => {
@@ -89,7 +100,7 @@ export default function VerticalMovingCovers() {
 					>
 						{[...Array(10)].map((_, innerIdx) => (
 							<Image
-								transition="opacity 0.5s ease"
+								animation={`${easeIn} 6s`}
 								w="100px"
 								minH="150px"
 								objectFit="cover"

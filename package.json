@@ -14,6 +14,7 @@
     "@chakra-ui/react": "^2.3.2",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@hookform/resolvers": "^2.9.8",
     "axios": "^0.27.2",
     "framer-motion": "^7.3.5",
     "next": "12.3.0",
@@ -21,7 +22,9 @@
     "random-words": "^1.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.4.0"
+    "react-hook-form": "^7.37.0",
+    "react-icons": "^4.4.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "eslint": "8.23.1",

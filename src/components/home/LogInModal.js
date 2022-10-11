@@ -1,18 +1,14 @@
-import { Modal } from '../common/Modal';
-import { Button } from '../common/Button';
-import {
-	Icon,
-	VStack,
-	Text,
-	FormControl,
-	Input,
-	InputGroup,
-	InputRightElement,
-	keyframes,
-} from '@chakra-ui/react';
+import { Icon, VStack, Text, Flex, keyframes } from '@chakra-ui/react';
 import { IoLogoGoogle, IoLogoApple, IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import { signIn } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { Modal } from '../common/Modal';
+import { Button } from '../common/Button';
+import { Input } from '../common/Input';
 
 export function LogInModal({
 	isLogInModalOpen,
@@ -25,6 +21,22 @@ export function LogInModal({
   `;
 	const [showEmailInputs, setShowEmailInputs] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
+
+	const LogInFormSchema = yup.object({
+		email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
+		password: yup.string().required('Senha obrigatória'),
+	});
+
+	const { register, handleSubmit, formState } = useForm({
+		resolver: yupResolver(LogInFormSchema),
+	});
+	const { errors } = formState;
+
+	const handleLogIn = (values, event) => {
+		event.preventDefault();
+		console.log(values);
+	};
+
 	useEffect(() => {
 		if (!isLogInModalOpen) {
 			setShowEmailInputs(false);
@@ -45,31 +57,32 @@ export function LogInModal({
 			>
 				<VStack color="white" width="100%">
 					{showEmailInputs ? (
-						<FormControl isRequired animation={`${easeIn} 1s`}>
-							<VStack spacing="16px" color="gray">
-								<Input placeholder="E-mail ou nome de usuário" />
-								<InputGroup>
+						<>
+							<Flex
+								flexDirection="column"
+								width="100%"
+								animation={`${easeIn} 1s`}
+								onSubmit={handleSubmit(handleLogIn)}
+							>
+								<VStack as="form" spacing="12px" color="gray">
+									<Input
+										placeholder="E-mail ou nome de usuário"
+										{...register('email')}
+										error={errors.email}
+									/>
 									<Input
 										placeholder="Senha"
 										type={showPassword ? 'text' : 'password'}
+										rightIconAction={() => setShowPassword(!showPassword)}
+										rightIcon={showPassword ? IoMdEyeOff : IoMdEye}
+										{...register('password')}
+										error={errors.password}
 									/>
-									<InputRightElement>
-										<Button
-											variant="unstyled"
-											_hover={{}}
-											onClick={() => setShowPassword(!showPassword)}
-										>
-											<Icon
-												as={showPassword ? IoMdEyeOff : IoMdEye}
-												fontSize={22}
-											/>
-										</Button>
-									</InputRightElement>
-								</InputGroup>
-								<Button variant="styled" width="100%">
-									Entrar
-								</Button>
-							</VStack>
+									<Button variant="styled" width="100%" type="submit">
+										Entrar
+									</Button>
+								</VStack>
+							</Flex>
 							<Text
 								color="black"
 								display="flex"
@@ -81,7 +94,7 @@ export function LogInModal({
 									Recupere-a
 								</Button>
 							</Text>
-						</FormControl>
+						</>
 					) : (
 						<>
 							<Button

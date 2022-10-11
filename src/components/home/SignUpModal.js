@@ -1,18 +1,14 @@
-import { Modal } from '../common/Modal';
-import { Button } from '../common/Button';
-import {
-	Icon,
-	VStack,
-	Text,
-	FormControl,
-	Input,
-	InputGroup,
-	InputRightElement,
-	keyframes,
-} from '@chakra-ui/react';
+import { Flex, Icon, VStack, Text, keyframes } from '@chakra-ui/react';
 import { IoLogoGoogle, IoLogoApple, IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import { signIn } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { Modal } from '../common/Modal';
+import { Button } from '../common/Button';
+import { Input } from '../common/Input';
 
 export function SignUpModal({
 	isSignUpModalOpen,
@@ -27,11 +23,28 @@ export function SignUpModal({
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+	const signUpFormSchema = yup.object({
+		name: yup.string().required('Nome obrigatório'),
+		email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
+		password: yup.string().required('Senha obrigatória'),
+		confirm_password: yup.string().required('Confirmação de senha obrigatório'),
+	});
+	const { register, handleSubmit, formState } = useForm({
+		resolver: yupResolver(signUpFormSchema),
+	});
+	const { errors } = formState;
+
+	const handleSignUp = (values, event) => {
+		event.preventDefault();
+		console.log(values);
+	};
+
 	useEffect(() => {
 		if (!isSignUpModalOpen) {
 			setShowEmailInputs(false);
 		}
 	}, [isSignUpModalOpen]);
+
 	return (
 		<Modal
 			variant="styled"
@@ -46,52 +59,48 @@ export function SignUpModal({
 			>
 				<VStack color="white" width="100%">
 					{showEmailInputs ? (
-						<FormControl isRequired animation={`${easeIn} 1s`}>
-							<VStack spacing="16px" color="gray">
-								<Input placeholder="Nome completo" />
-								<Input placeholder="E-mail" type="email" />
-								<InputGroup>
+						<>
+							<Flex
+								as="form"
+								width="100%"
+								animation={`${easeIn} 1s`}
+								onSubmit={handleSubmit(handleSignUp)}
+							>
+								<VStack spacing="12px" color="gray" width="100%">
+									<Input
+										placeholder="Nome completo"
+										{...register('name')}
+										error={errors.name}
+									/>
+									<Input
+										placeholder="E-mail"
+										type="email"
+										{...register('email')}
+										error={errors.email}
+									/>
 									<Input
 										placeholder="Senha"
 										type={showPassword ? 'text' : 'password'}
+										{...register('password')}
+										error={errors.password}
+										rightIcon={showPassword ? IoMdEyeOff : IoMdEye}
+										rightIconAction={() => setShowPassword(!showPassword)}
 									/>
-									<InputRightElement>
-										<Button
-											variant="unstyled"
-											_hover={{}}
-											onClick={() => setShowPassword(!showPassword)}
-										>
-											<Icon
-												as={showPassword ? IoMdEyeOff : IoMdEye}
-												fontSize={22}
-											/>
-										</Button>
-									</InputRightElement>
-								</InputGroup>
-								<InputGroup>
 									<Input
 										placeholder="Confirmar senha"
 										type={showConfirmPassword ? 'text' : 'password'}
+										{...register('confirm_password')}
+										error={errors.confirm_password}
+										rightIcon={showConfirmPassword ? IoMdEyeOff : IoMdEye}
+										rightIconAction={() =>
+											setShowConfirmPassword(!showConfirmPassword)
+										}
 									/>
-									<InputRightElement>
-										<Button
-											variant="unstyled"
-											_hover={{}}
-											onClick={() =>
-												setShowConfirmPassword(!showConfirmPassword)
-											}
-										>
-											<Icon
-												as={showConfirmPassword ? IoMdEyeOff : IoMdEye}
-												fontSize={22}
-											/>
-										</Button>
-									</InputRightElement>
-								</InputGroup>
-								<Button variant="styled" width="100%">
-									Entrar
-								</Button>
-							</VStack>
+									<Button variant="styled" width="100%" type="submit">
+										Criar conta
+									</Button>
+								</VStack>
+							</Flex>
 							<Text
 								color="black"
 								display="flex"
@@ -103,7 +112,7 @@ export function SignUpModal({
 									Recupere-a
 								</Button>
 							</Text>
-						</FormControl>
+						</>
 					) : (
 						<>
 							<Button
