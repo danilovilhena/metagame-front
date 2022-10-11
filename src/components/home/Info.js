@@ -13,7 +13,13 @@ export default function Info() {
 		md: true,
 	});
 	return (
-		<Box color="primary" px={{ base: '2rem', xl: '11.5em' }} py="3rem">
+		<Box
+			color="primary"
+			px={{ base: '2rem', xl: '11.5em' }}
+			py="3rem"
+			id="info"
+			height="100vh"
+		>
 			<Text
 				as="h1"
 				pb="1em"

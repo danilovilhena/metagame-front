@@ -1,5 +1,4 @@
 import {
-	Box,
 	Text,
 	Tabs,
 	TabList,
@@ -9,15 +8,20 @@ import {
 	Image,
 	Grid,
 	GridItem,
+	Flex,
 } from '@chakra-ui/react';
 
 export default function TabsComponent() {
 	return (
-		<Box
+		<Flex
+			flexDir="column"
+			justify="center"
 			bg="primary"
 			color="white"
 			px={{ base: '1rem', sm: '3rem', xl: '11.5em' }}
 			py="3rem"
+			id="tabs"
+			height="100vh"
 		>
 			<Text>Confira as mídias mais populares entre nossos usuários.</Text>
 
@@ -132,6 +136,6 @@ export default function TabsComponent() {
 					</TabPanel>
 				</TabPanels>
 			</Tabs>
-		</Box>
+		</Flex>
 	);
 }

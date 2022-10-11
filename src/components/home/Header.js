@@ -18,10 +18,10 @@ import { SideBarDrawer } from './SideBarDrawer';
 
 export default function Header() {
 	const links = [
-		{ name: 'Como funciona?', href: '#' },
-		{ name: 'Livros', href: '#' },
-		{ name: 'Filmes', href: '#' },
-		{ name: 'Jogos', href: '#' },
+		{ name: 'Como funciona?', href: '#info' },
+		{ name: 'Livros', href: '#tabs' },
+		{ name: 'Filmes', href: '#tabs' },
+		{ name: 'Jogos', href: '#tabs' },
 	];
 
 	const [isLogInModalOpen, setIsLogInModalOpen] = useState(false);
