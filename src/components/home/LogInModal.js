@@ -32,9 +32,14 @@ export function LogInModal({
 	});
 	const { errors } = formState;
 
-	const handleLogIn = (values, event) => {
+	const handleLogIn = async ({ email, password }, event) => {
 		event.preventDefault();
-		console.log(values);
+		const response = await signIn('credentials', {
+			email,
+			password,
+			redirect: false,
+		});
+		console.log(response);
 	};
 
 	useEffect(() => {

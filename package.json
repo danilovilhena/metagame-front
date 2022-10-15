@@ -19,6 +19,7 @@
     "framer-motion": "^7.3.5",
     "next": "12.3.0",
     "next-auth": "^4.12.2",
+    "nookies": "^2.5.2",
     "random-words": "^1.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
