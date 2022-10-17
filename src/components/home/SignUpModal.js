@@ -10,6 +10,8 @@ import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
 import { Input } from '../common/Input';
 
+import { userCreation } from '../../utils/userCreation';
+
 export function SignUpModal({
 	isSignUpModalOpen,
 	setIsSignUpModalOpen,
@@ -25,6 +27,7 @@ export function SignUpModal({
 
 	const signUpFormSchema = yup.object({
 		name: yup.string().required('Nome obrigatório'),
+		username: yup.string().required('Nome de usuário obrigatório'),
 		email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
 		password: yup.string().required('Senha obrigatória'),
 		confirm_password: yup.string().required('Confirmação de senha obrigatório'),
@@ -34,9 +37,19 @@ export function SignUpModal({
 	});
 	const { errors } = formState;
 
-	const handleSignUp = (values, event) => {
+	const handleSignUp = async (values, event) => {
 		event.preventDefault();
-		console.log(values);
+		const { name, username, email, password } = values;
+		const user_created = await userCreation({
+			name,
+			username,
+			email,
+			password,
+		});
+		if (user_created) {
+			const response = await signIn('credentials', { email, password });
+			console.log(response);
+		}
 	};
 
 	useEffect(() => {
@@ -71,6 +84,11 @@ export function SignUpModal({
 										placeholder="Nome completo"
 										{...register('name')}
 										error={errors.name}
+									/>
+									<Input
+										placeholder="Nome de usuário"
+										{...register('username')}
+										error={errors.username}
 									/>
 									<Input
 										placeholder="E-mail"

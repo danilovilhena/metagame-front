@@ -39,7 +39,10 @@ export function LogInModal({
 			password,
 			redirect: false,
 		});
-		console.log(response);
+		console.log('----------');
+		console.log(response.string);
+		console.log(response.status);
+		console.log(response.ok);
 	};
 
 	useEffect(() => {
