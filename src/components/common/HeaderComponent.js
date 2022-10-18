@@ -13,11 +13,7 @@ import {
 	MenuItem,
 	Divider,
 } from '@chakra-ui/react';
-import { IoMdSearch, IoMdAddCircleOutline } from 'react-icons/io';
-import { AiOutlineFire } from 'react-icons/ai';
-import { MdHome, MdOutlineHome } from 'react-icons/md';
-import { BsPerson } from 'react-icons/bs';
-import { FiMoon } from 'react-icons/fi';
+import { IoMdSearch } from 'react-icons/io';
 import { Button } from 'components/common/Button';
 import { signOut } from 'next-auth/react';
 
@@ -25,6 +21,9 @@ import { useRouter } from 'next/router';
 
 export function HeaderComponent() {
 	const router = useRouter();
+
+	const getIcon = (name, condition) =>
+		`icons/${name}${condition ? '_active' : ''}.svg`;
 
 	return (
 		<Flex
@@ -48,39 +47,40 @@ export function HeaderComponent() {
 				<Input type="text" placeholder="Buscar" fontSize="1em" />
 			</InputGroup>
 			<HStack color="primary" spacing="0.5em">
-				<Button variant="unstyled">
-					<Icon as={IoMdAddCircleOutline} fontSize={22} />
+				<Button variant="unstyled" mr="0">
+					<Image src={getIcon('add', false)} alt="Adicionar" />
 				</Button>
 				<Button variant="unstyled">
-					{router.pathname === '/home' ? (
-						<Icon as={MdHome} color="secondary" fontSize={22} />
-					) : (
-						<Icon as={MdOutlineHome} fontSize={22} />
-					)}
-				</Button>
-				<Button variant="unstyled">
-					<Icon
-						as={AiOutlineFire}
-						color={router.pathname === '/tops' && 'secondary'}
-						fontSize={22}
+					<Image
+						src={getIcon('home', router.pathname === '/home')}
+						alt="Início"
 					/>
 				</Button>
 				<Button variant="unstyled">
-					<Icon
-						as={AiOutlineFire}
-						color={router.pathname === '/goals' && 'secondary'}
-						fontSize={22}
+					<Image
+						src={getIcon('hot', router.pathname === '/tops')}
+						alt="Metas populares"
+					/>
+				</Button>
+				<Button variant="unstyled">
+					<Image
+						src={getIcon('goal', router.pathname === '/goals')}
+						alt="Minhas metas"
 					/>
 				</Button>
 				<Menu isLazy>
 					<MenuButton>
 						<Avatar name="Jon Doe" size="sm" />
 					</MenuButton>
-					<MenuList color="gray">
-						<MenuItem icon={<Icon boxSize={5} display="flex" as={BsPerson} />}>
+					<MenuList color="#5F5C6BFF">
+						<MenuItem
+							icon={<Image src={getIcon('user', false)} alt="Perfil" />}
+						>
 							Perfil
 						</MenuItem>
-						<MenuItem icon={<Icon boxSize={5} display="flex" as={FiMoon} />}>
+						<MenuItem
+							icon={<Image src={getIcon('moon', false)} alt="Modo escuro" />}
+						>
 							Modo escuro
 						</MenuItem>
 						<Divider opacity="1" my="2" borderBottomWidth="2px" />
