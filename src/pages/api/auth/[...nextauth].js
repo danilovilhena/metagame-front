@@ -38,19 +38,14 @@ export const authOptions = {
 			return true;
 		},
 		async session({ session, token }) {
-			console.log('Session token user');
-			console.log(token.user);
-			console.log('Session token user');
-			console.log(token.error);
-			// Session returns: {
-			//   user: {
-			//     name: string,
-			//     email: string,
-			//     image: string
-			//   },
-			//   expires: string
-			// }
-
+			if (token) {
+				if (token.user) {
+					session.user = token.user;
+				}
+				if (token.error) {
+					session.user = token.user;
+				}
+			}
 			return session;
 		},
 
@@ -75,7 +70,8 @@ export const authOptions = {
 					password: isNotCredential ? '' : user.password,
 					provider: isNotCredential ? account.provider : '',
 				});
-				user_logged_in && (token.user = user_logged_in);
+				console.log(user_logged_in.data);
+				user_logged_in && (token.user = user_logged_in.data);
 				return token;
 			} catch (err) {
 				if (err && err.response && err.response.data) {
