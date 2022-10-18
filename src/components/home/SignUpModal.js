@@ -155,11 +155,12 @@ export function SignUpModal({
 						</>
 					)}
 				</VStack>
-				<Text fontSize="14px" display="flex" alignItems="center">
-					Não possui conta?
+				<Text display="flex" alignItems="center" justifyContent="center">
+					Possui conta?
 					<Button
 						variant="unstyled"
 						px="4px"
+						mr="0"
 						onClick={() => {
 							setIsSignUpModalOpen(false);
 							setIsLogInModalOpen(true);
@@ -167,10 +168,6 @@ export function SignUpModal({
 					>
 						Faça seu login.
 					</Button>
-				</Text>
-				<Text fontSize="14px">
-					Ao continuar, você concorda com os nossos
-					<Text as="strong">Termos de Serviço e Política de Privacidade.</Text>
 				</Text>
 			</VStack>
 		</Modal>

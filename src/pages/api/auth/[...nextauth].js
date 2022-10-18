@@ -32,25 +32,8 @@ export const authOptions = {
 		signIn: '/',
 	},
 	callbacks: {
-		async signIn() {
+		async signIn({ user, account }) {
 			// Props of this function are : { user, account, profile, email, credentials }
-
-			return true;
-		},
-		async session({ session, token }) {
-			if (token) {
-				if (token.user) {
-					session.user = token.user;
-				}
-				if (token.error) {
-					session.user = token.user;
-				}
-			}
-			return session;
-		},
-
-		async jwt({ token, user, account }) {
-			// Parameters for this function are : { token, user, account, profile, isNewUser }
 
 			const isNotCredential = account && account.provider !== 'credentials';
 			if (account && isNotCredential) {
@@ -59,8 +42,7 @@ export const authOptions = {
 				const user_response = await userCreation(user, account.provider);
 				// If it is the first login, the user is already logged in
 				if (user_response && !user_response.error) {
-					user_response && (token.user = user_response);
-					return token;
+					return true;
 				}
 			}
 			// Do login for all type of providers
@@ -70,18 +52,25 @@ export const authOptions = {
 					password: isNotCredential ? '' : user.password,
 					provider: isNotCredential ? account.provider : '',
 				});
-				console.log(user_logged_in.data);
-				user_logged_in && (token.user = user_logged_in.data);
-				return token;
+				if (user_logged_in && user_logged_in.data) {
+					return true;
+				}
 			} catch (err) {
 				if (err && err.response && err.response.data) {
-					const error = err.response.data;
-					error && (token.error = error);
-					return token;
+					const { error } = err.response.data;
+					throw new Error(error);
 				}
-				// Return default token if nothing works'
-				return token;
 			}
+
+			return true;
+		},
+		async session({ session }) {
+			return session;
+		},
+
+		async jwt({ token }) {
+			// Parameters for this function are : { token, user, account, profile, isNewUser }
+			return token;
 		},
 	},
 	events: {
