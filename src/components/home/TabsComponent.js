@@ -11,7 +11,19 @@ import {
 	Flex,
 } from '@chakra-ui/react';
 
-export default function TabsComponent() {
+export default function TabsComponent({ content, getCover }) {
+	const getCoverTitle = (row, item) => {
+		if (item) {
+			if (row === 0 && item.title) {
+				return item.title;
+			} else if (row === 1 && item.name) {
+				return item.name;
+			} else if (row === 2 && item.volumeInfo && item.volumeInfo.title) {
+				return item.volumeInfo.title;
+			}
+		}
+	};
+
 	return (
 		<Flex
 			flexDir="column"
@@ -20,120 +32,67 @@ export default function TabsComponent() {
 			color="white"
 			px={{ base: '1rem', sm: '3rem', xl: '11.5em' }}
 			py="3rem"
-			id="tabs"
 			height="100vh"
 		>
 			<Text>Confira as mídias mais populares entre nossos usuários.</Text>
 
 			<Tabs variant="unstyled" color="#8C8A97">
 				<TabList flexDirection={{ base: 'row', sm: 'row' }} flexWrap="wrap">
-					<Tab
-						_selected={{ color: 'white' }}
-						fontSize={{ base: '2em', lg: '3em' }}
-						fontWeight="bold"
-						pl="0"
-						w="fit-content"
-					>
-						Filmes
-					</Tab>
-					<Tab
-						_selected={{ color: 'white' }}
-						fontSize={{ base: '2em', lg: '3em' }}
-						fontWeight="bold"
-						w="fit-content"
-						pl="0"
-					>
-						Livros
-					</Tab>
-					<Tab
-						_selected={{ color: 'white' }}
-						fontSize={{ base: '2em', lg: '3em' }}
-						fontWeight="bold"
-						w="fit-content"
-						pl="0"
-					>
-						Jogos
-					</Tab>
+					{Object.keys(content).map((tabOption, index) => (
+						<Tab
+							_selected={{ color: 'white' }}
+							fontSize={{ base: '2em', lg: '3em' }}
+							fontWeight="bold"
+							pl="0"
+							w="fit-content"
+							overflow="hidden"
+							key={index}
+						>
+							{tabOption.charAt(0).toUpperCase() + tabOption.slice(1)}
+						</Tab>
+					))}
 				</TabList>
 				<TabPanels>
-					<TabPanel>
-						<Grid
-							templateColumns="repeat(auto-fill,minmax(160px, 1fr));"
-							gap={18}
-						>
-							{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, idx) => (
-								<GridItem
-									display="flex"
-									justifyContent="center"
-									flexDir="column"
-									alignItems="center"
-									key={idx}
-								>
-									<Image
-										boxSize="150px"
-										src="movie-cover.svg"
-										alt="cover"
-										mb="0.5em"
-									/>
-									<Text color="white" fontSize="1em">
-										Título do filme
-									</Text>
-								</GridItem>
-							))}
-						</Grid>
-					</TabPanel>
-					<TabPanel>
-						<Grid
-							templateColumns="repeat(auto-fill,minmax(160px, 1fr));"
-							gap={18}
-						>
-							{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, idx) => (
-								<GridItem
-									display="flex"
-									justifyContent="center"
-									flexDir="column"
-									alignItems="center"
-									key={idx}
-								>
-									<Image
-										boxSize="150px"
-										src="movie-cover.svg"
-										alt="cover"
-										mb="0.5em"
-									/>
-									<Text color="white" fontSize="1em">
-										Título do livro
-									</Text>
-								</GridItem>
-							))}
-						</Grid>
-					</TabPanel>
-					<TabPanel>
-						<Grid
-							templateColumns="repeat(auto-fill,minmax(160px, 1fr));"
-							gap={18}
-						>
-							{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, idx) => (
-								<GridItem
-									display="flex"
-									justifyContent="center"
-									flexDir="column"
-									alignItems="center"
-									key={idx}
-								>
-									<Image
-										boxSize="150px"
-										src="movie-cover.svg"
-										alt="cover"
-										mb="0.5em"
-									/>
-									<Text color="white" fontSize="1em">
-										Título do jogo
-									</Text>
-								</GridItem>
-							))}
-						</Grid>
-					</TabPanel>
+					{Object.entries(content).map((tabOptionContent, idx) => (
+						<TabPanel key={`panel-${idx}`}>
+							<Grid
+								templateColumns="repeat(auto-fill,minmax(160px, 1fr));"
+								gap={18}
+							>
+								{tabOptionContent[1].slice(0, 12).map((item, innerIdx) => (
+									<GridItem
+										key={`content-${innerIdx}`}
+										display="flex"
+										justifyContent="center"
+										flexDir="column"
+										alignItems="center"
+										px={5}
+										overflow="hidden"
+									>
+										<Image
+											boxSize="200px"
+											objectFit="cover"
+											borderRadius="10px"
+											boxShadow="10px 5px 5px black"
+											src={getCover(idx, innerIdx)}
+											alt="cover"
+											mb="0.5em"
+										/>
+										<Text
+											color="white"
+											fontSize="1em"
+											height="2em"
+											lineHeight="1em"
+											maxWidth="150px"
+											textAlign="center"
+										>
+											{getCoverTitle(idx, item)}
+										</Text>
+									</GridItem>
+								))}
+							</Grid>
+						</TabPanel>
+					))}
 				</TabPanels>
 			</Tabs>
 		</Flex>
