@@ -44,6 +44,7 @@ export default function FAQ() {
 				color="primary"
 				py="3rem"
 				spacing={{ base: '2rem', md: '0' }}
+				_dark={{ color: 'gray.200' }}
 			>
 				<Flex
 					align="flex-start"

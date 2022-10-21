@@ -32,6 +32,7 @@ export default function TabsComponent({ content, getCover }) {
 			color="white"
 			px={{ base: '1rem', sm: '3rem', xl: '11.5em' }}
 			py="3rem"
+			_dark={{ bg: 'gray.900', color: 'gray.200' }}
 		>
 			<Text>Confira as mídias mais populares entre nossos usuários.</Text>
 

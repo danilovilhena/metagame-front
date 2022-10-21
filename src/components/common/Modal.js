@@ -25,7 +25,7 @@ export function Modal({
 			isCentered
 		>
 			<ModalOverlay />
-			<ModalContent>
+			<ModalContent _dark={{ bg: 'gray.800' }}>
 				<ModalHeader>{ModalTitle}</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>{children}</ModalBody>

@@ -12,6 +12,7 @@ export default function Cover({ content, getCover }) {
 			maxH={{ base: 'none', lg: '656px' }}
 			overflow="hidden"
 			flexDirection={{ base: 'column', lg: 'row' }}
+			_dark={{ bg: 'gray.900' }}
 		>
 			<Flex
 				wrap="wrap"
@@ -19,6 +20,7 @@ export default function Cover({ content, getCover }) {
 				alignItems="center"
 				mt={{ base: '2rem', lg: 0 }}
 				px={{ base: '1rem', md: 0 }}
+				_dark={{ color: 'gray.200' }}
 			>
 				<Text
 					fontWeight="bold"

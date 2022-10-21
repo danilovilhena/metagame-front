@@ -69,7 +69,12 @@ export function LogInModal({
 								animation={`${easeIn} 1s`}
 								onSubmit={handleSubmit(handleLogIn)}
 							>
-								<VStack as="form" spacing="12px" color="gray">
+								<VStack
+									as="form"
+									spacing="12px"
+									color="gray"
+									_dark={{ color: 'gray.200' }}
+								>
 									<Input
 										placeholder="E-mail ou nome de usuário"
 										{...register('email')}
@@ -93,6 +98,7 @@ export function LogInModal({
 								display="flex"
 								justifyContent="center"
 								alignItems="center"
+								_dark={{ color: 'gray.200' }}
 							>
 								Esqueceu senha?
 								<Button variant="unstyled" fontWeight="bold" hover={{}} px="1">

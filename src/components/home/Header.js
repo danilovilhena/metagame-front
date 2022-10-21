@@ -27,13 +27,15 @@ export default function Header() {
 
 	const [isLogInModalOpen, setIsLogInModalOpen] = useState(false);
 	const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
-	const { colorMode } = useColorMode();
+	const { colorMode, toggleColorMode } = useColorMode();
 	const isLight = colorMode === 'light';
 
 	const isWideVersion = useBreakpointValue({
 		base: false,
 		lg: true,
 	});
+
+	const getIcon = (name) => `icons/${name}${isLight ? '' : '_dark'}.svg`;
 
 	return (
 		<Flex
@@ -75,6 +77,12 @@ export default function Header() {
 							setIsSignUpModalOpen={setIsSignUpModalOpen}
 							setIsLogInModalOpen={setIsLogInModalOpen}
 						/>
+						<Button variant="unstyled" ml="4" onClick={toggleColorMode}>
+							<Image
+								src={getIcon('moon')}
+								alt={`Modo ${isLight ? 'escuro' : 'claro'}`}
+							/>
+						</Button>
 					</Box>
 				</>
 			) : (
@@ -86,6 +94,7 @@ export default function Header() {
 						mt="50px"
 						fontWeight="bold"
 						spacing="5"
+						_dark={{ color: 'gray.200' }}
 					>
 						{links.map((link, idx) => (
 							<NextLink href={link.href} key={idx} passHref>
@@ -121,6 +130,13 @@ export default function Header() {
 								isSignUpModalOpen={isSignUpModalOpen}
 								setIsSignUpModalOpen={setIsSignUpModalOpen}
 								setIsLogInModalOpen={setIsLogInModalOpen}
+							/>
+							<Image
+								src={getIcon('moon')}
+								alt={`Modo ${isLight ? 'escuro' : 'claro'}`}
+								cursor="pointer"
+								role="button"
+								onClick={toggleColorMode}
 							/>
 						</>
 					</VStack>

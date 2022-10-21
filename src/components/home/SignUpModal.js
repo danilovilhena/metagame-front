@@ -66,7 +66,12 @@ export function SignUpModal({
 								animation={`${easeIn} 1s`}
 								onSubmit={handleSubmit(handleSignUp)}
 							>
-								<VStack spacing="12px" color="gray" width="100%">
+								<VStack
+									spacing="12px"
+									color="gray"
+									width="100%"
+									_dark={{ color: 'gray.200' }}
+								>
 									<Input
 										placeholder="Nome completo"
 										{...register('name')}
@@ -106,6 +111,7 @@ export function SignUpModal({
 								display="flex"
 								justifyContent="center"
 								alignItems="center"
+								_dark={{ color: 'gray.200' }}
 							>
 								Esqueceu senha?
 								<Button variant="unstyled" fontWeight="bold" hover={{}} px="1">

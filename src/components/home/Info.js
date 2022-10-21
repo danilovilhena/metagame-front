@@ -19,6 +19,7 @@ export default function Info() {
 			py="3rem"
 			id="info"
 			height="100vh"
+			_dark={{ color: 'gray.200' }}
 		>
 			<Text
 				as="h1"
