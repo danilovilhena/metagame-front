@@ -12,6 +12,7 @@ import {
 	MenuList,
 	MenuItem,
 	Divider,
+	useColorMode,
 } from '@chakra-ui/react';
 import { IoMdSearch } from 'react-icons/io';
 import { Button } from 'components/common/Button';
@@ -21,9 +22,11 @@ import { useRouter } from 'next/router';
 
 export function HeaderComponent() {
 	const router = useRouter();
+	const { colorMode, toggleColorMode } = useColorMode();
+	const isLight = colorMode === 'light';
 
 	const getIcon = (name, condition) =>
-		`icons/${name}${condition ? '_active' : ''}.svg`;
+		`icons/${name}${condition ? '_active' : isLight ? '' : '_dark'}.svg`;
 
 	return (
 		<Flex
@@ -33,12 +36,13 @@ export function HeaderComponent() {
 			h="5em"
 			align="center"
 		>
-			<Image src="/logo.svg" alt="Metagame" />
+			<Image src={isLight ? '/logo.svg' : '/logo_dark.svg'} alt="Metagame" />
 			<InputGroup
 				border="grey"
 				color="grey"
 				maxWidth="256px"
 				alignItems="center"
+				_dark={{ color: 'gray.200' }}
 			>
 				<InputLeftElement pointerEvents="none">
 					<Icon boxSize={5} as={IoMdSearch} />
@@ -72,19 +76,31 @@ export function HeaderComponent() {
 					<MenuButton>
 						<Avatar name="Jon Doe" size="sm" />
 					</MenuButton>
-					<MenuList color="#5F5C6BFF">
+					<MenuList minW="fit-content">
 						<MenuItem
 							icon={<Image src={getIcon('user', false)} alt="Perfil" />}
+							mr="8"
+							_dark={{ color: 'gray.200' }}
 						>
 							Perfil
 						</MenuItem>
 						<MenuItem
-							icon={<Image src={getIcon('moon', false)} alt="Modo escuro" />}
+							icon={
+								<Image
+									src={getIcon('moon', false)}
+									alt={`Modo ${isLight ? 'escuro' : 'claro'}`}
+								/>
+							}
+							mr="8"
+							_dark={{ color: 'gray.200' }}
+							onClick={toggleColorMode}
 						>
-							Modo escuro
+							Modo {isLight ? 'escuro' : 'claro'}
 						</MenuItem>
 						<Divider opacity="1" my="2" borderBottomWidth="2px" />
-						<MenuItem onClick={() => signOut()}>Sair da conta</MenuItem>
+						<MenuItem onClick={() => signOut()} _dark={{ color: 'gray.200' }}>
+							Sair da conta
+						</MenuItem>
 					</MenuList>
 				</Menu>
 			</HStack>

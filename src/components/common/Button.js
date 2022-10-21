@@ -11,6 +11,9 @@ export function Button({ variant, children, ...rest }) {
 					_hover={{
 						backgroundColor: '#f8f8ff',
 						transition: 'background-color 0.5s',
+						_dark: {
+							backgroundColor: 'gray.700',
+						},
 					}}
 					{...rest}
 				>

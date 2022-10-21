@@ -7,6 +7,7 @@ import {
 	Divider,
 	useBreakpointValue,
 	Stack,
+	useColorMode,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
@@ -26,6 +27,8 @@ export default function Header() {
 
 	const [isLogInModalOpen, setIsLogInModalOpen] = useState(false);
 	const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+	const { colorMode } = useColorMode();
+	const isLight = colorMode === 'light';
 
 	const isWideVersion = useBreakpointValue({
 		base: false,
@@ -41,7 +44,7 @@ export default function Header() {
 			align="center"
 			fontSize="1em"
 		>
-			<Image src="/logo.svg" alt="Metagame" />
+			<Image src={isLight ? '/logo.svg' : '/logo_dark.svg'} alt="Metagame" />
 
 			{isWideVersion ? (
 				<>

@@ -1,7 +1,10 @@
-import { Link, Text, Image, Stack } from '@chakra-ui/react';
+import { Link, Text, Image, Stack, useColorMode } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
 export default function Footer() {
+	const { colorMode } = useColorMode();
+	const isLight = colorMode === 'light';
+
 	const links = [
 		{ name: 'Políticas de Privacidade', href: '#' },
 		{ name: 'Termos e Condições', href: '#' },
@@ -19,7 +22,7 @@ export default function Footer() {
 			pt="1rem"
 			pb="2rem"
 		>
-			<Image src="/logo.svg" alt="Metagame" />
+			<Image src={isLight ? '/logo.svg' : '/logo_dark.svg'} alt="Metagame" />
 			<Stack
 				as="nav"
 				justifyContent="space-evenly"
