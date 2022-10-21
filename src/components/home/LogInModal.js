@@ -1,4 +1,13 @@
-import { Icon, VStack, Text, Flex, keyframes } from '@chakra-ui/react';
+import {
+	Icon,
+	VStack,
+	Text,
+	Flex,
+	Alert,
+	AlertIcon,
+	AlertDescription,
+	keyframes,
+} from '@chakra-ui/react';
 import { IoLogoGoogle, IoLogoApple, IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import { signIn } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -21,6 +30,7 @@ export function LogInModal({
   `;
 	const [showEmailInputs, setShowEmailInputs] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
+	const [signInError, setSignInError] = useState('');
 
 	const LogInFormSchema = yup.object({
 		email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
@@ -39,7 +49,9 @@ export function LogInModal({
 			password,
 			redirect: false,
 		});
-		console.log(response);
+		if (response && response.error) {
+			setSignInError(response.error);
+		}
 	};
 
 	useEffect(() => {
@@ -59,6 +71,7 @@ export function LogInModal({
 				textAlign="center"
 				spacing={showEmailInputs ? '0px' : '16px'}
 				mb="16px"
+				alignItems="center"
 			>
 				<VStack color="white" width="100%">
 					{showEmailInputs ? (
@@ -91,6 +104,18 @@ export function LogInModal({
 									<Button variant="styled" width="100%" type="submit">
 										Entrar
 									</Button>
+									{signInError && (
+										<Alert
+											status="error"
+											borderRadius="0.375em"
+											justifyContent="center"
+										>
+											<AlertIcon />
+											<AlertDescription color="black">
+												{signInError}
+											</AlertDescription>
+										</Alert>
+									)}
 								</VStack>
 							</Flex>
 							<Text
@@ -135,6 +160,7 @@ export function LogInModal({
 					<Button
 						variant="unstyled"
 						px="4px"
+						mr="0"
 						onClick={() => {
 							setIsLogInModalOpen(false);
 							setIsSignUpModalOpen(true);
@@ -143,10 +169,6 @@ export function LogInModal({
 					>
 						Faça seu cadastro.
 					</Button>
-				</Text>
-				<Text fontSize="14px">
-					Ao continuar, você concorda com os nossos{' '}
-					<Text as="strong">Termos de Serviço e Política de Privacidade.</Text>
 				</Text>
 			</VStack>
 		</Modal>
