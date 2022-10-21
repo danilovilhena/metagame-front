@@ -32,7 +32,6 @@ export default function TabsComponent({ content, getCover }) {
 			color="white"
 			px={{ base: '1rem', sm: '3rem', xl: '11.5em' }}
 			py="3rem"
-			height="100vh"
 		>
 			<Text>Confira as mídias mais populares entre nossos usuários.</Text>
 
@@ -73,7 +72,7 @@ export default function TabsComponent({ content, getCover }) {
 											boxSize="200px"
 											objectFit="cover"
 											borderRadius="10px"
-											boxShadow="10px 5px 5px black"
+											shadow="md"
 											src={getCover(idx, innerIdx)}
 											alt="cover"
 											mb="0.5em"
