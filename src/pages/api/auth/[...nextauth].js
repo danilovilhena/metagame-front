@@ -1,4 +1,5 @@
 import NextAuth from 'next-auth';
+
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -31,6 +32,13 @@ export const authOptions = {
 	pages: {
 		signIn: '/',
 	},
+	session: { jwt: true },
+	cookies: {
+		sessionToken: {
+			name: 'metagame-token',
+			options: { httpOnly: true, sameSite: 'lax', path: '/', secure: true },
+		},
+	},
 	callbacks: {
 		async signIn({ user, account }) {
 			// Props of this function are : { user, account, profile, email, credentials }
@@ -39,11 +47,8 @@ export const authOptions = {
 			if (account && isNotCredential) {
 				// Try to create account if its not crecential
 				// It can return error or the user returned
-				const user_response = await userCreation(user, account.provider);
+				await userCreation(user, account.provider);
 				// If it is the first login, the user is already logged in
-				if (user_response && !user_response.error) {
-					return true;
-				}
 			}
 			// Do login for all type of providers
 			try {
@@ -53,6 +58,7 @@ export const authOptions = {
 					provider: isNotCredential ? account.provider : '',
 				});
 				if (user_logged_in && user_logged_in.data) {
+					user.token_jwt = user_logged_in.data.token;
 					return true;
 				}
 			} catch (err) {
@@ -64,12 +70,24 @@ export const authOptions = {
 
 			return true;
 		},
-		async session({ session }) {
-			return session;
+		async session({ token }) {
+			const token_jwt = token.token_jwt;
+			api.defaults.headers['Authorization'] = `Bearer ${token_jwt}`;
+			try {
+				const response = await api.get('/me', {});
+				const customSession = response.data;
+				return customSession;
+			} catch (err) {
+				console.log(err.response.data);
+			}
+			return {};
 		},
 
-		async jwt({ token }) {
-			// Parameters for this function are : { token, user, account, profile, isNewUser }
+		async jwt({ token, user }) {
+			if (user && user.token_jwt) {
+				const token_jwt = user.token_jwt;
+				return { ...token, token_jwt };
+			}
 			return token;
 		},
 	},
@@ -77,8 +95,7 @@ export const authOptions = {
 		async signOut() {
 			// Props of this function are : token
 			try {
-				const response = await api.get('/logout');
-				console.log(response);
+				await api.get('/logout');
 			} catch (err) {
 				console.log(err);
 			}

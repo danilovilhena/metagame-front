@@ -1,15 +1,14 @@
-import { unstable_getServerSession } from 'next-auth/next';
-import { authOptions } from './api/auth/[...nextauth]';
 import { HeaderComponent } from 'components/common/HeaderComponent';
+import { parseCookies } from 'nookies';
 
 export default function Home() {
 	return <HeaderComponent />;
 }
 
-export async function getServerSideProps({ req, res }) {
-	const session = await unstable_getServerSession(req, res, authOptions);
-
-	if (!session) {
+export async function getServerSideProps(ctx) {
+	const cookies = parseCookies(ctx);
+	const token = cookies['metagame-token'];
+	if (!token) {
 		return {
 			redirect: {
 				destination: '/',

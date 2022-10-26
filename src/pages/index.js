@@ -1,5 +1,3 @@
-import { unstable_getServerSession } from 'next-auth/next';
-import { authOptions } from './api/auth/[...nextauth]';
 import { useState, useEffect } from 'react';
 import randomWords from 'random-words';
 
@@ -11,6 +9,7 @@ import FAQ from 'components/home/FAQ';
 import Footer from 'components/home/Footer';
 
 import { api } from 'services/api';
+import { parseCookies } from 'nookies';
 
 export default function Index() {
 	const [data, setData] = useState({});
@@ -86,10 +85,11 @@ export default function Index() {
 	);
 }
 
-export async function getServerSideProps({ req, res }) {
-	const session = await unstable_getServerSession(req, res, authOptions);
+export async function getServerSideProps(ctx) {
+	const cookies = parseCookies(ctx);
+	const token = cookies['metagame-token'];
 
-	if (session) {
+	if (token) {
 		return {
 			redirect: {
 				destination: '/home',
