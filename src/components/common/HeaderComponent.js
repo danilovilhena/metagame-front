@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { IoMdSearch } from 'react-icons/io';
 import { Button } from 'components/common/Button';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 
 import { useRouter } from 'next/router';
 
@@ -24,6 +24,8 @@ export function HeaderComponent() {
 	const router = useRouter();
 	const { colorMode, toggleColorMode } = useColorMode();
 	const isLight = colorMode === 'light';
+	const session = useSession();
+	const user = session.data;
 
 	const getIcon = (name, condition) =>
 		`icons/${name}${condition ? '_active' : isLight ? '' : '_dark'}.svg`;
@@ -74,7 +76,14 @@ export function HeaderComponent() {
 				</Button>
 				<Menu isLazy>
 					<MenuButton>
-						<Avatar name="Jon Doe" size="sm" />
+						{user && user.userinfo && (
+							<Avatar
+								src={user.userinfo.image_url}
+								referrerPolicy="no-referrer"
+								name={user.first_name}
+								size="sm"
+							/>
+						)}
 					</MenuButton>
 					<MenuList minW="fit-content">
 						<MenuItem
