@@ -77,14 +77,20 @@ export default function TabsComponent({ content, getCover }) {
 											src={getCover(idx, innerIdx)}
 											alt="cover"
 											mb="0.5em"
+											boxShadow="10px 5px 5px rgba(0,0,0,0.3);"
 										/>
 										<Text
 											color="white"
 											fontSize="1em"
-											height="2em"
 											lineHeight="1em"
 											maxWidth="150px"
 											textAlign="center"
+											overflow="hidden"
+											style={{
+												'-webkit-line-clamp': '2',
+												display: '-webkit-box',
+												'-webkit-box-orient': 'vertical',
+											}}
 										>
 											{getCoverTitle(idx, item)}
 										</Text>
