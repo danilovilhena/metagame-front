@@ -47,8 +47,7 @@ export function SignUpModal({
 			password,
 		});
 		if (user_created) {
-			const response = await signIn('credentials', { email, password });
-			console.log(response);
+			await signIn('credentials', { email, password });
 		}
 	};
 

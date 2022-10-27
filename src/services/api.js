@@ -12,8 +12,6 @@ const apiClient = () => {
 
 			if (session) {
 				request.headers.Authorization = `Bearer ${session.token_jwt}`;
-				console.log('Logging');
-				console.log(request.headers.Authorization);
 			}
 			return request;
 		},

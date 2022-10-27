@@ -12,6 +12,7 @@ export async function userCreation(user, provider = '') {
 					? user_name_array[user_name_array.length - 1]
 					: '',
 				provider: provider,
+				image_url: user.image || '',
 				password: user.password || '',
 			});
 			return response.data;

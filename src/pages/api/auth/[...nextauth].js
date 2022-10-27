@@ -42,7 +42,6 @@ export const authOptions = {
 	callbacks: {
 		async signIn({ user, account }) {
 			// Props of this function are : { user, account, profile, email, credentials }
-
 			const isNotCredential = account && account.provider !== 'credentials';
 			if (account && isNotCredential) {
 				// Try to create account if its not crecential
