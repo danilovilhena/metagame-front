@@ -86,11 +86,7 @@ export default function TabsComponent({ content, getCover }) {
 											maxWidth="150px"
 											textAlign="center"
 											overflow="hidden"
-											style={{
-												'-webkit-line-clamp': '2',
-												display: '-webkit-box',
-												'-webkit-box-orient': 'vertical',
-											}}
+											className="textElipsis"
 										>
 											{getCoverTitle(idx, item)}
 										</Text>
