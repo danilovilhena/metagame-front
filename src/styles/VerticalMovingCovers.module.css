@@ -1,65 +1,84 @@
-.row-animate {
-	animation: pulse 10s infinite;
+.slider-body {
+	align-items: center;
+	display: flex;
+	justify-content: center;
 }
 
-.row-animate-i {
-	animation: pulse-i 10s infinite;
-}
-
-@keyframes pulse {
+@-webkit-keyframes scroll {
 	0% {
-		transform: translateY(50px);
+		transform: translateY(calc(-100px * 7));
 	}
-	50% {
-		transform: translateY(150px);
-	}
-	to {
-		transform: translateY(50px);
-	}
-}
-
-@keyframes pulse-i {
-	0% {
-		transform: translateY(0);
-	}
-	50% {
-		transform: translateY(-125px);
-	}
-	to {
+	100% {
 		transform: translateY(0);
 	}
 }
 
-@keyframes pulse-x {
+@keyframes scroll {
 	0% {
-		transform: translateX(-25px);
+		transform: translateY(calc(-100px * 7));
 	}
-	50% {
-		transform: translateX(50px);
+	100% {
+		transform: translateY(0);
 	}
-	to {
-		transform: translateX(-25px);
+}
+@-webkit-keyframes scrollB {
+	0% {
+		transform: translateY(0);
+	}
+	100% {
+		transform: translateY(calc(-100px * 7));
 	}
 }
 
-@keyframes pulse-x-i {
+@keyframes scrollB {
 	0% {
-		transform: translateX(25px);
+		transform: translateY(0);
 	}
-	50% {
-		transform: translateX(-125px);
-	}
-	to {
-		transform: translateX(25px);
+	100% {
+		transform: translateY(calc(-100px * 7));
 	}
 }
-
-@media (max-width: 62em) {
-	.row-animate {
-		animation: pulse-x 10s infinite;
-	}
-
-	.row-animate-i {
-		animation: pulse-x-i 10s infinite;
-	}
+.slider {
+	box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.125);
+	height: 1000px;
+	margin: auto;
+	overflow: hidden;
+	position: relative;
+	width: 120px;
+}
+.slider::before,
+.slider::after {
+	content: '';
+	height: 100px;
+	position: absolute;
+	width: 200px;
+	z-index: 2;
+}
+.slider::after {
+	right: 0;
+	top: 0;
+	transform: rotateZ(180deg);
+}
+.slider::before {
+	left: 0;
+	top: 0;
+}
+.slider .slide-track {
+	-webkit-animation: scroll 20s linear infinite;
+	animation: scroll 20s linear infinite;
+	display: flex;
+	flex-direction: column;
+	width: calc(250px * 14);
+}
+.slider .slide-track-b {
+	-webkit-animation: scrollB 20s linear infinite;
+	animation: scrollB 20s linear infinite;
+	display: flex;
+	flex-direction: column;
+	width: calc(250px * 14);
+}
+.slider .slide {
+	height: 100px;
+	margin-bottom: 1rem;
+	width: 250px;
 }
