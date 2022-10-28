@@ -5,7 +5,7 @@ export async function userCreation(user, provider = '') {
 		if (user) {
 			const user_name_array = user.name?.split(' ');
 			const response = await api.post('/users', {
-				username: user.username || user.email,
+				username: user.username || user.email.split('@')[0],
 				email: user.email,
 				first_name: user_name_array ? user_name_array[0] : '',
 				last_name: user_name_array
