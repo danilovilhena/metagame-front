@@ -19,6 +19,7 @@ import { Button } from 'components/common/Button';
 import { signOut, useSession } from 'next-auth/react';
 
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export function HeaderComponent() {
 	const router = useRouter();
@@ -34,9 +35,10 @@ export function HeaderComponent() {
 		<Flex
 			as="header"
 			justify="space-between"
-			mx={['1em', '2.5em', '5em']}
+			px={['1em', '2.5em', '5em']}
 			h="5em"
 			align="center"
+			width="100%"
 		>
 			<Image src={isLight ? '/logo.svg' : '/logo_dark.svg'} alt="Metagame" />
 			<InputGroup
@@ -86,13 +88,17 @@ export function HeaderComponent() {
 						)}
 					</MenuButton>
 					<MenuList minW="fit-content">
-						<MenuItem
-							icon={<Image src={getIcon('user', false)} alt="Perfil" />}
-							mr="8"
-							_dark={{ color: 'gray.200' }}
-						>
-							Perfil
-						</MenuItem>
+						<Link href="/profile">
+							<a>
+								<MenuItem
+									icon={<Image src={getIcon('user', false)} alt="Perfil" />}
+									mr="8"
+									_dark={{ color: 'gray.200' }}
+								>
+									Perfil
+								</MenuItem>
+							</a>
+						</Link>
 						<MenuItem
 							icon={
 								<Image
