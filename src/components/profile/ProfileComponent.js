@@ -64,10 +64,11 @@ export function ProfileComponent() {
 				color="white"
 				py="3em"
 				height="100%"
+				_dark={{ bg: 'gray.900', color: 'gray.200' }}
 			>
 				<Flex width="100%" justifyContent="space-between" mb="1em">
 					<Title>Meu Perfil</Title>
-					<Button variant="styled" fontSize="18px">
+					<Button variant="styled" fontSize="1rem" fontWeight="medium">
 						Editar Perfil
 					</Button>
 				</Flex>
@@ -116,6 +117,7 @@ export function ProfileComponent() {
 							height="4.5em"
 							padding="1.5em"
 							key={idx}
+							_dark={{ bg: 'gray.700' }}
 						>
 							<MediaIcon type={button.type} />
 							<Text as="strong" mr="0.25em" fontSize="3xl">

@@ -10,6 +10,7 @@ import {
 	useColorMode,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
+import { getIcon } from 'utils/getIcon';
 
 import { useState } from 'react';
 import { Button } from '../common/Button';
@@ -34,8 +35,6 @@ export default function Header() {
 		base: false,
 		lg: true,
 	});
-
-	const getIcon = (name) => `icons/${name}${isLight ? '' : '_dark'}.svg`;
 
 	return (
 		<Flex

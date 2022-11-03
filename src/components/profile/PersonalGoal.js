@@ -3,7 +3,6 @@ import {
 	Flex,
 	Text,
 	Image,
-	useColorMode,
 	Stack,
 	Menu,
 	MenuButton,
@@ -11,6 +10,7 @@ import {
 	MenuList,
 } from '@chakra-ui/react';
 import { MediaIcon } from 'components/common/MediaIcon';
+import { getIcon } from 'utils/getIcon';
 
 const Badge = ({ children, isCompleted }) => (
 	<Flex
@@ -26,9 +26,6 @@ const Badge = ({ children, isCompleted }) => (
 );
 
 export function PersonalGoal({ goal, ...rest }) {
-	const { colorMode } = useColorMode();
-	const isLight = colorMode === 'light';
-	const getIcon = (name) => `icons/${name}${isLight ? '' : '_dark'}.svg`;
 	const isCompleted = goal.completion === 100;
 
 	const options = [
@@ -41,13 +38,14 @@ export function PersonalGoal({ goal, ...rest }) {
 			<Flex
 				align="center"
 				justify="space-between"
-				{...rest}
 				background="#FFFFFF"
 				color="primary"
 				minW="50%"
 				borderRadius="8px"
 				p="3"
 				pb="4"
+				{...rest}
+				_dark={{ bg: 'gray.700', color: 'gray.200' }}
 			>
 				<Flex align="center">
 					<MediaIcon type={goal.type} />
@@ -69,7 +67,6 @@ export function PersonalGoal({ goal, ...rest }) {
 							{options.map((option, idx) => (
 								<MenuItem
 									key={idx}
-									mr="0"
 									icon={
 										<Image
 											src={getIcon(option.icon, false)}

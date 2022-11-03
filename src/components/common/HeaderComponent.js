@@ -17,6 +17,7 @@ import {
 import { IoMdSearch } from 'react-icons/io';
 import { Button } from 'components/common/Button';
 import { signOut, useSession } from 'next-auth/react';
+import { getIcon } from 'utils/getIcon';
 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -27,9 +28,6 @@ export function HeaderComponent() {
 	const isLight = colorMode === 'light';
 	const session = useSession();
 	const user = session.data;
-
-	const getIcon = (name, condition) =>
-		`icons/${name}${condition ? '_active' : isLight ? '' : '_dark'}.svg`;
 
 	return (
 		<Flex
