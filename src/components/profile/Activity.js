@@ -36,10 +36,19 @@ export function Activity() {
 					</Text>
 				</Flex>
 				<Flex>
-					<Button variant="unstyled" px="0">
+					<Button
+						variant="unstyled"
+						px="0"
+						_hover={{ _dark: { backgroundColor: 'gray.600' } }}
+					>
 						<Image src={getIcon('edit')} alt="Editar atividade" />
 					</Button>
-					<Button variant="unstyled" margin="0" px="0">
+					<Button
+						variant="unstyled"
+						margin="0"
+						px="0"
+						_hover={{ _dark: { backgroundColor: 'gray.600' } }}
+					>
 						<Image src={getIcon('trash')} alt="Deletar atividade" />
 					</Button>
 				</Flex>
