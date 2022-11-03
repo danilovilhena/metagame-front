@@ -1,5 +1,4 @@
 import {
-	Box,
 	Flex,
 	Text,
 	Image,
@@ -14,33 +13,34 @@ import getIcon from 'utils/getIcon';
 
 // TODO: Update this component's styles to match the design
 export default function PublicGoal({ goal, ...rest }) {
-	const isCompleted = goal.completion === 100;
-
 	const options = [
 		{ name: 'Copiar link', icon: 'link' },
 		{ name: 'Excluir meta', icon: 'trash' },
 	];
 
 	return (
-		<Box>
-			<Flex
-				align="center"
-				justify="space-between"
-				background="#FFFFFF"
-				color="primary"
-				minW="50%"
-				borderRadius="8px"
-				p="3"
-				pb="4"
-				{...rest}
-				_dark={{ bg: 'gray.700', color: 'gray.200' }}
-			>
+		<Flex
+			flexDir="column"
+			background="#FFFFFF"
+			color="primary"
+			minW="50%"
+			borderRadius="8px"
+			p="3"
+			{...rest}
+			_dark={{ bg: 'gray.700', color: 'gray.200' }}
+		>
+			<Flex align="center" justify="space-between" w="100%">
 				<Flex align="center">
 					<MediaIcon type={goal.type} />
 					<Text as="strong">{goal.title}</Text>
 				</Flex>
 				<Stack direction="row" align="center" minW="max-content" spacing={2}>
-					<Text>{goal.duration}</Text>
+					<Image
+						src={getIcon('like', goal.liked)}
+						w="1.75rem"
+						role="button"
+						alt="Descurtir"
+					/>
 					<Menu matchWidth>
 						<MenuButton>
 							<Image
@@ -68,13 +68,19 @@ export default function PublicGoal({ goal, ...rest }) {
 					</Menu>
 				</Stack>
 			</Flex>
-			<Box
-				height="0.5rem"
-				marginTop="-0.5rem"
-				borderRadius={isCompleted ? '0 0 8px 8px' : '0 0 0 8px'}
-				background={isCompleted ? '#3DC92C' : 'secondary'}
-				w={`${goal.completion}%`}
-			/>
-		</Box>
+			<Flex mt="4" alignSelf="flex-end" alignItems="center">
+				<Text>
+					Criado por{' '}
+					<Text as="strong">{goal.author && goal.author.username}</Text>
+				</Text>
+				<Image
+					src={goal.author && goal.author.photo}
+					w="2rem"
+					alt={goal.author && goal.author.username}
+					ml="4"
+					borderRadius="50%"
+				/>
+			</Flex>
+		</Flex>
 	);
 }

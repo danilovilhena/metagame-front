@@ -45,16 +45,18 @@ export default function GoalComponent() {
 			title: 'Assistir 10 filmes em 3 meses',
 			author: {
 				username: '@murilo.couto',
-				photo: 'https://avatars.githubusercontent.com/u/48722341?v=4',
+				photo: 'https://avatars.githubusercontent.com/u/4872234?v=4',
 			},
+			liked: true,
 		},
 		{
 			type: 'movie',
 			title: 'Assistir 10 filmes em 3 meses',
 			author: {
 				username: '@murilo.couto',
-				photo: 'https://avatars.githubusercontent.com/u/48722341?v=4',
+				photo: 'https://avatars.githubusercontent.com/u/4872234?v=4',
 			},
+			liked: true,
 		},
 	];
 
@@ -81,7 +83,7 @@ export default function GoalComponent() {
 					</Grid>
 				</Flex>
 				<Flex flexDirection="column" marginTop="1.5em" mb="2rem">
-					<Title>Metas favoritas</Title>
+					<Title>Metas curtidas</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
 						{publicGoals.map((goal, idx) => (
 							<PublicGoal goal={goal} key={idx} />

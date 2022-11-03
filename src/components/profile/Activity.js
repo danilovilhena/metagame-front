@@ -23,6 +23,7 @@ export default function Activity() {
 						borderRadius="10px"
 						src="/movie-cover.svg"
 						mr="1em"
+						alt="Name"
 					/>
 					<Text display="flex" alignItems="center">
 						Filme
