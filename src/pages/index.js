@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
+import { parseCookies } from 'nookies';
 import randomWords from 'random-words';
-
 import Header from 'components/home/Header';
 import Cover from 'components/home/Cover';
 import Info from 'components/home/Info';
 import TabsComponent from 'components/home/TabsComponent';
 import FAQ from 'components/home/FAQ';
 import Footer from 'components/home/Footer';
-
 import { api } from 'services/api';
-import { parseCookies } from 'nookies';
 
 export default function Index() {
 	const [data, setData] = useState({});

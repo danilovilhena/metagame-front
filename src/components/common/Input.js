@@ -8,7 +8,7 @@ import {
 	Icon,
 } from '@chakra-ui/react';
 import { forwardRef } from 'react';
-import { Button } from 'components/common/Button';
+import Button from 'components/common/Button';
 
 export function InputBase(
 	{ name, label, error = null, rightIcon, rightIconAction, ...rest },

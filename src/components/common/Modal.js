@@ -9,7 +9,7 @@ import {
 	Button,
 } from '@chakra-ui/react';
 
-export function Modal({
+export default function Modal({
 	children,
 	confirmModal = false,
 	ModalTitle = '',

@@ -1,6 +1,6 @@
-import { api } from '../services/api';
+import { api } from 'services/api';
 
-export async function userCreation(user, provider = '') {
+export default async function userCreation(user, provider = '') {
 	try {
 		if (user) {
 			const user_name_array = user.name?.split(' ');

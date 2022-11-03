@@ -3,10 +3,10 @@ import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-import { userCreation } from '../../../utils/userCreation';
+import userCreation from 'utils/userCreation';
 
 // import AppleProvider from 'next-auth/providers/apple';
-import { api } from '../../../services/api';
+import { api } from 'services/api';
 
 export const authOptions = {
 	providers: [

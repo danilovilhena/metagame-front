@@ -1,6 +1,6 @@
-import { HeaderComponent } from 'components/common/HeaderComponent';
 import { useSession } from 'next-auth/react';
 import { parseCookies } from 'nookies';
+import HeaderComponent from 'components/common/HeaderComponent';
 
 export default function Home() {
 	const session = useSession();

@@ -9,8 +9,8 @@ import {
 	MenuItem,
 	MenuList,
 } from '@chakra-ui/react';
-import { MediaIcon } from 'components/common/MediaIcon';
-import { getIcon } from 'utils/getIcon';
+import MediaIcon from 'components/common/MediaIcon';
+import getIcon from 'utils/getIcon';
 
 const Badge = ({ children, isCompleted }) => (
 	<Flex
@@ -25,7 +25,7 @@ const Badge = ({ children, isCompleted }) => (
 	</Flex>
 );
 
-export function PersonalGoal({ goal, ...rest }) {
+export default function PersonalGoal({ goal, ...rest }) {
 	const isCompleted = goal.completion === 100;
 
 	const options = [

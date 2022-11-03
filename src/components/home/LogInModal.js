@@ -15,11 +15,11 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { Modal } from '../common/Modal';
-import { Button } from '../common/Button';
-import { Input } from '../common/Input';
+import Modal from 'components/common/Modal';
+import Button from 'components/common/Button';
+import { Input } from 'components/common/Input';
 
-export function LogInModal({
+export default function LogInModal({
 	isLogInModalOpen,
 	setIsLogInModalOpen,
 	setIsSignUpModalOpen,

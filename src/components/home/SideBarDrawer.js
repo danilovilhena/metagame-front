@@ -11,9 +11,9 @@ import {
 } from '@chakra-ui/react';
 import { IoMdMenu } from 'react-icons/io';
 
-import { Button } from '../common/Button';
+import Button from 'components/common/Button';
 
-export function SideBarDrawer({ children }) {
+export default function SideBarDrawer({ children }) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	return (

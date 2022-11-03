@@ -1,9 +1,9 @@
 import { Grid, Flex, Text, Avatar } from '@chakra-ui/react';
-import { Button } from 'components/common/Button';
-import { MediaIcon } from 'components/common/MediaIcon';
 import { useSession } from 'next-auth/react';
-import { Activity } from './Activity';
-import { PersonalGoal } from './PersonalGoal';
+import Button from 'components/common/Button';
+import MediaIcon from 'components/common/MediaIcon';
+import Activity from './Activity';
+import PersonalGoal from './PersonalGoal';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -11,7 +11,7 @@ const Title = ({ children }) => (
 	</Text>
 );
 
-export function ProfileComponent() {
+export default function ProfileComponent() {
 	const session = useSession();
 	const user = session.data;
 
@@ -78,6 +78,7 @@ export function ProfileComponent() {
 						src={user.userinfo.image_url}
 						referrerPolicy="no-referrer"
 						name={user.first_name}
+						borderRadius="1rem"
 					/>
 					<Grid ml="2em" gridTemplateColumns="1fr 1fr" gap="1em">
 						<Flex flexDirection="column" mr="2em">

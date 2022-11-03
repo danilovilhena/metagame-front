@@ -10,13 +10,12 @@ import {
 	useColorMode,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { getIcon } from 'utils/getIcon';
-
 import { useState } from 'react';
-import { Button } from '../common/Button';
-import { LogInModal } from './LogInModal';
-import { SignUpModal } from './SignUpModal';
-import { SideBarDrawer } from './SideBarDrawer';
+import Button from 'components/common/Button';
+import LogInModal from './LogInModal';
+import SignUpModal from './SignUpModal';
+import SideBarDrawer from './SideBarDrawer';
+import getIcon from 'utils/getIcon';
 
 export default function Header() {
 	const links = [

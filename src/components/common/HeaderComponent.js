@@ -15,14 +15,13 @@ import {
 	useColorMode,
 } from '@chakra-ui/react';
 import { IoMdSearch } from 'react-icons/io';
-import { Button } from 'components/common/Button';
 import { signOut, useSession } from 'next-auth/react';
-import { getIcon } from 'utils/getIcon';
-
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Button from 'components/common/Button';
+import getIcon from 'utils/getIcon';
 
-export function HeaderComponent() {
+export default function HeaderComponent() {
 	const router = useRouter();
 	const { colorMode, toggleColorMode } = useColorMode();
 	const isLight = colorMode === 'light';
@@ -111,7 +110,10 @@ export function HeaderComponent() {
 							Modo {isLight ? 'escuro' : 'claro'}
 						</MenuItem>
 						<Divider opacity="1" my="2" borderBottomWidth="2px" />
-						<MenuItem onClick={() => signOut()} _dark={{ color: 'gray.200' }}>
+						<MenuItem
+							onClick={() => signOut({ callbackUrl: '/' })}
+							_dark={{ color: 'gray.200' }}
+						>
 							Sair da conta
 						</MenuItem>
 					</MenuList>

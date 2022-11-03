@@ -1,6 +1,6 @@
 import { Button as ChakraButton } from '@chakra-ui/react';
 
-export function Button({ variant, children, ...rest }) {
+export default function Button({ variant, children, ...rest }) {
 	switch (variant) {
 		case 'unstyled':
 			return (
