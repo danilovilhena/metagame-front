@@ -1,7 +1,7 @@
 import { Flex, Image, Text } from '@chakra-ui/react';
 import { Button } from 'components/common/Button';
 
-export function Activit() {
+export function Activity() {
 	return (
 		<Flex
 			flexDirection="column"

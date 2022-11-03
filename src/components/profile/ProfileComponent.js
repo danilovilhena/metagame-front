@@ -1,13 +1,41 @@
-import { Grid, Flex, Text, Avatar, Icon, Image } from '@chakra-ui/react';
+import { Grid, Flex, Text, Avatar, Image } from '@chakra-ui/react';
 import { Button } from 'components/common/Button';
 import { useSession } from 'next-auth/react';
-import { TbMovie } from 'react-icons/tb';
-import { BsBook } from 'react-icons/bs';
-import { Activit } from './Activit';
+import { Activity } from './Activity';
 
 export function ProfileComponent() {
 	const session = useSession();
 	const user = session.data;
+
+	const buttons = [
+		{
+			icon: '/icons/movie.svg',
+			amount: '20',
+			label: 'filmes assistidos',
+			background: '#FF4C4D',
+		},
+		{
+			icon: '/icons/book.svg',
+			amount: '80',
+			label: 'livros lidos',
+			background: '#4CA4FF',
+		},
+		{
+			icon: '/icons/game.svg',
+			amount: '40',
+			label: 'jogos concluídos',
+			background: '#4CFFB8',
+		},
+	];
+
+	const formatDate = (date) => {
+		return new Date(date).toLocaleDateString('pt-BR', {
+			year: 'numeric',
+			month: '2-digit',
+			day: '2-digit',
+		});
+	};
+
 	if (user) {
 		return (
 			<Flex
@@ -45,15 +73,15 @@ export function ProfileComponent() {
 							<Text as="strong">{user.username}</Text>
 						</Flex>
 						<Flex flexDirection="column" mr="2em">
-							<Text>Núemro de mídias consumidas</Text>
+							<Text>Número de mídias consumidas</Text>
 							<Text as="strong">140</Text>
 						</Flex>
 						<Flex flexDirection="column">
 							<Text>Data de cadastro</Text>
-							<Text as="strong">{user.date_joined}</Text>
+							<Text as="strong">{formatDate(user.date_joined)}</Text>
 						</Flex>
 						<Flex flexDirection="column" mr="2em">
-							<Text>E=mail</Text>
+							<Text>E-mail</Text>
 							<Text as="strong">{user.email}</Text>
 						</Flex>
 						<Flex flexDirection="column">
@@ -63,81 +91,38 @@ export function ProfileComponent() {
 					</Grid>
 				</Flex>
 				<Grid gridTemplateColumns="1fr 1fr 1fr" gap="2em">
-					<Flex
-						background="elementBackground"
-						borderRadius="10px"
-						alignItems="center"
-						height="4.5em"
-						padding="1.5em"
-					>
+					{buttons.map((button, idx) => (
 						<Flex
-							background="red"
-							borderRadius="20px"
-							width="2.5em"
-							height="2.5em"
+							background="elementBackground"
+							borderRadius="8px"
 							alignItems="center"
-							justifyContent="center"
-							mr="1em"
+							height="4.5em"
+							padding="1.5em"
+							key={idx}
 						>
-							<Icon as={TbMovie} color="primary" fontSize="1.5em" />
+							<Flex
+								background={button.background}
+								borderRadius="4px"
+								width="2.5em"
+								height="2.5em"
+								alignItems="center"
+								justifyContent="center"
+								mr="1em"
+							>
+								<Image src={button.icon} color="primary" fontSize="1.5em" />
+							</Flex>
+							<Text as="strong" mr="0.25em" fontSize="3xl">
+								{button.amount}
+							</Text>
+							<Text>{button.label}</Text>
 						</Flex>
-						<Text as="strong" mr="0.5em">
-							20
-						</Text>
-						<Text>Filmes assistidos</Text>
-					</Flex>
-					<Flex
-						background="elementBackground"
-						borderRadius="10px"
-						alignItems="center"
-						height="4.5em"
-						padding="1.5em"
-					>
-						<Flex
-							background="#4CA4FF"
-							borderRadius="20px"
-							width="2.5em"
-							height="2.5em"
-							alignItems="center"
-							justifyContent="center"
-							mr="1em"
-						>
-							<Icon as={BsBook} color="primary" fontSize="1.5em" />
-						</Flex>
-						<Text as="strong" mr="0.5em">
-							80
-						</Text>
-						<Text>Livros lidos</Text>
-					</Flex>
-					<Flex
-						background="elementBackground"
-						borderRadius="10px"
-						alignItems="center"
-						height="4.5em"
-						padding="1.5em"
-					>
-						<Flex
-							background="#4CFFB8"
-							borderRadius="20px"
-							width="2.5em"
-							height="2.5em"
-							alignItems="center"
-							justifyContent="center"
-							mr="1em"
-						>
-							<Image src="/icons/game.svg" color="primary" fontSize="1.5em" />
-						</Flex>
-						<Text as="strong" mr="0.5em">
-							40
-						</Text>
-						<Text>Jogos concluidos</Text>
-					</Flex>
+					))}
 				</Grid>
 				<Flex flexDirection="column" marginTop="1.5em">
 					<Text as="strong" fontSize="32px" mb="1.5em">
-						Ultimos registros
+						Últimos registros
 					</Text>
-					<Activit />
+					<Activity />
 				</Flex>
 			</Flex>
 		);
