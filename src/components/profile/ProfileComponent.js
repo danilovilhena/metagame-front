@@ -1,30 +1,49 @@
-import { Grid, Flex, Text, Avatar, Image } from '@chakra-ui/react';
+import { Grid, Flex, Text, Avatar } from '@chakra-ui/react';
 import { Button } from 'components/common/Button';
+import { MediaIcon } from 'components/common/MediaIcon';
 import { useSession } from 'next-auth/react';
 import { Activity } from './Activity';
+import { PersonalGoal } from './PersonalGoal';
+
+const Title = ({ children }) => (
+	<Text as="strong" fontSize="3xl" mb="1.5em">
+		{children}
+	</Text>
+);
 
 export function ProfileComponent() {
 	const session = useSession();
 	const user = session.data;
 
 	const buttons = [
+		{ type: 'movie', amount: '20', label: 'filmes assistidos' },
+		{ type: 'book', amount: '80', label: 'livros lidos' },
+		{ type: 'game', amount: '40', label: 'jogos concluídos' },
+	];
+
+	const personalGoals = [
 		{
-			icon: '/icons/movie.svg',
-			amount: '20',
-			label: 'filmes assistidos',
-			background: '#FF4C4D',
+			type: 'movie',
+			title: 'Assistir 10 filmes em 3 meses',
+			duration: '10 dias restantes',
+			completion: 50,
 		},
 		{
-			icon: '/icons/book.svg',
-			amount: '80',
-			label: 'livros lidos',
-			background: '#4CA4FF',
+			type: 'book',
+			title: 'Ler 3 livros em 2 meses',
+			duration: '1 mês e 3 dias restantes',
+			completion: 33,
 		},
 		{
-			icon: '/icons/game.svg',
-			amount: '40',
-			label: 'jogos concluídos',
-			background: '#4CFFB8',
+			type: 'movie',
+			title: 'Assistir 10 filmes em 3 meses',
+			duration: '10 dias restantes',
+			completion: 50,
+		},
+		{
+			type: 'book',
+			title: 'Ler 3 livros em 2 meses',
+			completion: 100,
 		},
 	];
 
@@ -47,9 +66,7 @@ export function ProfileComponent() {
 				height="100%"
 			>
 				<Flex width="100%" justifyContent="space-between" mb="3em">
-					<Text as="strong" fontSize="32px">
-						Meu Perfil
-					</Text>
+					<Title>Meu Perfil</Title>
 					<Button variant="styled" fontSize="18px">
 						Editar Perfil
 					</Button>
@@ -100,17 +117,7 @@ export function ProfileComponent() {
 							padding="1.5em"
 							key={idx}
 						>
-							<Flex
-								background={button.background}
-								borderRadius="4px"
-								width="2.5em"
-								height="2.5em"
-								alignItems="center"
-								justifyContent="center"
-								mr="1em"
-							>
-								<Image src={button.icon} color="primary" fontSize="1.5em" />
-							</Flex>
+							<MediaIcon type={button.type} />
 							<Text as="strong" mr="0.25em" fontSize="3xl">
 								{button.amount}
 							</Text>
@@ -118,10 +125,18 @@ export function ProfileComponent() {
 						</Flex>
 					))}
 				</Grid>
+				{/* metas atuais */}
 				<Flex flexDirection="column" marginTop="1.5em">
-					<Text as="strong" fontSize="32px" mb="1.5em">
-						Últimos registros
-					</Text>
+					<Title>Metas atuais</Title>
+					<Grid templateColumns="repeat(2, 1fr)" gap="4">
+						{personalGoals.map((goal, idx) => (
+							<PersonalGoal goal={goal} key={idx} />
+						))}
+					</Grid>
+				</Flex>
+				{/* últimos registros */}
+				<Flex flexDirection="column" marginTop="1.5em">
+					<Title>Últimos registros</Title>
 					<Activity />
 				</Flex>
 			</Flex>
