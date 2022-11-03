@@ -1,4 +1,15 @@
-import { Box, Flex, Text, Image, useColorMode, Stack } from '@chakra-ui/react';
+import {
+	Box,
+	Flex,
+	Text,
+	Image,
+	useColorMode,
+	Stack,
+	Menu,
+	MenuButton,
+	MenuItem,
+	MenuList,
+} from '@chakra-ui/react';
 import { MediaIcon } from 'components/common/MediaIcon';
 
 const Badge = ({ children, isCompleted }) => (
@@ -20,6 +31,11 @@ export function PersonalGoal({ goal, ...rest }) {
 	const getIcon = (name) => `icons/${name}${isLight ? '' : '_dark'}.svg`;
 	const isCompleted = goal.completion === 100;
 
+	const options = [
+		{ name: 'Copiar link', icon: 'link' },
+		{ name: 'Excluir meta', icon: 'trash' },
+	];
+
 	return (
 		<Box>
 			<Flex
@@ -40,12 +56,32 @@ export function PersonalGoal({ goal, ...rest }) {
 				<Stack direction="row" align="center" minW="max-content" spacing={2}>
 					<Text>{goal.duration}</Text>
 					<Badge isCompleted={isCompleted}>{goal.completion}%</Badge>
-					<Image
-						src={getIcon('vertical-dots')}
-						w="2rem"
-						role="button"
-						alt="Mais opções"
-					/>
+					<Menu matchWidth>
+						<MenuButton>
+							<Image
+								src={getIcon('vertical-dots')}
+								w="2rem"
+								role="button"
+								alt="Mais opções"
+							/>
+						</MenuButton>
+						<MenuList minW="max-content">
+							{options.map((option, idx) => (
+								<MenuItem
+									key={idx}
+									mr="0"
+									icon={
+										<Image
+											src={getIcon(option.icon, false)}
+											alt={option.name}
+										/>
+									}
+								>
+									{option.name}
+								</MenuItem>
+							))}
+						</MenuList>
+					</Menu>
 				</Stack>
 			</Flex>
 			<Box

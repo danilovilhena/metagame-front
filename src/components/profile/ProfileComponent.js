@@ -6,7 +6,7 @@ import { Activity } from './Activity';
 import { PersonalGoal } from './PersonalGoal';
 
 const Title = ({ children }) => (
-	<Text as="strong" fontSize="3xl" mb="1.5em">
+	<Text as="strong" fontSize="3xl" mb="1.5rem">
 		{children}
 	</Text>
 );
@@ -65,7 +65,7 @@ export function ProfileComponent() {
 				py="3em"
 				height="100%"
 			>
-				<Flex width="100%" justifyContent="space-between" mb="3em">
+				<Flex width="100%" justifyContent="space-between" mb="1em">
 					<Title>Meu Perfil</Title>
 					<Button variant="styled" fontSize="18px">
 						Editar Perfil
@@ -107,7 +107,7 @@ export function ProfileComponent() {
 						</Flex>
 					</Grid>
 				</Flex>
-				<Grid gridTemplateColumns="1fr 1fr 1fr" gap="2em">
+				<Grid gridTemplateColumns="1fr 1fr 1fr" gap="2em" mb="3em">
 					{buttons.map((button, idx) => (
 						<Flex
 							background="elementBackground"
@@ -126,7 +126,7 @@ export function ProfileComponent() {
 					))}
 				</Grid>
 				{/* metas atuais */}
-				<Flex flexDirection="column" marginTop="1.5em">
+				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas atuais</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
 						{personalGoals.map((goal, idx) => (
