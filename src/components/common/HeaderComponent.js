@@ -68,10 +68,12 @@ export default function HeaderComponent() {
 					/>
 				</Button>
 				<Button variant="unstyled">
-					<Image
-						src={getIcon('goal', router.pathname === '/goals')}
-						alt="Minhas metas"
-					/>
+					<Link href="/goals">
+						<Image
+							src={getIcon('goal', router.pathname === '/goals')}
+							alt="Minhas metas"
+						/>
+					</Link>
 				</Button>
 				<Menu isLazy>
 					<MenuButton>
