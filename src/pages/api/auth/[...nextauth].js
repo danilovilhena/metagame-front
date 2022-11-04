@@ -78,9 +78,8 @@ export const authOptions = {
 				const customSession = response.data;
 				return customSession;
 			} catch (err) {
-				console.log(err.response.data);
+				throw Error(err.response.data);
 			}
-			return {};
 		},
 
 		async jwt({ token, user }) {
