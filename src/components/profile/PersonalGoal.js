@@ -11,19 +11,7 @@ import {
 } from '@chakra-ui/react';
 import MediaIcon from 'components/common/MediaIcon';
 import getIcon from 'utils/getIcon';
-
-const Badge = ({ children, isCompleted }) => (
-	<Flex
-		background={isCompleted ? '#3DC92C' : 'secondary'}
-		py="1"
-		px="3"
-		borderRadius="1rem"
-	>
-		<Text color="#FFFFFF" fontSize=".875rem">
-			{children}
-		</Text>
-	</Flex>
-);
+import mediaTypes from 'utils/mediaTypes';
 
 export default function PersonalGoal({ goal, ...rest }) {
 	const isCompleted = goal.completion === 100;
@@ -53,7 +41,9 @@ export default function PersonalGoal({ goal, ...rest }) {
 				</Flex>
 				<Stack direction="row" align="center" minW="max-content" spacing={2}>
 					<Text>{goal.duration}</Text>
-					<Badge isCompleted={isCompleted}>{goal.completion}%</Badge>
+					{isCompleted && (
+						<Image src={getIcon('check')} w="1.5rem" alt="Meta concluída" />
+					)}
 					<Menu matchWidth>
 						<MenuButton>
 							<Image
@@ -85,7 +75,7 @@ export default function PersonalGoal({ goal, ...rest }) {
 				height="0.5rem"
 				marginTop="-0.5rem"
 				borderRadius={isCompleted ? '0 0 8px 8px' : '0 0 0 8px'}
-				background={isCompleted ? '#3DC92C' : 'secondary'}
+				background={mediaTypes[goal.type].background}
 				w={`${goal.completion}%`}
 			/>
 		</Box>
