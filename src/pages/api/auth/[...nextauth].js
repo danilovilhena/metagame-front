@@ -61,11 +61,7 @@ export const authOptions = {
 					return true;
 				}
 			} catch (err) {
-				console.log(err.response.data);
-				if (err && err.response && err.response.data) {
-					const { error } = err.response.data;
-					throw new Error(error);
-				}
+				return '/';
 			}
 
 			return true;
