@@ -7,7 +7,7 @@ export default function Activity() {
 		<Flex
 			flexDirection="column"
 			mx="4.5em"
-			background="card_background"
+			background="#FFFFFF"
 			px="3"
 			py="1.5"
 			borderRadius="10px"

@@ -112,7 +112,7 @@ export default function ProfileComponent() {
 				<Grid gridTemplateColumns="1fr 1fr 1fr" gap="2em" mb="3em">
 					{buttons.map((button, idx) => (
 						<Flex
-							background="elementBackground"
+							background="tertiary"
 							borderRadius="8px"
 							alignItems="center"
 							height="4.5em"

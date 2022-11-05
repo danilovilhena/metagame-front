@@ -43,8 +43,8 @@ export default function HeaderLoggedIn({ user }) {
 		>
 			<Image src={isLight ? '/logo.svg' : '/logo_dark.svg'} alt="Metagame" />
 			<InputGroup
-				border="grey"
-				color="grey"
+				borderColor="primary"
+				color="primary"
 				maxWidth="256px"
 				alignItems="center"
 				_dark={{ color: 'gray.200' }}
