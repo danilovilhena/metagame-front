@@ -5,13 +5,14 @@ import {
 	Image,
 	VStack,
 	useBreakpointValue,
+	useColorMode,
 } from '@chakra-ui/react';
 
 export default function Info() {
-	const isWideVersion = useBreakpointValue({
-		base: false,
-		md: true,
-	});
+	const isWideVersion = useBreakpointValue({ base: false, md: true });
+	const { colorMode } = useColorMode();
+	const isLight = colorMode === 'light';
+
 	return (
 		<Box
 			color="primary"
@@ -59,7 +60,12 @@ export default function Info() {
 						nível, melhor será sua colocação no ranking geral!
 					</Text>
 				</VStack>
-				<Image src="/movie.svg" width="360px" h="360px" alt="Cover" />
+				<Image
+					src={`/movie${isLight ? '' : '_dark'}.svg`}
+					width="360px"
+					h="360px"
+					alt="Cover"
+				/>
 			</Flex>
 		</Box>
 	);
