@@ -31,6 +31,7 @@ export const authOptions = {
 	],
 	pages: {
 		signIn: '/',
+		error: '/auth-error',
 	},
 	session: { jwt: true },
 	cookies: {
@@ -61,7 +62,7 @@ export const authOptions = {
 					return true;
 				}
 			} catch (err) {
-				return '/';
+				return '/auth-error';
 			}
 
 			return true;

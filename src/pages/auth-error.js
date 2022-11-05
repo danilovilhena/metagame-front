@@ -4,13 +4,13 @@ import { Image, Stack, Text, useColorMode } from '@chakra-ui/react';
 import Button from 'components/common/Button';
 import Title from 'components/common/Title';
 
-export default function Custom404() {
+export default function AuthError() {
 	const { colorMode } = useColorMode();
 	const session = useSession();
 
 	return (
 		<>
-			<Title title="Página não encontrada" />
+			<Title title="Erro na autenticação" />
 			<Stack
 				w={{ base: '90%', xl: '100%' }}
 				mx="auto"
@@ -26,10 +26,10 @@ export default function Custom404() {
 					alt="Metagame"
 				/>
 				<Image
-					src="/404.svg"
+					src={colorMode === 'light' ? '/error.svg' : '/error_dark.svg'}
 					w={{ base: '100%', xl: '75%' }}
 					maxW="2xl"
-					alt="Página não encontrada"
+					alt="Erro na autenticação"
 				/>
 				<Text
 					as="h1"
@@ -37,7 +37,7 @@ export default function Custom404() {
 					fontSize={{ base: 'lg', sm: 'xl' }}
 					textAlign="center"
 				>
-					Essa página não foi encontrada ou ainda está em construção 🚧
+					Ocorreu um erro na sua autenticação, tente novamente.
 				</Text>
 				<Link href={session.data ? '/home' : '/'}>
 					<Button variant="styled">Voltar para o início</Button>
