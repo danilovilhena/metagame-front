@@ -22,12 +22,7 @@ export default function Footer() {
 			py="2rem"
 		>
 			<Image src={isLight ? '/logo.svg' : '/logo_dark.svg'} alt="Metagame" />
-			<Stack
-				as="nav"
-				justifyContent="space-evenly"
-				spacing="2rem"
-				direction="row"
-			>
+			<Stack as="nav" justifyContent="space-evenly" spacing="2rem" direction="row">
 				{links.map((link, idx) => (
 					<NextLink href={link.href} key={idx} passHref>
 						<Link textAlign="center">{link.name}</Link>

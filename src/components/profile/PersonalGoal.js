@@ -41,28 +41,16 @@ export default function PersonalGoal({ goal, ...rest }) {
 				</Flex>
 				<Stack direction="row" align="center" minW="max-content" spacing={2}>
 					<Text>{goal.duration}</Text>
-					{isCompleted && (
-						<Image src={getIcon('check')} w="1.5rem" alt="Meta concluída" />
-					)}
+					{isCompleted && <Image src={getIcon('check')} w="1.5rem" alt="Meta concluída" />}
 					<Menu matchWidth>
 						<MenuButton>
-							<Image
-								src={getIcon('vertical-dots')}
-								w="2rem"
-								role="button"
-								alt="Mais opções"
-							/>
+							<Image src={getIcon('vertical-dots')} w="2rem" role="button" alt="Mais opções" />
 						</MenuButton>
 						<MenuList minW="max-content">
 							{options.map((option, idx) => (
 								<MenuItem
 									key={idx}
-									icon={
-										<Image
-											src={getIcon(option.icon, false)}
-											alt={option.name}
-										/>
-									}
+									icon={<Image src={getIcon(option.icon, false)} alt={option.name} />}
 								>
 									{option.name}
 								</MenuItem>

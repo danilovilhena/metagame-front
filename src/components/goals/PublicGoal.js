@@ -1,13 +1,4 @@
-import {
-	Flex,
-	Text,
-	Image,
-	Stack,
-	Menu,
-	MenuButton,
-	MenuItem,
-	MenuList,
-} from '@chakra-ui/react';
+import { Flex, Text, Image, Stack, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import MediaIcon from 'components/common/MediaIcon';
 import getIcon from 'utils/getIcon';
 
@@ -35,31 +26,16 @@ export default function PublicGoal({ goal, ...rest }) {
 					<Text as="strong">{goal.title}</Text>
 				</Flex>
 				<Stack direction="row" align="center" minW="max-content" spacing={2}>
-					<Image
-						src={getIcon('like', goal.liked)}
-						w="1.75rem"
-						role="button"
-						alt="Descurtir"
-					/>
+					<Image src={getIcon('like', goal.liked)} w="1.75rem" role="button" alt="Descurtir" />
 					<Menu matchWidth>
 						<MenuButton>
-							<Image
-								src={getIcon('vertical-dots')}
-								w="2rem"
-								role="button"
-								alt="Mais opções"
-							/>
+							<Image src={getIcon('vertical-dots')} w="2rem" role="button" alt="Mais opções" />
 						</MenuButton>
 						<MenuList minW="max-content">
 							{options.map((option, idx) => (
 								<MenuItem
 									key={idx}
-									icon={
-										<Image
-											src={getIcon(option.icon, false)}
-											alt={option.name}
-										/>
-									}
+									icon={<Image src={getIcon(option.icon, false)} alt={option.name} />}
 								>
 									{option.name}
 								</MenuItem>
@@ -70,8 +46,7 @@ export default function PublicGoal({ goal, ...rest }) {
 			</Flex>
 			<Flex mt="4" alignSelf="flex-end" alignItems="center">
 				<Text>
-					Criado por{' '}
-					<Text as="strong">{goal.author && goal.author.username}</Text>
+					Criado por <Text as="strong">{goal.author && goal.author.username}</Text>
 				</Text>
 				<Image
 					src={goal.author && goal.author.photo}

@@ -47,12 +47,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen }) {
 						</option>
 					</Select>
 					<Input type="number" placeholder="0" />
-					<Text
-						display="flex"
-						alignItems="center"
-						justifyContent="center"
-						minWidth="80px"
-					>
+					<Text display="flex" alignItems="center" justifyContent="center" minWidth="80px">
 						filmes em
 					</Text>
 					<Input type="number" placeholder="0" />

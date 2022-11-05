@@ -14,8 +14,7 @@ const theme = extendTheme({ colors });
 function MyApp({ Component, pageProps, ...appProps }) {
 	const getComponent = () => {
 		const pages = ['/404', '/auth-error'];
-		if (pages.includes(appProps.router.pathname))
-			return <Component {...pageProps} />;
+		if (pages.includes(appProps.router.pathname)) return <Component {...pageProps} />;
 		else {
 			return (
 				<Layout>

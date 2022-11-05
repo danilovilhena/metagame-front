@@ -63,11 +63,7 @@ export default function SignUpModal({
 			isOpen={isSignUpModalOpen}
 			setIsOpen={setIsSignUpModalOpen}
 		>
-			<VStack
-				textAlign="center"
-				spacing={showEmailInputs ? '0px' : '16px'}
-				mb="16px"
-			>
+			<VStack textAlign="center" spacing={showEmailInputs ? '0px' : '16px'} mb="16px">
 				<VStack color="white" width="100%">
 					{showEmailInputs ? (
 						<>
@@ -77,17 +73,8 @@ export default function SignUpModal({
 								animation={`${easeIn} 1s`}
 								onSubmit={handleSubmit(handleSignUp)}
 							>
-								<VStack
-									spacing="12px"
-									color="gray"
-									width="100%"
-									_dark={{ color: 'gray.200' }}
-								>
-									<Input
-										placeholder="Nome completo"
-										{...register('name')}
-										error={errors.name}
-									/>
+								<VStack spacing="12px" color="gray" width="100%" _dark={{ color: 'gray.200' }}>
+									<Input placeholder="Nome completo" {...register('name')} error={errors.name} />
 									<Input
 										placeholder="Nome de usuário"
 										{...register('username')}
@@ -113,9 +100,7 @@ export default function SignUpModal({
 										{...register('confirm_password')}
 										error={errors.confirm_password}
 										rightIcon={showConfirmPassword ? IoMdEyeOff : IoMdEye}
-										rightIconAction={() =>
-											setShowConfirmPassword(!showConfirmPassword)
-										}
+										rightIconAction={() => setShowConfirmPassword(!showConfirmPassword)}
 									/>
 									<Button variant="styled" width="100%" type="submit">
 										Criar conta
@@ -137,11 +122,7 @@ export default function SignUpModal({
 						</>
 					) : (
 						<>
-							<Button
-								variant="styled"
-								width="100%"
-								onClick={() => signIn('google')}
-							>
+							<Button variant="styled" width="100%" onClick={() => signIn('google')}>
 								<Icon as={IoLogoGoogle} mr="8px" fontSize={22} />
 								Continuar com Google
 							</Button>
@@ -149,11 +130,7 @@ export default function SignUpModal({
 								<Icon as={IoLogoApple} mr="8px" fontSize={22} />
 								Continuar com Apple
 							</Button>
-							<Button
-								variant="styled"
-								width="100%"
-								onClick={() => setShowEmailInputs(true)}
-							>
+							<Button variant="styled" width="100%" onClick={() => setShowEmailInputs(true)}>
 								Continuar com E-mail
 							</Button>
 						</>

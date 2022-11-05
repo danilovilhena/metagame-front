@@ -19,12 +19,7 @@ export default function Modal({
 	setIsOpen,
 }) {
 	return (
-		<ModalChakra
-			isOpen={isOpen}
-			onClose={() => setIsOpen(false)}
-			size={modalSize}
-			isCentered
-		>
+		<ModalChakra isOpen={isOpen} onClose={() => setIsOpen(false)} size={modalSize} isCentered>
 			<ModalOverlay />
 			<ModalContent _dark={{ bg: 'gray.800' }}>
 				<ModalHeader

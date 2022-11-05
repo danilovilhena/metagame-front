@@ -53,12 +53,7 @@ export default function FAQ() {
 					maxW={{ base: '100%', md: '40%' }}
 				>
 					<Text>Perguntas frequentes</Text>
-					<Text
-						as="h2"
-						fontWeight="bold"
-						fontSize={{ base: '2em', lg: '3em' }}
-						textAlign="left"
-					>
+					<Text as="h2" fontWeight="bold" fontSize={{ base: '2em', lg: '3em' }} textAlign="left">
 						Ficou com alguma dúvida?
 					</Text>
 				</Flex>

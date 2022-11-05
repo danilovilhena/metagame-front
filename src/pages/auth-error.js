@@ -21,22 +21,14 @@ export default function AuthError() {
 				h="100vh"
 				spacing="4"
 			>
-				<Image
-					src={colorMode === 'light' ? '/logo.svg' : '/logo_dark.svg'}
-					alt="Metagame"
-				/>
+				<Image src={colorMode === 'light' ? '/logo.svg' : '/logo_dark.svg'} alt="Metagame" />
 				<Image
 					src={colorMode === 'light' ? '/error.svg' : '/error_dark.svg'}
 					w={{ base: '100%', xl: '75%' }}
 					maxW="2xl"
 					alt="Erro na autenticação"
 				/>
-				<Text
-					as="h1"
-					fontWeight="medium"
-					fontSize={{ base: 'lg', sm: 'xl' }}
-					textAlign="center"
-				>
+				<Text as="h1" fontWeight="medium" fontSize={{ base: 'lg', sm: 'xl' }} textAlign="center">
 					Ocorreu um erro na sua autenticação, tente novamente.
 				</Text>
 				<Link href={session.data ? '/home' : '/'}>

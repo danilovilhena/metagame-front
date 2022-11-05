@@ -82,12 +82,7 @@ export default function LogInModal({
 								animation={`${easeIn} 1s`}
 								onSubmit={handleSubmit(handleLogIn)}
 							>
-								<VStack
-									as="form"
-									spacing="12px"
-									color="gray"
-									_dark={{ color: 'gray.200' }}
-								>
+								<VStack as="form" spacing="12px" color="gray" _dark={{ color: 'gray.200' }}>
 									<Input
 										placeholder="E-mail ou nome de usuário"
 										{...register('email')}
@@ -105,15 +100,9 @@ export default function LogInModal({
 										Entrar
 									</Button>
 									{signInError && (
-										<Alert
-											status="error"
-											borderRadius="0.375em"
-											justifyContent="center"
-										>
+										<Alert status="error" borderRadius="0.375em" justifyContent="center">
 											<AlertIcon />
-											<AlertDescription color="black">
-												{signInError}
-											</AlertDescription>
+											<AlertDescription color="black">{signInError}</AlertDescription>
 										</Alert>
 									)}
 								</VStack>
@@ -133,11 +122,7 @@ export default function LogInModal({
 						</>
 					) : (
 						<>
-							<Button
-								variant="styled"
-								width="100%"
-								onClick={() => signIn('google')}
-							>
+							<Button variant="styled" width="100%" onClick={() => signIn('google')}>
 								<Icon as={IoLogoGoogle} mr="8px" fontSize={22} />
 								Continuar com Google
 							</Button>
@@ -145,11 +130,7 @@ export default function LogInModal({
 								<Icon as={IoLogoApple} mr="8px" fontSize={22} />
 								Continuar com Apple
 							</Button>
-							<Button
-								variant="styled"
-								width="100%"
-								onClick={() => setShowEmailInputs(true)}
-							>
+							<Button variant="styled" width="100%" onClick={() => setShowEmailInputs(true)}>
 								Continuar com e-mail
 							</Button>
 						</>

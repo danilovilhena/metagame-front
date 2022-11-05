@@ -52,10 +52,7 @@ export default function Header() {
 						))}
 					</Stack>
 					<Box>
-						<Button
-							variant="unstyled"
-							onClick={() => setIsLogInModalOpen(true)}
-						>
+						<Button variant="unstyled" onClick={() => setIsLogInModalOpen(true)}>
 							Entrar
 						</Button>
 						<LogInModal
@@ -72,10 +69,7 @@ export default function Header() {
 							setIsLogInModalOpen={setIsLogInModalOpen}
 						/>
 						<Button variant="unstyled" ml="4" onClick={toggleColorMode}>
-							<Image
-								src={getIcon('moon')}
-								alt={`Modo ${isLight ? 'escuro' : 'claro'}`}
-							/>
+							<Image src={getIcon('moon')} alt={`Modo ${isLight ? 'escuro' : 'claro'}`} />
 						</Button>
 					</Box>
 				</>

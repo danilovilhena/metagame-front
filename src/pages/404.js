@@ -21,22 +21,14 @@ export default function Custom404() {
 				h="100vh"
 				spacing="4"
 			>
-				<Image
-					src={colorMode === 'light' ? '/logo.svg' : '/logo_dark.svg'}
-					alt="Metagame"
-				/>
+				<Image src={colorMode === 'light' ? '/logo.svg' : '/logo_dark.svg'} alt="Metagame" />
 				<Image
 					src="/404.svg"
 					w={{ base: '100%', xl: '75%' }}
 					maxW="2xl"
 					alt="Página não encontrada"
 				/>
-				<Text
-					as="h1"
-					fontWeight="medium"
-					fontSize={{ base: 'lg', sm: 'xl' }}
-					textAlign="center"
-				>
+				<Text as="h1" fontWeight="medium" fontSize={{ base: 'lg', sm: 'xl' }} textAlign="center">
 					Essa página não foi encontrada ou ainda está em construção 🚧
 				</Text>
 				<Link href={session.data ? '/home' : '/'}>

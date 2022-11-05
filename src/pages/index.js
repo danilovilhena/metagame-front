@@ -19,9 +19,7 @@ export default function Index() {
 		} else if (row == 2 && data.books && data.books[index]) {
 			return data.books[index].volumeInfo.imageLinks.thumbnail;
 		} else if (row == 3 && data.movies && data.movies[index + 9]) {
-			return `https://image.tmdb.org/t/p/w500${
-				data.movies[index + 9].poster_path
-			}`;
+			return `https://image.tmdb.org/t/p/w500${data.movies[index + 9].poster_path}`;
 		}
 	};
 

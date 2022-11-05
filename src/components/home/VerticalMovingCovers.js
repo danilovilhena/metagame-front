@@ -1,10 +1,4 @@
-import {
-	Box,
-	Flex,
-	Image,
-	useBreakpointValue,
-	keyframes,
-} from '@chakra-ui/react';
+import { Box, Flex, Image, useBreakpointValue, keyframes } from '@chakra-ui/react';
 import styles from 'styles/VerticalMovingCovers.module.css';
 
 export default function VerticalMovingCovers({ getCover }) {
@@ -28,11 +22,7 @@ export default function VerticalMovingCovers({ getCover }) {
 					key={idx}
 				>
 					<div className={styles['slider']}>
-						<div
-							className={
-								idx % 2 == 0 ? styles['slide-track'] : styles['slide-track-b']
-							}
-						>
+						<div className={idx % 2 == 0 ? styles['slide-track'] : styles['slide-track-b']}>
 							{[...Array(10)].map((_, innerIdx) => (
 								<Image
 									animation={`${easeIn} 6s`}
