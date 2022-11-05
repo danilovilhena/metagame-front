@@ -17,23 +17,32 @@ import {
 import { IoMdSearch } from 'react-icons/io';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Button from 'components/common/Button';
 import getIcon from 'utils/getIcon';
 import AddModal from 'components/add/AddModal';
+import AddGoal from 'components/add/AddGoal';
 
 export default function HeaderLoggedIn({ user }) {
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+	// const [isAddMediaModalOpen, setIsAddMediaModalOpen] = useState(false);
+	const [isAddGoalModalOpen, setIsAddGoalModalOpen] = useState(false);
 	const router = useRouter();
 	const { colorMode, toggleColorMode } = useColorMode();
 	const isLight = colorMode === 'light';
 
 	const buttons = [
-		{ icon: 'add', alt: 'Adicionar', action: () => setIsModalOpen(true) },
+		{
+			icon: 'add',
+			alt: 'Adicionar',
+			action: () => setIsAddModalOpen(true),
+		},
 		{ icon: 'home', alt: 'Início', route: '/home', action: () => {} },
 		{ icon: 'goal', alt: 'Minhas metas', route: '/goals', action: () => {} },
 	];
+
+	useEffect(() => console.log(isAddGoalModalOpen), [isAddGoalModalOpen]);
 
 	return (
 		<Flex
@@ -117,7 +126,15 @@ export default function HeaderLoggedIn({ user }) {
 					</MenuList>
 				</Menu>
 			</HStack>
-			<AddModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+			<AddModal
+				isModalOpen={isAddModalOpen}
+				setIsModalOpen={setIsAddModalOpen}
+				setIsAddGoalModalOpen={setIsAddGoalModalOpen}
+			/>
+			<AddGoal
+				isModalOpen={isAddGoalModalOpen}
+				setIsModalOpen={setIsAddGoalModalOpen}
+			/>
 		</Flex>
 	);
 }

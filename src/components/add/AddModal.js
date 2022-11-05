@@ -7,7 +7,7 @@ export default function AddModal({
 	isModalOpen,
 	setIsModalOpen,
 	// setIsAddMediaModalOpen,
-	// setIsAddGoalModalOpen,
+	setIsAddGoalModalOpen,
 }) {
 	return (
 		<Modal
@@ -29,7 +29,11 @@ export default function AddModal({
 					<Image src={getIcon('media-add')} w="1.5rem" alt="" mr="2" />
 					Adicionar registro
 				</Button>
-				<Button variant="styled" width="100%">
+				<Button
+					variant="styled"
+					width="100%"
+					onClick={() => setIsAddGoalModalOpen(true)}
+				>
 					<Image src={getIcon('goal-add')} w="1.5rem" alt="" mr="2" />
 					Criar meta de consumo
 				</Button>
