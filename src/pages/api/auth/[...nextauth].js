@@ -72,7 +72,7 @@ export const authOptions = {
 			api.defaults.headers['Authorization'] = `Bearer ${token_jwt}`;
 			try {
 				const response = await api.get('/me', {});
-				const customSession = response.data;
+				const customSession = { ...response.data, token_jwt };
 				return customSession;
 			} catch (err) {
 				throw Error(err);

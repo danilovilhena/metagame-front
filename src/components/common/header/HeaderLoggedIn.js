@@ -17,7 +17,7 @@ import {
 import { IoMdSearch } from 'react-icons/io';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Button from 'components/common/Button';
 import getIcon from 'utils/getIcon';
@@ -42,8 +42,6 @@ export default function HeaderLoggedIn({ user }) {
 		{ icon: 'home', alt: 'Início', route: '/home', action: () => {} },
 		{ icon: 'goal', alt: 'Minhas metas', route: '/goals', action: () => {} },
 	];
-
-	useEffect(() => console.log(isAddGoalModalOpen), [isAddGoalModalOpen]);
 
 	return (
 		<Flex
@@ -72,10 +70,7 @@ export default function HeaderLoggedIn({ user }) {
 				{buttons.map((btn, idx) => (
 					<Button variant="unstyled" mr="0" key={idx} onClick={btn.action}>
 						<Link href={btn.route || ''}>
-							<Image
-								src={getIcon(btn.icon, router.pathname === btn.route)}
-								alt={btn.alt}
-							/>
+							<Image src={getIcon(btn.icon, router.pathname === btn.route)} alt={btn.alt} />
 						</Link>
 					</Button>
 				))}
@@ -106,10 +101,7 @@ export default function HeaderLoggedIn({ user }) {
 						</Link>
 						<MenuItem
 							icon={
-								<Image
-									src={getIcon('moon', false)}
-									alt={`Modo ${isLight ? 'escuro' : 'claro'}`}
-								/>
+								<Image src={getIcon('moon', false)} alt={`Modo ${isLight ? 'escuro' : 'claro'}`} />
 							}
 							mr="8"
 							_dark={{ color: 'gray.200' }}
@@ -118,10 +110,7 @@ export default function HeaderLoggedIn({ user }) {
 							Modo {isLight ? 'escuro' : 'claro'}
 						</MenuItem>
 						<Divider opacity="1" my="2" borderBottomWidth="2px" />
-						<MenuItem
-							onClick={() => signOut({ callbackUrl: '/' })}
-							_dark={{ color: 'gray.200' }}
-						>
+						<MenuItem onClick={() => signOut({ callbackUrl: '/' })} _dark={{ color: 'gray.200' }}>
 							Sair da conta
 						</MenuItem>
 					</MenuList>
@@ -133,14 +122,8 @@ export default function HeaderLoggedIn({ user }) {
 				setIsAddGoalModalOpen={setIsAddGoalModalOpen}
 				setIsAddMediaModalOpen={setIsAddMediaModalOpen}
 			/>
-			<AddGoal
-				isModalOpen={isAddGoalModalOpen}
-				setIsModalOpen={setIsAddGoalModalOpen}
-			/>
-			<AddRegister
-				isModalOpen={isAddMediaModalOpen}
-				setIsModalOpen={setIsAddMediaModalOpen}
-			/>
+			<AddGoal isModalOpen={isAddGoalModalOpen} setIsModalOpen={setIsAddGoalModalOpen} />
+			<AddRegister isModalOpen={isAddMediaModalOpen} setIsModalOpen={setIsAddMediaModalOpen} />
 		</Flex>
 	);
 }

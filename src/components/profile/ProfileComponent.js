@@ -4,6 +4,9 @@ import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
 import Activity from './Activity';
 import PersonalGoal from './PersonalGoal';
+import { useEffect, useState } from 'react';
+import { api } from 'services/api';
+import { Input } from 'components/common/Input';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -11,9 +14,34 @@ const Title = ({ children }) => (
 	</Text>
 );
 
+const InputEdit = ({ name, action, value }) => (
+	<Input
+		name={name}
+		value={value}
+		placeholder={value}
+		background="transparent"
+		borderColor="white"
+		borderWidth="1px"
+		_hover={{ background: 'primary' }}
+		mt="2"
+		onChange={action}
+	/>
+);
+
 export default function ProfileComponent() {
 	const session = useSession();
 	const user = session.data;
+
+	const [isEdit, setIsEdit] = useState(false);
+	const [medias, setMedias] = useState(0);
+	const [name, setName] = useState(user ? `${user.first_name} ${user.last_name}` : '');
+	const [username, setUsername] = useState(user ? user.username : '');
+
+	useEffect(() => {
+		if (user && user.id) {
+			api.get(`/medias/user/${user.id}`).then((res) => setMedias(res.data.length));
+		}
+	}, [user]);
 
 	const buttons = [
 		{ type: 'movie', amount: '20', label: 'filmes assistidos' },
@@ -55,6 +83,8 @@ export default function ProfileComponent() {
 		});
 	};
 
+	const toggleIsEdit = () => setIsEdit(!isEdit);
+
 	if (user) {
 		return (
 			<Flex
@@ -68,8 +98,8 @@ export default function ProfileComponent() {
 			>
 				<Flex width="100%" justifyContent="space-between" mb="1em">
 					<Title>Meu Perfil</Title>
-					<Button variant="styled" fontSize="1rem">
-						Editar Perfil
+					<Button variant="styled" fontSize="1rem" onClick={toggleIsEdit}>
+						{isEdit ? 'Salvar mudanças' : 'Editar Perfil'}
 					</Button>
 				</Flex>
 				<Flex mb="3em">
@@ -83,17 +113,27 @@ export default function ProfileComponent() {
 					<Grid ml="2em" gridTemplateColumns="1fr 1fr" gap="1em">
 						<Flex flexDirection="column" mr="2em">
 							<Text>Nome</Text>
-							<Text as="strong">
-								{user.first_name} {user.last_name}
-							</Text>
+							{isEdit ? (
+								<InputEdit name="name" action={(e) => setName(e.target.value)} value={name} />
+							) : (
+								<Text as="strong">{name}</Text>
+							)}
 						</Flex>
 						<Flex flexDirection="column">
 							<Text>Nome de usuário</Text>
-							<Text as="strong">{user.username}</Text>
+							{isEdit ? (
+								<InputEdit
+									name="username"
+									action={(e) => setUsername(e.target.value)}
+									value={username}
+								/>
+							) : (
+								<Text as="strong">{username}</Text>
+							)}
 						</Flex>
 						<Flex flexDirection="column" mr="2em">
 							<Text>Número de mídias consumidas</Text>
-							<Text as="strong">140</Text>
+							<Text as="strong">{medias}</Text>
 						</Flex>
 						<Flex flexDirection="column">
 							<Text>Data de cadastro</Text>
@@ -105,7 +145,7 @@ export default function ProfileComponent() {
 						</Flex>
 						<Flex flexDirection="column">
 							<Text>Número de seguidores</Text>
-							<Text as="strong">10</Text>
+							<Text as="strong">_</Text>
 						</Flex>
 					</Grid>
 				</Flex>
