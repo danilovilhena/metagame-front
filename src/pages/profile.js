@@ -1,8 +1,14 @@
+import Title from 'components/common/Title';
 import ProfileComponent from 'components/profile/ProfileComponent';
 import { parseCookies } from 'nookies';
 
 export default function Profile() {
-	return <ProfileComponent />;
+	return (
+		<>
+			<Title title="Perfil" />
+			<ProfileComponent />
+		</>
+	);
 }
 
 export async function getServerSideProps(ctx) {

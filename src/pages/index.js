@@ -6,6 +6,7 @@ import Info from 'components/home/Info';
 import TabsComponent from 'components/home/TabsComponent';
 import FAQ from 'components/home/FAQ';
 import { api } from 'services/api';
+import Title from 'components/common/Title';
 
 export default function Index() {
 	const [data, setData] = useState({});
@@ -71,6 +72,7 @@ export default function Index() {
 
 	return (
 		<>
+			<Title title="Metagame" />
 			<Cover content={data} getCover={getCover} />
 			<Info />
 			<TabsComponent content={data} getCover={getCover} />
