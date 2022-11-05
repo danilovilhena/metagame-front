@@ -8,12 +8,14 @@ export default function Button({ variant, children, ...rest }) {
 					fontWeight="medium"
 					background="none"
 					mr="1em"
+					transition="background-color 0.5s"
 					_hover={{
-						backgroundColor: '#f8f8ff',
-						transition: 'background-color 0.5s',
-						_dark: {
-							backgroundColor: 'gray.700',
-						},
+						backgroundColor: 'gray.100',
+						_dark: { backgroundColor: 'gray.700' },
+					}}
+					_active={{
+						backgroundColor: 'gray.200',
+						_dark: { backgroundColor: 'gray.600' },
 					}}
 					{...rest}
 				>
@@ -26,10 +28,9 @@ export default function Button({ variant, children, ...rest }) {
 					fontWeight="medium"
 					color="#FFFFFF"
 					bg="secondary"
-					_hover={{
-						filter: 'brightness(0.9)',
-						transition: 'filter 0.5s',
-					}}
+					transition="filter 0.5s"
+					_hover={{ filter: 'brightness(0.9)' }}
+					_active={{ filter: 'brightness(0.8)' }}
 					{...rest}
 				>
 					{children}
