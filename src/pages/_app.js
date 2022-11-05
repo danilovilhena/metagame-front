@@ -11,14 +11,23 @@ const colors = {
 
 const theme = extendTheme({ colors });
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, ...appProps }) {
+	const getComponent = () => {
+		const pages = ['/404'];
+		if (pages.includes(appProps.router.pathname))
+			return <Component {...pageProps} />;
+		else {
+			return (
+				<Layout>
+					<Component {...pageProps} />{' '}
+				</Layout>
+			);
+		}
+	};
+
 	return (
 		<SessionProvider session={pageProps.session}>
-			<ChakraProvider theme={theme}>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
-			</ChakraProvider>
+			<ChakraProvider theme={theme}>{getComponent()}</ChakraProvider>
 		</SessionProvider>
 	);
 }
