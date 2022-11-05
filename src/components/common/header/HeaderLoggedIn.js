@@ -23,10 +23,11 @@ import Button from 'components/common/Button';
 import getIcon from 'utils/getIcon';
 import AddModal from 'components/add/AddModal';
 import AddGoal from 'components/add/AddGoal';
+import AddRegister from 'components/add/AddRegister';
 
 export default function HeaderLoggedIn({ user }) {
 	const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-	// const [isAddMediaModalOpen, setIsAddMediaModalOpen] = useState(false);
+	const [isAddMediaModalOpen, setIsAddMediaModalOpen] = useState(false);
 	const [isAddGoalModalOpen, setIsAddGoalModalOpen] = useState(false);
 	const router = useRouter();
 	const { colorMode, toggleColorMode } = useColorMode();
@@ -130,10 +131,15 @@ export default function HeaderLoggedIn({ user }) {
 				isModalOpen={isAddModalOpen}
 				setIsModalOpen={setIsAddModalOpen}
 				setIsAddGoalModalOpen={setIsAddGoalModalOpen}
+				setIsAddMediaModalOpen={setIsAddMediaModalOpen}
 			/>
 			<AddGoal
 				isModalOpen={isAddGoalModalOpen}
 				setIsModalOpen={setIsAddGoalModalOpen}
+			/>
+			<AddRegister
+				isModalOpen={isAddMediaModalOpen}
+				setIsModalOpen={setIsAddMediaModalOpen}
 			/>
 		</Flex>
 	);

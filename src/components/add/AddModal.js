@@ -6,7 +6,7 @@ import getIcon from 'utils/getIcon';
 export default function AddModal({
 	isModalOpen,
 	setIsModalOpen,
-	// setIsAddMediaModalOpen,
+	setIsAddMediaModalOpen,
 	setIsAddGoalModalOpen,
 }) {
 	return (
@@ -25,7 +25,12 @@ export default function AddModal({
 				mb="4"
 				mt="-2"
 			>
-				<Button variant="styled" width="100%" backgroundColor="primary">
+				<Button
+					variant="styled"
+					width="100%"
+					backgroundColor="primary"
+					onClick={() => setIsAddMediaModalOpen(true)}
+				>
 					<Image src={getIcon('media-add')} w="1.5rem" alt="" mr="2" />
 					Adicionar registro
 				</Button>
