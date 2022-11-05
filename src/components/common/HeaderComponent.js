@@ -27,6 +27,11 @@ export default function HeaderComponent() {
 	const isLight = colorMode === 'light';
 	const session = useSession();
 	const user = session.data;
+	const buttons = [
+		{ icon: 'add', alt: 'Adicionar', action: () => {} },
+		{ icon: 'home', alt: 'Início', route: '/home', action: () => {} },
+		{ icon: 'goal', alt: 'Minhas metas', route: '/goals', action: () => {} },
+	];
 
 	return (
 		<Flex
@@ -52,37 +57,26 @@ export default function HeaderComponent() {
 				<Input type="text" placeholder="Buscar" fontSize="1em" />
 			</InputGroup>
 			<HStack color="primary" spacing="0.5em">
-				<Button variant="unstyled" mr="0">
-					<Image src={getIcon('add', false)} alt="Adicionar" />
-				</Button>
-				<Button variant="unstyled">
-					<Image
-						src={getIcon('home', router.pathname === '/home')}
-						alt="Início"
-					/>
-				</Button>
-				<Button variant="unstyled">
-					<Image
-						src={getIcon('hot', router.pathname === '/tops')}
-						alt="Metas populares"
-					/>
-				</Button>
-				<Button variant="unstyled">
-					<Link href="/goals">
-						<Image
-							src={getIcon('goal', router.pathname === '/goals')}
-							alt="Minhas metas"
-						/>
-					</Link>
-				</Button>
+				{buttons.map((btn, idx) => (
+					<Button variant="unstyled" mr="0" key={idx}>
+						<Link href={btn.route || ''}>
+							<Image
+								src={getIcon(btn.icon, router.pathname === btn.route)}
+								alt={btn.alt}
+							/>
+						</Link>
+					</Button>
+				))}
 				<Menu isLazy>
-					<MenuButton>
+					<MenuButton ml="1rem !important">
 						{user && user.userinfo && (
 							<Avatar
 								src={user.userinfo.image_url}
 								referrerPolicy="no-referrer"
 								name={user.first_name}
 								size="sm"
+								outline={router.pathname === '/profile' ? '2px solid' : ''}
+								outlineColor="secondary"
 							/>
 						)}
 					</MenuButton>

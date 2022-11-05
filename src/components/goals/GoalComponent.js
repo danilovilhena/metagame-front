@@ -91,7 +91,7 @@ export default function GoalComponent() {
 					</Grid>
 				</Flex>
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
-					<Title>Metas concluídas</Title>
+					<Title>Metas finalizadas</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
 						{personalGoals
 							.filter((el) => el.completion === 100)

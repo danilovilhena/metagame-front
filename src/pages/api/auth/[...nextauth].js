@@ -74,7 +74,7 @@ export const authOptions = {
 				const customSession = response.data;
 				return customSession;
 			} catch (err) {
-				throw Error(err.response.data);
+				throw Error(err);
 			}
 		},
 
