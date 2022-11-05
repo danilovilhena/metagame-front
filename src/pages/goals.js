@@ -1,5 +1,6 @@
 import Title from 'components/common/Title';
 import GoalComponent from 'components/goals/GoalComponent';
+import checkForCookie from 'utils/checkForCookie';
 
 export default function Goals() {
 	return (
@@ -9,3 +10,5 @@ export default function Goals() {
 		</>
 	);
 }
+
+export { checkForCookie as getServerSideProps };
