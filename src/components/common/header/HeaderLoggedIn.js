@@ -17,17 +17,20 @@ import {
 import { IoMdSearch } from 'react-icons/io';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import Link from 'next/link';
 import Button from 'components/common/Button';
 import getIcon from 'utils/getIcon';
+import AddModal from 'components/add/AddModal';
 
 export default function HeaderLoggedIn({ user }) {
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const router = useRouter();
 	const { colorMode, toggleColorMode } = useColorMode();
 	const isLight = colorMode === 'light';
 
 	const buttons = [
-		{ icon: 'add', alt: 'Adicionar', action: () => {} },
+		{ icon: 'add', alt: 'Adicionar', action: () => setIsModalOpen(true) },
 		{ icon: 'home', alt: 'Início', route: '/home', action: () => {} },
 		{ icon: 'goal', alt: 'Minhas metas', route: '/goals', action: () => {} },
 	];
@@ -57,7 +60,7 @@ export default function HeaderLoggedIn({ user }) {
 			</InputGroup>
 			<HStack color="primary" spacing="0.5em">
 				{buttons.map((btn, idx) => (
-					<Button variant="unstyled" mr="0" key={idx}>
+					<Button variant="unstyled" mr="0" key={idx} onClick={btn.action}>
 						<Link href={btn.route || ''}>
 							<Image
 								src={getIcon(btn.icon, router.pathname === btn.route)}
@@ -114,6 +117,7 @@ export default function HeaderLoggedIn({ user }) {
 					</MenuList>
 				</Menu>
 			</HStack>
+			<AddModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
 		</Flex>
 	);
 }

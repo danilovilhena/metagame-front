@@ -7,6 +7,7 @@ import {
 	ModalBody,
 	ModalCloseButton,
 	Button,
+	Text,
 } from '@chakra-ui/react';
 
 export default function Modal({
@@ -26,8 +27,16 @@ export default function Modal({
 		>
 			<ModalOverlay />
 			<ModalContent _dark={{ bg: 'gray.800' }}>
-				<ModalHeader>{ModalTitle}</ModalHeader>
-				<ModalCloseButton />
+				<ModalHeader
+					display="flex"
+					flexDir="row"
+					alignItems="center"
+					justifyContent="space-between"
+				>
+					<Text flex="1">{ModalTitle}</Text>
+					<ModalCloseButton position="initial" />
+				</ModalHeader>
+
 				<ModalBody>{children}</ModalBody>
 
 				{confirmModal && (

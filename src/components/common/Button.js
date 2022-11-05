@@ -5,7 +5,7 @@ export default function Button({ variant, children, ...rest }) {
 		case 'unstyled':
 			return (
 				<ChakraButton
-					fontWeight="bold"
+					fontWeight="medium"
 					background="none"
 					mr="1em"
 					_hover={{
@@ -23,7 +23,7 @@ export default function Button({ variant, children, ...rest }) {
 		case 'styled':
 			return (
 				<ChakraButton
-					fontWeight="bold"
+					fontWeight="medium"
 					color="#FFFFFF"
 					bg="secondary"
 					_hover={{

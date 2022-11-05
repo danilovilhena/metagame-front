@@ -68,7 +68,7 @@ export default function ProfileComponent() {
 			>
 				<Flex width="100%" justifyContent="space-between" mb="1em">
 					<Title>Meu Perfil</Title>
-					<Button variant="styled" fontSize="1rem" fontWeight="medium">
+					<Button variant="styled" fontSize="1rem">
 						Editar Perfil
 					</Button>
 				</Flex>

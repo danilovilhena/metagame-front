@@ -6,7 +6,7 @@ export default function Activity() {
 	return (
 		<Flex
 			flexDirection="column"
-			mx="4.5em"
+			maxW="80%"
 			background="#FFFFFF"
 			px="3"
 			py="1.5"
