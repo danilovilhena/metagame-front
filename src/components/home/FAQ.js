@@ -76,7 +76,7 @@ export default function FAQ() {
 					))}
 				</Accordion>
 			</Stack>
-			<Divider w="80%" mx="auto" opacity="1" mb="8" />
+			<Divider w="80%" mx="auto" opacity="1" mb="4" />
 		</>
 	);
 }

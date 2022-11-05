@@ -12,28 +12,24 @@ import {
 import NextLink from 'next/link';
 import { useState } from 'react';
 import Button from 'components/common/Button';
-import LogInModal from './LogInModal';
-import SignUpModal from './SignUpModal';
-import SideBarDrawer from './SideBarDrawer';
+import LogInModal from 'components/home/LogInModal';
+import SignUpModal from 'components/home/SignUpModal';
+import SideBarDrawer from 'components/home/SideBarDrawer';
 import getIcon from 'utils/getIcon';
 
 export default function Header() {
+	const [isLogInModalOpen, setIsLogInModalOpen] = useState(false);
+	const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+	const { colorMode, toggleColorMode } = useColorMode();
+	const isWideVersion = useBreakpointValue({ base: false, lg: true });
+	const isLight = colorMode === 'light';
+
 	const links = [
 		{ name: 'Como funciona?', href: '#info' },
 		{ name: 'Livros', href: '#tabs' },
 		{ name: 'Filmes', href: '#tabs' },
 		{ name: 'Jogos', href: '#tabs' },
 	];
-
-	const [isLogInModalOpen, setIsLogInModalOpen] = useState(false);
-	const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
-	const { colorMode, toggleColorMode } = useColorMode();
-	const isLight = colorMode === 'light';
-
-	const isWideVersion = useBreakpointValue({
-		base: false,
-		lg: true,
-	});
 
 	return (
 		<Flex

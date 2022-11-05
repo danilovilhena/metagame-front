@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import { parseCookies } from 'nookies';
 import randomWords from 'random-words';
-import Header from 'components/home/Header';
 import Cover from 'components/home/Cover';
 import Info from 'components/home/Info';
 import TabsComponent from 'components/home/TabsComponent';
 import FAQ from 'components/home/FAQ';
-import Footer from 'components/home/Footer';
 import { api } from 'services/api';
 
 export default function Index() {
@@ -73,12 +71,10 @@ export default function Index() {
 
 	return (
 		<>
-			<Header />
 			<Cover content={data} getCover={getCover} />
 			<Info />
 			<TabsComponent content={data} getCover={getCover} />
 			<FAQ />
-			<Footer />
 		</>
 	);
 }

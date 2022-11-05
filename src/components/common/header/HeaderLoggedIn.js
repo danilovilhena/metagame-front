@@ -15,18 +15,17 @@ import {
 	useColorMode,
 } from '@chakra-ui/react';
 import { IoMdSearch } from 'react-icons/io';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Button from 'components/common/Button';
 import getIcon from 'utils/getIcon';
 
-export default function HeaderComponent() {
+export default function HeaderLoggedIn({ user }) {
 	const router = useRouter();
 	const { colorMode, toggleColorMode } = useColorMode();
 	const isLight = colorMode === 'light';
-	const session = useSession();
-	const user = session.data;
+
 	const buttons = [
 		{ icon: 'add', alt: 'Adicionar', action: () => {} },
 		{ icon: 'home', alt: 'Início', route: '/home', action: () => {} },
