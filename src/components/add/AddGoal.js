@@ -1,10 +1,37 @@
-import { VStack, Image, Select, Text, Grid } from '@chakra-ui/react';
+import { VStack, Image, Menu, Text, Grid, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import Modal from 'components/common/Modal';
 import Button from 'components/common/Button';
 import getIcon from 'utils/getIcon';
 import { Input } from 'components/common/Input';
+import { useEffect, useState } from 'react';
+import { api } from 'services/api';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 
 export default function AddGoal({ isModalOpen, setIsModalOpen }) {
+	const [mediaTypes, setMediaTypes] = useState([]);
+	const [mediaSelected, setMediaSelected] = useState('');
+	const [goalPeriod, setGoalPeriod] = useState('dias');
+
+	function getMediaVerb(media) {
+		if (media === 'Movie') {
+			return 'assitir';
+		}
+		if (media === 'Game') {
+			return 'jogar';
+		}
+		return 'ler';
+	}
+
+	useEffect(() => {
+		async function getMediaTypes() {
+			const response = await api.get('/mediatypes');
+			setMediaTypes(response.data);
+			setMediaSelected(response.data[0].type);
+		}
+
+		getMediaTypes();
+	}, []);
+
 	return (
 		<Modal
 			variant="unstyled"
@@ -32,39 +59,51 @@ export default function AddGoal({ isModalOpen, setIsModalOpen }) {
 					<Text textAlign="center" display="flex" alignItems="center">
 						Eu quero
 					</Text>
-					<Select placeholder="assistir" background="primary" color="white">
-						<option value="1" style={{ color: 'primary' }}>
-							1
-						</option>
-						<option value="2" style={{ color: 'primary' }}>
-							2
-						</option>
-						<option value="3" style={{ color: 'primary' }}>
-							3
-						</option>
-						<option value="4" style={{ color: 'primary' }}>
-							4
-						</option>
-					</Select>
+					<Menu>
+						<MenuButton>
+							<Button
+								variant="styled"
+								background="primary"
+								width="100%"
+								display="flex"
+								justifyContent="space-between"
+							>
+								{getMediaVerb(mediaSelected)}
+								<ChevronDownIcon />
+							</Button>
+						</MenuButton>
+						<MenuList>
+							{mediaTypes.map((media, idx) => (
+								<MenuItem key={idx} onClick={() => setMediaSelected(media.type)}>
+									{getMediaVerb(media.type)}
+								</MenuItem>
+							))}
+						</MenuList>
+					</Menu>
 					<Input type="number" placeholder="0" />
 					<Text display="flex" alignItems="center" justifyContent="center" minWidth="80px">
-						filmes em
+						{mediaSelected.toLowerCase()}s em
 					</Text>
 					<Input type="number" placeholder="0" />
-					<Select placeholder="dias" background="primary" color="white">
-						<option value="1" style={{ color: 'primary' }}>
-							1
-						</option>
-						<option value="2" style={{ color: 'primary' }}>
-							2
-						</option>
-						<option value="3" style={{ color: 'primary' }}>
-							3
-						</option>
-						<option value="4" style={{ color: 'primary' }}>
-							4
-						</option>
-					</Select>
+					<Menu>
+						<MenuButton>
+							<Button
+								variant="styled"
+								background="primary"
+								width="100%"
+								display="flex"
+								justifyContent="space-between"
+							>
+								{goalPeriod}
+								<ChevronDownIcon />
+							</Button>
+						</MenuButton>
+						<MenuList>
+							<MenuItem onClick={() => setGoalPeriod('dias')}>dias</MenuItem>
+							<MenuItem onClick={() => setGoalPeriod('semanas')}>semanas</MenuItem>
+							<MenuItem onClick={() => setGoalPeriod('meses')}>meses</MenuItem>
+						</MenuList>
+					</Menu>
 				</Grid>
 				<Button
 					variant="styled"
