@@ -55,10 +55,7 @@ export default function TabsComponent({ content, getCover }) {
 				<TabPanels>
 					{Object.entries(content).map((tabOptionContent, idx) => (
 						<TabPanel key={`panel-${idx}`}>
-							<Grid
-								templateColumns="repeat(auto-fill,minmax(160px, 1fr));"
-								gap={18}
-							>
+							<Grid templateColumns="repeat(auto-fill,minmax(160px, 1fr));" gap={18}>
 								{tabOptionContent[1].slice(0, 12).map((item, innerIdx) => (
 									<GridItem
 										key={`content-${innerIdx}`}

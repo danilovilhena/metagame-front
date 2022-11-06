@@ -8,9 +8,7 @@ export default async function userCreation(user, provider = '') {
 				username: user.username || user.email.split('@')[0],
 				email: user.email,
 				first_name: user_name_array ? user_name_array[0] : '',
-				last_name: user_name_array
-					? user_name_array[user_name_array.length - 1]
-					: '',
+				last_name: user_name_array ? user_name_array[user_name_array.length - 1] : '',
 				provider: provider,
 				image_url: user.image || '',
 				password: user.password || '',

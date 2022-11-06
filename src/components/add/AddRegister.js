@@ -29,13 +29,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 					value={searchInput}
 					onChange={(e) => setSearchInput(e.target.value)}
 				/>
-				<Flex
-					wrap="wrap"
-					gap="20px"
-					justifyContent="center"
-					overflow="auto"
-					maxH="400px"
-				>
+				<Flex wrap="wrap" gap="20px" justifyContent="center" overflow="auto" maxH="400px">
 					<Flex flexDirection="column">
 						<Image
 							width="120px"

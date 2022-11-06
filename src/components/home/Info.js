@@ -1,17 +1,10 @@
-import {
-	Flex,
-	Text,
-	Box,
-	Image,
-	VStack,
-	useBreakpointValue,
-} from '@chakra-ui/react';
+import { Flex, Text, Box, Image, VStack, useBreakpointValue, useColorMode } from '@chakra-ui/react';
 
 export default function Info() {
-	const isWideVersion = useBreakpointValue({
-		base: false,
-		md: true,
-	});
+	const isWideVersion = useBreakpointValue({ base: false, md: true });
+	const { colorMode } = useColorMode();
+	const isLight = colorMode === 'light';
+
 	return (
 		<Box
 			color="primary"
@@ -37,29 +30,27 @@ export default function Info() {
 			>
 				<VStack maxWidth="550px" spacing="1em" mr={isWideVersion && '2rem'}>
 					<Text fontWeight="bold" fontSize="1.5em">
-						Não fique só falando sobre os filmes que quer assistir, mas
-						assista-os.
+						Não fique só falando sobre os filmes que quer assistir, mas assista-os.
 					</Text>
 					<Text>
-						Com o Metagame, você pode planejar filmes, livros ou jogos que quer
-						consumir e definir em quanto tempo você deseja completar essa meta.
+						Com o Metagame, você pode planejar filmes, livros ou jogos que quer consumir e definir
+						em quanto tempo você deseja completar essa meta.
 					</Text>
 					<Text>
-						A cada mídia que você consumir, registre no site ou aplicativo e
-						acompanhe seu progresso na meta.
+						A cada mídia que você consumir, registre no site ou aplicativo e acompanhe seu progresso
+						na meta.
 					</Text>
 					<Text>
-						Você pode compartilhar metas com amigos, buscar metas populares ou
-						criadas por outros usuários e acompanhar o progresso de quem está
-						completando a mesma meta que você.
+						Você pode compartilhar metas com amigos, buscar metas populares ou criadas por outros
+						usuários e acompanhar o progresso de quem está completando a mesma meta que você.
 					</Text>
 					<Text>
-						Ao completar as metas, você ganha pontos de experiência, evoluindo
-						seu nível e ganhando conquistas no Metagame. Quanto mais alto seu
-						nível, melhor será sua colocação no ranking geral!
+						Ao completar as metas, você ganha pontos de experiência, evoluindo seu nível e ganhando
+						conquistas no Metagame. Quanto mais alto seu nível, melhor será sua colocação no ranking
+						geral!
 					</Text>
 				</VStack>
-				<Image src="/movie.svg" width="360px" h="360px" alt="Cover" />
+				<Image src={`/movie${isLight ? '' : '_dark'}.svg`} width="360px" h="360px" alt="Cover" />
 			</Flex>
 		</Box>
 	);

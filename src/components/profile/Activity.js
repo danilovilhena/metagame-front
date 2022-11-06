@@ -37,11 +37,7 @@ export default function Activity() {
 					</Text>
 				</Flex>
 				<Flex>
-					<Button
-						variant="unstyled"
-						px="0"
-						_hover={{ _dark: { backgroundColor: 'gray.600' } }}
-					>
+					<Button variant="unstyled" px="0" _hover={{ _dark: { backgroundColor: 'gray.600' } }}>
 						<Image src={getIcon('edit')} alt="Editar atividade" />
 					</Button>
 					<Button
