@@ -17,7 +17,7 @@ import {
 import { IoMdSearch } from 'react-icons/io';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Button from 'components/common/Button';
 import getIcon from 'utils/getIcon';
@@ -42,8 +42,6 @@ export default function HeaderLoggedIn({ user }) {
 		{ icon: 'home', alt: 'Início', route: '/home', action: () => {} },
 		{ icon: 'goal', alt: 'Minhas metas', route: '/goals', action: () => {} },
 	];
-
-	useEffect(() => console.log(isAddGoalModalOpen), [isAddGoalModalOpen]);
 
 	return (
 		<Flex
