@@ -1,4 +1,14 @@
-import { VStack, Image, Flex, Text, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import {
+	VStack,
+	Image,
+	Flex,
+	Text,
+	Menu,
+	MenuButton,
+	MenuList,
+	MenuItem,
+	Box,
+} from '@chakra-ui/react';
 import Modal from 'components/common/Modal';
 import Button from 'components/common/Button';
 import getIcon from 'utils/getIcon';
@@ -38,23 +48,34 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 
 				if (filterCategory === 'Todos' || filterCategory === 1) {
 					// Games
-					res = await fetch(
-						`https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG}&maxResults=10&search=${searchInput}`
-					);
-					response = await res.json();
-					data = { ...data, games: response.results };
+					try {
+						res = await fetch(
+							`https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG}&maxResults=10&search=${searchInput}`
+						);
+						response = await res.json();
+						data = { ...data, games: response.results };
+					} catch (err) {
+						console.log(err);
+					}
 				} else {
 					data = { ...data, games: [] };
 				}
 
 				if (filterCategory === 'Todos' || filterCategory === 2) {
 					// Books
-					res = await fetch(
-						`https://www.googleapis.com/books/v1/volumes?orderBy=relevance&filter=paid-ebooks&&page_size=10&q=${searchInput}`
-					);
-					response = await res.json();
-
-					data = { ...data, books: response.items };
+					try {
+						res = await fetch(
+							`https://www.googleapis.com/books/v1/volumes?orderBy=relevance&filter=paid-ebooks&&page_size=10&q=${searchInput}`
+						);
+						response = await res.json();
+						if (response.items) {
+							data = { ...data, books: response.items };
+						} else {
+							data = { ...data, books: [] };
+						}
+					} catch (err) {
+						console.log(err);
+					}
 				} else {
 					data = { ...data, books: [] };
 				}
@@ -120,6 +141,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 					</Menu>
 				</Flex>
 				<Flex
+					width="100%"
 					wrap="wrap"
 					gap="5px"
 					justifyContent="center"
@@ -128,40 +150,45 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 					maxH="600px"
 				>
 					{searchInput ? (
-						filtredMedias ? (
-							Object.values(filtredMedias).map((medias, idx) => {
-								return medias.map((media) => (
-									<Flex
-										as="button"
-										flexDirection="column"
-										alignItems="center"
-										onClick={() => setMediaSelected({ type: idx, item: media })}
-										key={media.id}
-									>
-										<Image
-											width="120px"
-											height="180px"
-											objectFit="cover"
-											borderRadius="10px"
-											alt="cover"
-											mb="0.5em"
-											boxShadow="5px 2.5px 2.5px rgba(0,0,0,0.3);"
-											src={getCover(idx, media)}
-										/>
-										<Text
-											fontWeight="500"
-											maxW="130px"
-											className="textElipsis"
-											fontSize="1em"
-											lineHeight="1.3em"
-											textAlign="center"
-											overflow="hidden"
+						filtredMedias &&
+						(filtredMedias.movies.length > 0 ||
+							filtredMedias.games.length > 0 ||
+							filtredMedias.books.length > 0) ? (
+							Object.values(filtredMedias).map((medias, idx) => (
+								<Box key={idx}>
+									{medias.map((media) => (
+										<Flex
+											as="button"
+											flexDirection="column"
+											alignItems="center"
+											onClick={() => setMediaSelected({ type: idx, item: media })}
+											key={media.id}
 										>
-											{getCoverTitle(idx, media)}
-										</Text>
-									</Flex>
-								));
-							})
+											<Image
+												width="120px"
+												height="180px"
+												objectFit="cover"
+												borderRadius="10px"
+												alt="cover"
+												mb="0.5em"
+												boxShadow="5px 2.5px 2.5px rgba(0,0,0,0.3);"
+												src={getCover(idx, media)}
+											/>
+											<Text
+												fontWeight="500"
+												maxW="130px"
+												className="textElipsis"
+												fontSize="1em"
+												lineHeight="1.3em"
+												textAlign="center"
+												overflow="hidden"
+											>
+												{getCoverTitle(idx, media)}
+											</Text>
+										</Flex>
+									))}
+								</Box>
+							))
 						) : (
 							<Text fontWeight="bold" alignSelf="center">
 								Mídia não encontrada
@@ -191,7 +218,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 										onClick={() =>
 											setMediaSelected({ type: mediaIndex, item: currentMediaType[idx] })
 										}
-										key={idx}
+										key={`defaultMedias-${idx}`}
 									>
 										<Image
 											width="120px"
@@ -217,7 +244,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 									</Flex>
 								);
 							}
-							return <></>;
+							return <Flex key={`defaultMedias-${idx}`}></Flex>;
 						})
 					)}
 				</Flex>

@@ -75,9 +75,11 @@ export default function HeaderLoggedIn({ user }) {
 			<HStack color="primary" spacing="0.5em">
 				{buttons.map((btn, idx) => (
 					<Link href={btn.route || ''} key={idx}>
-						<Button variant="unstyled" mr="0" onClick={btn.action}>
-							<Image src={getIcon(btn.icon, router.pathname === btn.route)} alt={btn.alt} />
-						</Button>
+						<a>
+							<Button variant="unstyled" mr="0" onClick={btn.action}>
+								<Image src={getIcon(btn.icon, router.pathname === btn.route)} alt={btn.alt} />
+							</Button>
+						</a>
 					</Link>
 				))}
 				<Menu isLazy>
