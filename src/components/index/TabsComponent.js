@@ -61,7 +61,7 @@ export default function TabsComponent() {
 											objectFit="cover"
 											borderRadius="10px"
 											shadow="md"
-											src={getCover(idx, innerIdx)}
+											src={getCover(idx, item)}
 											alt="cover"
 											mb="0.5em"
 											boxShadow="10px 5px 5px rgba(0,0,0,0.3);"

@@ -6,15 +6,13 @@ const MediasContext = createContext({});
 export function MediasProvider({ children }) {
 	const [medias, setMedias] = useState({});
 
-	const getCover = (row, index) => {
-		if (row === 0 && medias.movies && medias.movies[index]) {
-			return `https://image.tmdb.org/t/p/w500${medias.movies[index].poster_path}`;
-		} else if (row == 1 && medias.games && medias.games[index]) {
-			return medias.games[index].background_image;
-		} else if (row == 2 && medias.books && medias.books[index]) {
-			return medias.books[index].volumeInfo.imageLinks.thumbnail;
-		} else if (row == 3 && medias.movies && medias.movies[index + 9]) {
-			return `https://image.tmdb.org/t/p/w500${medias.movies[index + 9].poster_path}`;
+	const getCover = (row, item) => {
+		if (row === 0) {
+			return `https://image.tmdb.org/t/p/w500${item.poster_path}`;
+		} else if (row == 1) {
+			return item.background_image;
+		} else if (row == 2) {
+			return item.volumeInfo.imageLinks.thumbnail;
 		}
 	};
 

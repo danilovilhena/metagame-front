@@ -1,7 +1,7 @@
 import { Flex, Text, Highlight } from '@chakra-ui/react';
 import VerticalMovingCovers from './VerticalMovingCovers';
 
-export default function Cover({ content, getCover }) {
+export default function Cover() {
 	return (
 		<Flex
 			bg="primary"
@@ -91,7 +91,7 @@ export default function Cover({ content, getCover }) {
 					</Flex>
 				</Flex>
 			</Flex>
-			<VerticalMovingCovers content={content} getCover={getCover} />
+			<VerticalMovingCovers />
 		</Flex>
 	);
 }
