@@ -1,24 +1,19 @@
 import { VStack, Image, Menu, Text, Grid, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import Modal from 'components/common/Modal';
 import Button from 'components/common/Button';
 import getIcon from 'utils/getIcon';
 import { Input } from 'components/common/Input';
 import { useEffect, useState } from 'react';
 import { api } from 'services/api';
-import { ChevronDownIcon } from '@chakra-ui/icons';
+import { getGroup, getVerb } from 'utils/mediaTypes';
 
 export default function AddGoal({ isModalOpen, setIsModalOpen }) {
 	const [mediaTypes, setMediaTypes] = useState([]);
 	const [mediaSelected, setMediaSelected] = useState('');
 	const [goalPeriod, setGoalPeriod] = useState('dias');
-
-	const mediaVerb = (name) => {
-		return {
-			book: 'ler',
-			movie: 'assistir',
-			game: 'jogar',
-		}[name.toLowerCase()];
-	};
+	const [goalValue, setGoalValue] = useState(0);
+	const [goalLength, setGoalLength] = useState(0);
 
 	useEffect(() => {
 		async function getMediaTypes() {
@@ -29,6 +24,12 @@ export default function AddGoal({ isModalOpen, setIsModalOpen }) {
 
 		getMediaTypes();
 	}, []);
+
+	const addGoal = async () => {
+		setIsModalOpen(false);
+		console.log(goalValue);
+		console.log(goalLength);
+	};
 
 	return (
 		<Modal
@@ -66,23 +67,33 @@ export default function AddGoal({ isModalOpen, setIsModalOpen }) {
 								display="flex"
 								justifyContent="space-between"
 							>
-								{mediaVerb(mediaSelected)}
+								{getVerb(mediaSelected)}
 								<ChevronDownIcon />
 							</Button>
 						</MenuButton>
 						<MenuList minW="max-content">
 							{mediaTypes.map((media, idx) => (
 								<MenuItem key={idx} onClick={() => setMediaSelected(media.type)}>
-									{mediaVerb(media.type)}
+									{getVerb(media.type)}
 								</MenuItem>
 							))}
 						</MenuList>
 					</Menu>
-					<Input type="number" placeholder="0" />
+					<Input
+						type="number"
+						aria-label={`Número de ${mediaSelected.toLowerCase()}s`}
+						value={goalValue}
+						onChange={(e) => setGoalValue(e.target.value)}
+					/>
 					<Text display="flex" alignItems="center" justifyContent="center" minWidth="80px">
-						{mediaSelected.toLowerCase()}s em
+						{getGroup(mediaSelected)} em
 					</Text>
-					<Input type="number" placeholder="0" />
+					<Input
+						type="number"
+						aria-label={`Número de ${goalPeriod}`}
+						value={goalLength}
+						onChange={(e) => setGoalLength(e.target.value)}
+					/>
 					<Menu matchWidth>
 						<MenuButton>
 							<Button
@@ -103,13 +114,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen }) {
 						</MenuList>
 					</Menu>
 				</Grid>
-				<Button
-					variant="styled"
-					width="100%"
-					onClick={() => {
-						setIsModalOpen(false);
-					}}
-				>
+				<Button variant="styled" width="100%" onClick={addGoal}>
 					<Image src={getIcon('goal-add')} w="1.5rem" alt="" mr="2" />
 					Criar meta de consumo
 				</Button>

@@ -26,7 +26,12 @@ export default function PublicGoal({ goal, ...rest }) {
 					<Text as="strong">{goal.title}</Text>
 				</Flex>
 				<Stack direction="row" align="center" minW="max-content" spacing={2}>
-					<Image src={getIcon('like', goal.liked)} w="1.75rem" role="button" alt="Descurtir" />
+					<Image
+						src={`/icons/like${goal.liked ? '_active' : ''}.svg`}
+						w="1.75rem"
+						role="button"
+						alt="Descurtir"
+					/>
 					<Menu matchWidth>
 						<MenuButton>
 							<Image src={getIcon('vertical-dots')} w="2rem" role="button" alt="Mais opções" />
