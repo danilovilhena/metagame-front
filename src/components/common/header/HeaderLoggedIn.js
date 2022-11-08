@@ -58,7 +58,7 @@ export default function HeaderLoggedIn({ user }) {
 				color="primary"
 				maxWidth="256px"
 				alignItems="center"
-				_dark={{ color: 'gray.200' }}
+				_dark={{ color: 'gray.200', borderColor: 'gray.600' }}
 			>
 				<InputLeftElement pointerEvents="none">
 					<Icon boxSize={5} as={IoMdSearch} />
