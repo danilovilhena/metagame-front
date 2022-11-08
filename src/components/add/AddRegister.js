@@ -28,17 +28,17 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 				// );
 				// response = await res.json();
 				// data = { movies: response.results.slice(0, max_movies) };
-
+				data = { movies: [] };
 				// Games
 				res = await fetch(
-					`https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG}&page=2&search=${searchInput}`
+					`https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG}&maxResults=10&search=${searchInput}`
 				);
 				response = await res.json();
 				data = { ...data, games: response.results };
 
 				// Books
 				res = await fetch(
-					`https://www.googleapis.com/books/v1/volumes?q=${searchInput}&orderBy=relevance&filter=paid-ebooks`
+					`https://www.googleapis.com/books/v1/volumes?orderBy=relevance&filter=paid-ebooks&&page_size=10&q=${searchInput}`
 				);
 				response = await res.json();
 
@@ -48,6 +48,8 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 			}, 3000);
 
 			return () => clearTimeout(delayDebounceFn);
+		} else {
+			setFiltredMedias(null);
 		}
 	}, [searchInput]);
 
@@ -87,8 +89,8 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 				>
 					{searchInput ? (
 						filtredMedias ? (
-							Object.entries(filtredMedias).map((medias, idx) => {
-								medias.map((media) => (
+							Object.values(filtredMedias).map((medias, idx) => {
+								return medias.map((media) => (
 									<Flex
 										as="button"
 										flexDirection="column"
@@ -96,7 +98,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 										onClick={() => setMediaSelected({ type: idx, item: media })}
 										key={media.id}
 									>
-										{/* <Image
+										<Image
 											width="120px"
 											height="180px"
 											objectFit="cover"
@@ -104,8 +106,8 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 											alt="cover"
 											mb="0.5em"
 											boxShadow="5px 2.5px 2.5px rgba(0,0,0,0.3);"
-											src={getCover(idx, idx)}
-										/> */}
+											src={getCover(idx, media)}
+										/>
 										<Text
 											fontWeight="500"
 											maxW="130px"
@@ -115,13 +117,12 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 											textAlign="center"
 											overflow="hidden"
 										>
-											{/* {getCoverTitle(mediaIndex, currentMediaType[idx])} */}
+											{getCoverTitle(idx, media)}
 										</Text>
 									</Flex>
 								));
 							})
 						) : (
-							// ))
 							<Text fontWeight="bold" alignSelf="center">
 								Mídia não encontrada
 							</Text>
@@ -177,6 +178,10 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 							{mediaSelected.item.title ||
 								mediaSelected.item.name ||
 								mediaSelected.item.volumeInfo.title}
+						</Text>
+						<Text>
+							<Text as="strong">Categoria: </Text>
+							{mediaSelected.type === 0 ? 'Filme' : mediaSelected.type === 1 ? 'Jogo' : 'Livro'}
 						</Text>
 						<Text>
 							<Text as="strong">Ano de lançamento: </Text>
