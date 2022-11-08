@@ -7,8 +7,21 @@ import { Input } from 'components/common/Input';
 import { useEffect, useState } from 'react';
 import { api } from 'services/api';
 import { getGroup, getVerb } from 'utils/mediaTypes';
+import { useSession } from 'next-auth/react';
 
-export default function AddGoal({ isModalOpen, setIsModalOpen }) {
+const getLengthInDays = (length, period) => {
+	switch (period) {
+		case 'dias':
+			return length;
+		case 'semanas':
+			return length * 7;
+		case 'meses':
+			return length * 30;
+	}
+};
+
+export default function AddGoal({ isModalOpen, setIsModalOpen, closeAll }) {
+	const session = useSession();
 	const [mediaTypes, setMediaTypes] = useState([]);
 	const [mediaSelected, setMediaSelected] = useState('');
 	const [goalPeriod, setGoalPeriod] = useState('dias');
@@ -26,9 +39,14 @@ export default function AddGoal({ isModalOpen, setIsModalOpen }) {
 	}, []);
 
 	const addGoal = async () => {
-		setIsModalOpen(false);
-		console.log(goalValue);
-		console.log(goalLength);
+		api
+			.post('/goals', {
+				mediatype: mediaTypes.find((media) => media.type === mediaSelected).id,
+				creator: session.data.id,
+				objective_quantity: goalValue,
+				limit_days: getLengthInDays(goalLength, goalPeriod),
+			})
+			.then(closeAll);
 	};
 
 	return (

@@ -33,6 +33,12 @@ export default function HeaderLoggedIn({ user }) {
 	const { colorMode, toggleColorMode } = useColorMode();
 	const isLight = colorMode === 'light';
 
+	const closeAll = () => {
+		setIsAddModalOpen(false);
+		setIsAddMediaModalOpen(false);
+		setIsAddGoalModalOpen(false);
+	};
+
 	const buttons = [
 		{
 			icon: 'add',
@@ -120,8 +126,16 @@ export default function HeaderLoggedIn({ user }) {
 				setIsAddGoalModalOpen={setIsAddGoalModalOpen}
 				setIsAddMediaModalOpen={setIsAddMediaModalOpen}
 			/>
-			<AddGoal isModalOpen={isAddGoalModalOpen} setIsModalOpen={setIsAddGoalModalOpen} />
-			<AddRegister isModalOpen={isAddMediaModalOpen} setIsModalOpen={setIsAddMediaModalOpen} />
+			<AddGoal
+				isModalOpen={isAddGoalModalOpen}
+				setIsModalOpen={setIsAddGoalModalOpen}
+				closeAll={closeAll}
+			/>
+			<AddRegister
+				isModalOpen={isAddMediaModalOpen}
+				setIsModalOpen={setIsAddMediaModalOpen}
+				closeAll={closeAll}
+			/>
 		</Flex>
 	);
 }
