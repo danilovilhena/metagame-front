@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { parseCookies } from 'nookies';
 import randomWords from 'random-words';
-import Cover from 'components/home/Cover';
-import Info from 'components/home/Info';
-import TabsComponent from 'components/home/TabsComponent';
-import FAQ from 'components/home/FAQ';
+import Cover from 'components/index/Cover';
+import Info from 'components/index/Info';
+import TabsComponent from 'components/index/TabsComponent';
+import FAQ from 'components/index/FAQ';
 import { api } from 'services/api';
 import Title from 'components/common/Title';
 
