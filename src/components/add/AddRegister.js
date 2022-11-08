@@ -23,6 +23,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 				width="100%"
 				mb="4"
 				mt="-2"
+				_dark={{ color: 'white' }}
 			>
 				<Input
 					placeholder="Buscar por filmes, livros ou jogos"

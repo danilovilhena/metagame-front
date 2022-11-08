@@ -68,11 +68,11 @@ export default function HeaderLoggedIn({ user }) {
 			</InputGroup>
 			<HStack color="primary" spacing="0.5em">
 				{buttons.map((btn, idx) => (
-					<Button variant="unstyled" mr="0" key={idx} onClick={btn.action}>
-						<Link href={btn.route || ''}>
+					<Link href={btn.route || ''} key={idx}>
+						<Button variant="unstyled" mr="0" onClick={btn.action}>
 							<Image src={getIcon(btn.icon, router.pathname === btn.route)} alt={btn.alt} />
-						</Link>
-					</Button>
+						</Button>
+					</Link>
 				))}
 				<Menu isLazy>
 					<MenuButton ml="1rem !important">
@@ -89,15 +89,13 @@ export default function HeaderLoggedIn({ user }) {
 					</MenuButton>
 					<MenuList minW="fit-content">
 						<Link href="/profile">
-							<a>
-								<MenuItem
-									icon={<Image src={getIcon('user', false)} alt="Perfil" />}
-									mr="8"
-									_dark={{ color: 'gray.200' }}
-								>
-									Perfil
-								</MenuItem>
-							</a>
+							<MenuItem
+								icon={<Image src={getIcon('user', false)} alt="Perfil" />}
+								mr="8"
+								_dark={{ color: 'gray.200' }}
+							>
+								Perfil
+							</MenuItem>
 						</Link>
 						<MenuItem
 							icon={

@@ -12,9 +12,9 @@ import {
 import NextLink from 'next/link';
 import { useState } from 'react';
 import Button from 'components/common/Button';
-import LogInModal from 'components/home/LogInModal';
-import SignUpModal from 'components/home/SignUpModal';
-import SideBarDrawer from 'components/home/SideBarDrawer';
+import LogInModal from 'components/index/LogInModal';
+import SignUpModal from 'components/index/SignUpModal';
+import SideBarDrawer from 'components/index/SideBarDrawer';
 import getIcon from 'utils/getIcon';
 
 export default function Header() {
