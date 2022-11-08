@@ -121,7 +121,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 				</Flex>
 				<Flex
 					wrap="wrap"
-					gap="20px"
+					gap="5px"
 					justifyContent="center"
 					overflow="auto"
 					height="400px"
@@ -181,6 +181,13 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 										as="button"
 										flexDirection="column"
 										alignItems="center"
+										padding="0.5rem"
+										borderRadius="20px"
+										border={
+											mediaSelected &&
+											currentMediaType[idx].id === mediaSelected.item.id &&
+											'solid 2px var(--chakra-colors-secondary)'
+										}
 										onClick={() =>
 											setMediaSelected({ type: mediaIndex, item: currentMediaType[idx] })
 										}
