@@ -29,7 +29,7 @@ export default function HomeComponent() {
 				minH="calc(100vh - 10rem)"
 			>
 				<Text as="h1" fontSize="3xl" fontWeight="bold">
-					Olá,{' '}
+					Olá,
 					<Text color="secondary" as="span">
 						{user.first_name}
 					</Text>

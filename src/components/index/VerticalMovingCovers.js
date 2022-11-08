@@ -1,7 +1,9 @@
 import { Box, Flex, Image, useBreakpointValue, keyframes } from '@chakra-ui/react';
+import { useMedias } from 'contexts/MediasContext';
 import styles from 'styles/VerticalMovingCovers.module.css';
 
-export default function VerticalMovingCovers({ getCover }) {
+export default function VerticalMovingCovers() {
+	const { getCover } = useMedias();
 	const isWideVersion = useBreakpointValue({
 		base: false,
 		xl: true,

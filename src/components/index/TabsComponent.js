@@ -10,19 +10,10 @@ import {
 	GridItem,
 	Flex,
 } from '@chakra-ui/react';
+import { useMedias } from 'contexts/MediasContext';
 
-export default function TabsComponent({ content, getCover }) {
-	const getCoverTitle = (row, item) => {
-		if (item) {
-			if (row === 0 && item.title) {
-				return item.title;
-			} else if (row === 1 && item.name) {
-				return item.name;
-			} else if (row === 2 && item.volumeInfo && item.volumeInfo.title) {
-				return item.volumeInfo.title;
-			}
-		}
-	};
+export default function TabsComponent() {
+	const { medias, getCover, getCoverTitle } = useMedias();
 
 	return (
 		<Flex
@@ -38,13 +29,13 @@ export default function TabsComponent({ content, getCover }) {
 
 			<Tabs variant="unstyled" color="#8C8A97">
 				<TabList flexDirection={{ base: 'row', sm: 'row' }} flexWrap="wrap">
-					{Object.keys(content).map((tabOption, index) => (
+					{Object.keys(medias).map((tabOption, index) => (
 						<Tab
 							_selected={{ color: 'white' }}
 							fontSize={{ base: '2em', lg: '3em' }}
 							fontWeight="bold"
 							pl="0"
-							w="fit-content"
+							w="fit-medias"
 							overflow="hidden"
 							key={index}
 						>
@@ -53,14 +44,13 @@ export default function TabsComponent({ content, getCover }) {
 					))}
 				</TabList>
 				<TabPanels>
-					{Object.entries(content).map((tabOptionContent, idx) => (
+					{Object.entries(medias).map((tabOptionContent, idx) => (
 						<TabPanel key={`panel-${idx}`}>
 							<Grid templateColumns="repeat(auto-fill,minmax(160px, 1fr));" gap={18}>
 								{tabOptionContent[1].slice(0, 12).map((item, innerIdx) => (
 									<GridItem
-										key={`content-${innerIdx}`}
+										key={`medias-${innerIdx}`}
 										display="flex"
-										justifyContent="center"
 										flexDir="column"
 										alignItems="center"
 										px={5}
@@ -79,7 +69,7 @@ export default function TabsComponent({ content, getCover }) {
 										<Text
 											color="white"
 											fontSize="1em"
-											lineHeight="1em"
+											lineHeight="1.3em"
 											maxWidth="150px"
 											textAlign="center"
 											overflow="hidden"
