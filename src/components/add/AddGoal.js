@@ -38,6 +38,13 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAll }) {
 		getMediaTypes();
 	}, []);
 
+	const resetStates = () => {
+		setMediaSelected(mediaTypes[0].type);
+		setGoalPeriod('dias');
+		setGoalValue(0);
+		setGoalLength(0);
+	};
+
 	const addGoal = async () => {
 		api
 			.post('/goals', {
@@ -46,6 +53,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAll }) {
 				objective_quantity: goalValue,
 				limit_days: getLengthInDays(goalLength, goalPeriod),
 			})
+			.then(resetStates)
 			.then(closeAll);
 	};
 
