@@ -12,15 +12,13 @@ export default function AddGoal({ isModalOpen, setIsModalOpen }) {
 	const [mediaSelected, setMediaSelected] = useState('');
 	const [goalPeriod, setGoalPeriod] = useState('dias');
 
-	function getMediaVerb(media) {
-		if (media === 'Movie') {
-			return 'assitir';
-		}
-		if (media === 'Game') {
-			return 'jogar';
-		}
-		return 'ler';
-	}
+	const mediaVerb = (name) => {
+		return {
+			book: 'ler',
+			movie: 'assistir',
+			game: 'jogar',
+		}[name.toLowerCase()];
+	};
 
 	useEffect(() => {
 		async function getMediaTypes() {
@@ -53,13 +51,13 @@ export default function AddGoal({ isModalOpen, setIsModalOpen }) {
 					width="100%"
 					color="primary"
 					gridTemplateColumns="1fr 2fr 1fr 1fr 1fr 2fr "
-					gap="20px"
+					gap="1rem"
 					alignItems="center"
 				>
 					<Text textAlign="center" display="flex" alignItems="center">
 						Eu quero
 					</Text>
-					<Menu>
+					<Menu matchWidth>
 						<MenuButton>
 							<Button
 								variant="styled"
@@ -68,14 +66,14 @@ export default function AddGoal({ isModalOpen, setIsModalOpen }) {
 								display="flex"
 								justifyContent="space-between"
 							>
-								{getMediaVerb(mediaSelected)}
+								{mediaVerb(mediaSelected)}
 								<ChevronDownIcon />
 							</Button>
 						</MenuButton>
-						<MenuList>
+						<MenuList minW="max-content">
 							{mediaTypes.map((media, idx) => (
 								<MenuItem key={idx} onClick={() => setMediaSelected(media.type)}>
-									{getMediaVerb(media.type)}
+									{mediaVerb(media.type)}
 								</MenuItem>
 							))}
 						</MenuList>
@@ -85,7 +83,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen }) {
 						{mediaSelected.toLowerCase()}s em
 					</Text>
 					<Input type="number" placeholder="0" />
-					<Menu>
+					<Menu matchWidth>
 						<MenuButton>
 							<Button
 								variant="styled"
@@ -98,7 +96,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen }) {
 								<ChevronDownIcon />
 							</Button>
 						</MenuButton>
-						<MenuList>
+						<MenuList minW="max-content">
 							<MenuItem onClick={() => setGoalPeriod('dias')}>dias</MenuItem>
 							<MenuItem onClick={() => setGoalPeriod('semanas')}>semanas</MenuItem>
 							<MenuItem onClick={() => setGoalPeriod('meses')}>meses</MenuItem>
