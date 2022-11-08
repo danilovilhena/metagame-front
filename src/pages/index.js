@@ -30,8 +30,6 @@ export default function Index() {
 		fetchMediaContent();
 	}, []);
 
-	useEffect(() => console.log(data), [data]);
-
 	return (
 		<>
 			<Title title="Metagame" />

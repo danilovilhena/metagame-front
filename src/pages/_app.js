@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps, ...appProps }) {
 		else {
 			return (
 				<Layout>
-					<Component {...pageProps} />{' '}
+					<Component {...pageProps} />
 				</Layout>
 			);
 		}
