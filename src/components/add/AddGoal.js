@@ -42,14 +42,14 @@ export default function AddGoal({ isModalOpen, setIsModalOpen }) {
 				textAlign="center"
 				alignItems="center"
 				spacing="1rem"
-				color="white"
+				color="primary"
 				width="100%"
 				mb="4"
 				mt="-2"
+				_dark={{ color: 'white' }}
 			>
 				<Grid
 					width="100%"
-					color="primary"
 					gridTemplateColumns="1fr 2fr 1fr 1fr 1fr 2fr "
 					gap="1rem"
 					alignItems="center"
