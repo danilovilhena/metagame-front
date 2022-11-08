@@ -114,24 +114,20 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 						mr="1rem"
 					/>
 					<Menu matchWidth>
-						<MenuButton>
-							<Button
-								variant="styled"
-								background="primary"
-								width="100%"
-								display="flex"
-								justifyContent="space-between"
-							>
-								{filterCategory === 'Todos'
-									? 'Todos'
-									: filterCategory === 0
-									? 'Filmes'
-									: filterCategory === 1
-									? 'Jogos'
-									: 'Livros'}
+						<Button as={MenuButton} variant="styled" background="primary" width="120px">
+							<Flex justifyContent="space-between" alignItems="center">
+								<Text>
+									{filterCategory === 'Todos'
+										? 'Todos'
+										: filterCategory === 0
+										? 'Filmes'
+										: filterCategory === 1
+										? 'Jogos'
+										: 'Livros'}
+								</Text>
 								<ChevronDownIcon />
-							</Button>
-						</MenuButton>
+							</Flex>
+						</Button>
 						<MenuList minW="max-content">
 							<MenuItem onClick={() => setFilterCategory('Todos')}>Todos</MenuItem>
 							<MenuItem onClick={() => setFilterCategory(0)}>Filmes</MenuItem>
