@@ -1,32 +1,44 @@
-import { VStack, Image, Menu, Text, Grid, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import {
+	VStack,
+	Image,
+	Menu,
+	Text,
+	Grid,
+	MenuButton,
+	MenuList,
+	MenuItem,
+	useToast,
+} from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
+import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import Modal from 'components/common/Modal';
 import Button from 'components/common/Button';
-import getIcon from 'utils/getIcon';
 import { Input } from 'components/common/Input';
-import { useEffect, useState } from 'react';
 import { api } from 'services/api';
 import { getGroup, getVerb } from 'utils/mediaTypes';
-import { useSession } from 'next-auth/react';
+import getIcon from 'utils/getIcon';
+import showToast from 'utils/showToast';
 
 const getLengthInDays = (length, period) => {
 	switch (period) {
 		case 'dias':
-			return length;
+			return parseInt(length);
 		case 'semanas':
-			return length * 7;
+			return parseInt(length) * 7;
 		case 'meses':
-			return length * 30;
+			return parseInt(length) * 30;
 	}
 };
 
-export default function AddGoal({ isModalOpen, setIsModalOpen, closeAll }) {
-	const session = useSession();
+export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals }) {
 	const [mediaTypes, setMediaTypes] = useState([]);
 	const [mediaSelected, setMediaSelected] = useState('');
 	const [goalPeriod, setGoalPeriod] = useState('dias');
 	const [goalValue, setGoalValue] = useState(0);
 	const [goalLength, setGoalLength] = useState(0);
+	const session = useSession();
+	const toast = useToast();
 
 	useEffect(() => {
 		async function getMediaTypes() {
@@ -50,11 +62,18 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAll }) {
 			.post('/goals', {
 				mediatype: mediaTypes.find((media) => media.type === mediaSelected).id,
 				creator: session.data.id,
-				objective_quantity: goalValue,
+				objective_quantity: parseInt(goalValue),
 				limit_days: getLengthInDays(goalLength, goalPeriod),
 			})
-			.then(resetStates)
-			.then(closeAll);
+			.then(() => {
+				showToast(toast, 'Meta adicionada com sucesso!', 'success');
+				resetStates();
+				closeAllModals();
+			})
+
+			.catch((err) => {
+				showToast(toast, `${err?.response?.data?.error}.` || 'Erro ao adicionar meta!', 'error');
+			});
 	};
 
 	return (

@@ -33,7 +33,7 @@ export default function HeaderLoggedIn({ user }) {
 	const { colorMode, toggleColorMode } = useColorMode();
 	const isLight = colorMode === 'light';
 
-	const closeAll = () => {
+	const closeAllModals = () => {
 		setIsAddModalOpen(false);
 		setIsAddMediaModalOpen(false);
 		setIsAddGoalModalOpen(false);
@@ -129,12 +129,12 @@ export default function HeaderLoggedIn({ user }) {
 			<AddGoal
 				isModalOpen={isAddGoalModalOpen}
 				setIsModalOpen={setIsAddGoalModalOpen}
-				closeAll={closeAll}
+				closeAllModals={closeAllModals}
 			/>
 			<AddRegister
 				isModalOpen={isAddMediaModalOpen}
 				setIsModalOpen={setIsAddMediaModalOpen}
-				closeAll={closeAll}
+				closeAllModals={closeAllModals}
 			/>
 		</Flex>
 	);
