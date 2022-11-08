@@ -1,16 +1,18 @@
-import { VStack, Image, Flex, Text } from '@chakra-ui/react';
+import { VStack, Image, Flex, Text, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import Modal from 'components/common/Modal';
 import Button from 'components/common/Button';
 import getIcon from 'utils/getIcon';
 import { Input } from 'components/common/Input';
 import { useEffect, useState } from 'react';
 import { useMedias } from 'contexts/MediasContext';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 
 export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 	const { medias, getCover, getCoverTitle } = useMedias();
 	const [searchInput, setSearchInput] = useState('');
 	const [mediaSelected, setMediaSelected] = useState(null);
 	const [filtredMedias, setFiltredMedias] = useState(null);
+	const [filterCategory, setFilterCategory] = useState('Todos');
 
 	useEffect(() => {
 		if (searchInput) {
@@ -19,43 +21,52 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 				let response = null;
 				let data = {};
 
-				// res = await fetch(
-				// 	`https://api.themoviedb.org/3/discover/movie/?api_key=${
-				// 		process.env.NEXT_PUBLIC_TMDB
-				// 	}&language=pt-BR&sort_by=popularity.desc&vote_average.gte=7&include_adult=false&include_video=false&page=${
-				// 		Math.random() * 25
-				// 	}`
-				// );
-				// response = await res.json();
-				// data = { movies: response.results.slice(0, max_movies) };
-				data = { movies: [] };
-				// Games
-				res = await fetch(
-					`https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG}&maxResults=10&search=${searchInput}`
-				);
-				response = await res.json();
-				data = { ...data, games: response.results };
+				if (filterCategory === 'Todos' || filterCategory === 0) {
+					// res = await fetch(
+					// 	`https://api.themoviedb.org/3/discover/movie/?api_key=${
+					// 		process.env.NEXT_PUBLIC_TMDB
+					// 	}&language=pt-BR&sort_by=popularity.desc&vote_average.gte=7&include_adult=false&include_video=false&page=${
+					// 		Math.random() * 25
+					// 	}`
+					// );
+					// response = await res.json();
+					// data = { movies: response.results.slice(0, max_movies) };
+					data = { movies: [] };
+				} else {
+					data = { movies: [] };
+				}
 
-				// Books
-				res = await fetch(
-					`https://www.googleapis.com/books/v1/volumes?orderBy=relevance&filter=paid-ebooks&&page_size=10&q=${searchInput}`
-				);
-				response = await res.json();
+				if (filterCategory === 'Todos' || filterCategory === 1) {
+					// Games
+					res = await fetch(
+						`https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG}&maxResults=10&search=${searchInput}`
+					);
+					response = await res.json();
+					data = { ...data, games: response.results };
+				} else {
+					data = { ...data, games: [] };
+				}
 
-				data = { ...data, books: response.items };
+				if (filterCategory === 'Todos' || filterCategory === 2) {
+					// Books
+					res = await fetch(
+						`https://www.googleapis.com/books/v1/volumes?orderBy=relevance&filter=paid-ebooks&&page_size=10&q=${searchInput}`
+					);
+					response = await res.json();
+
+					data = { ...data, books: response.items };
+				} else {
+					data = { ...data, books: [] };
+				}
 
 				setFiltredMedias(data);
-			}, 3000);
+			}, 1000);
 
 			return () => clearTimeout(delayDebounceFn);
 		} else {
 			setFiltredMedias(null);
 		}
-	}, [searchInput]);
-
-	useEffect(() => {
-		console.log(filtredMedias);
-	}, [filtredMedias]);
+	}, [searchInput, filterCategory]);
 
 	return (
 		<Modal
@@ -74,11 +85,40 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 				mt="-2"
 				_dark={{ color: 'white' }}
 			>
-				<Input
-					placeholder="Buscar por filmes, livros ou jogos"
-					value={searchInput}
-					onChange={(e) => setSearchInput(e.target.value)}
-				/>
+				<Flex width="100%">
+					<Input
+						placeholder="Buscar por filmes, livros ou jogos"
+						value={searchInput}
+						onChange={(e) => setSearchInput(e.target.value)}
+						mr="1rem"
+					/>
+					<Menu matchWidth>
+						<MenuButton>
+							<Button
+								variant="styled"
+								background="primary"
+								width="100%"
+								display="flex"
+								justifyContent="space-between"
+							>
+								{filterCategory === 'Todos'
+									? 'Todos'
+									: filterCategory === 0
+									? 'Filmes'
+									: filterCategory === 1
+									? 'Jogos'
+									: 'Livros'}
+								<ChevronDownIcon />
+							</Button>
+						</MenuButton>
+						<MenuList minW="max-content">
+							<MenuItem onClick={() => setFilterCategory('Todos')}>Todos</MenuItem>
+							<MenuItem onClick={() => setFilterCategory(0)}>Filmes</MenuItem>
+							<MenuItem onClick={() => setFilterCategory(1)}>Jogos</MenuItem>
+							<MenuItem onClick={() => setFilterCategory(2)}>Livros</MenuItem>
+						</MenuList>
+					</Menu>
+				</Flex>
 				<Flex
 					wrap="wrap"
 					gap="20px"
@@ -131,6 +171,9 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 						[...Array(10)].map((_, idx) => {
 							// Counting from 0 to 2
 							const mediaIndex = idx % 3;
+							if (filterCategory !== 'Todos' && filterCategory !== mediaIndex) {
+								return;
+							}
 							const currentMediaType = Object.values(medias)[mediaIndex];
 							if (currentMediaType) {
 								return (
