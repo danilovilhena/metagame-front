@@ -19,7 +19,7 @@ export default function Footer() {
 			mx={{ base: '5%', sm: '10%', xl: '15rem' }}
 			align="center"
 			fontSize="1em"
-			py="2rem"
+			py="1.25rem"
 		>
 			<Image src={isLight ? '/logo.svg' : '/logo_dark.svg'} alt="Metagame" />
 			<Stack as="nav" justifyContent="space-evenly" spacing="2rem" direction="row">
