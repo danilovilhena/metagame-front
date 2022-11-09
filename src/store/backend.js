@@ -6,26 +6,49 @@ export const backendSlice = createSlice({
 	initialState: {
 		goals: [],
 		mediaTypes: [],
+		medias: [],
+	},
+	reducers: {
+		setGoals: (state, action) => {
+			state.goals = action.payload;
+		},
+		setMediaTypes: (state, action) => {
+			state.mediaTypes = action.payload;
+		},
+		setMedias: (state, action) => {
+			state.medias = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(setMediaTypes.fulfilled, (state, action) => {
+		builder.addCase(fetchMediaTypes.fulfilled, (state, action) => {
 			state.mediaTypes = action.payload;
 		});
 
-		builder.addCase(setGoals.fulfilled, (state, action) => {
+		builder.addCase(fetchGoals.fulfilled, (state, action) => {
 			state.goals = action.payload;
+		});
+
+		builder.addCase(fetchMedias.fulfilled, (state, action) => {
+			state.medias = action.payload;
 		});
 	},
 });
 
-export const setMediaTypes = createAsyncThunk('backend/setMediaTypes', async () => {
+export const fetchMediaTypes = createAsyncThunk('backend/fetchMediaTypes', async () => {
 	const response = await api.get('/mediatypes');
 	return response.data;
 });
 
-export const setGoals = createAsyncThunk('backend/setGoals', async (userId) => {
+export const fetchGoals = createAsyncThunk('backend/fetchGoals', async (userId) => {
 	const response = await api.get(`/goals/user/${userId}`);
 	return response.data;
 });
+
+export const fetchMedias = createAsyncThunk('backend/fetchMedias', async (userId) => {
+	const response = await api.get(`/medias/user/${userId}`);
+	return response.data;
+});
+
+export const { setGoals, setMediaTypes } = backendSlice.actions;
 
 export default backendSlice.reducer;

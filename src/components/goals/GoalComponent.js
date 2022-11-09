@@ -1,7 +1,10 @@
 import { Grid, Flex, Text } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import PersonalGoal from 'components/profile/PersonalGoal';
 import PublicGoal from 'components/goals/PublicGoal';
+import { fetchGoals } from 'store/backend';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -10,8 +13,13 @@ const Title = ({ children }) => (
 );
 
 export default function GoalComponent() {
+	const dispatch = useDispatch();
 	const session = useSession();
 	const user = session.data;
+
+	useEffect(() => {
+		if (user && user.id) dispatch(fetchGoals(user.id));
+	}, [user]);
 
 	const personalGoals = [
 		{

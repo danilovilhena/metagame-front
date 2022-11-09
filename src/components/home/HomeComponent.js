@@ -1,10 +1,18 @@
 import { Flex, Grid, Text } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import PublicGoal from 'components/goals/PublicGoal';
+import { fetchGoals } from 'store/backend';
 
 export default function HomeComponent() {
+	const dispatch = useDispatch();
 	const session = useSession();
 	const user = session.data;
+
+	useEffect(() => {
+		if (user && user.id) dispatch(fetchGoals(user.id));
+	}, [user]);
 
 	const publicGoals = Array(10).fill({
 		type: 'movie',

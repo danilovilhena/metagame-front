@@ -5,8 +5,9 @@ import MediaIcon from 'components/common/MediaIcon';
 import Activity from './Activity';
 import PersonalGoal from './PersonalGoal';
 import { useEffect, useState } from 'react';
-import { api } from 'services/api';
 import { Input } from 'components/common/Input';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchGoals, fetchMedias } from 'store/backend';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -29,17 +30,19 @@ const InputEdit = ({ name, action, value }) => (
 );
 
 export default function ProfileComponent() {
+	const dispatch = useDispatch();
 	const session = useSession();
 	const user = session.data;
 
+	const medias = useSelector((state) => state.backend.medias);
 	const [isEdit, setIsEdit] = useState(false);
-	const [medias, setMedias] = useState(0);
 	const [name, setName] = useState(user ? `${user.first_name} ${user.last_name}` : '');
 	const [username, setUsername] = useState(user ? user.username : '');
 
 	useEffect(() => {
 		if (user && user.id) {
-			api.get(`/medias/user/${user.id}`).then((res) => setMedias(res.data.length));
+			dispatch(fetchMedias(user.id));
+			dispatch(fetchGoals(user.id));
 		}
 	}, [user]);
 
@@ -133,7 +136,7 @@ export default function ProfileComponent() {
 						</Flex>
 						<Flex flexDirection="column" mr="2em">
 							<Text>Número de mídias consumidas</Text>
-							<Text as="strong">{medias}</Text>
+							<Text as="strong">{medias.length}</Text>
 						</Flex>
 						<Flex flexDirection="column">
 							<Text>Data de cadastro</Text>
