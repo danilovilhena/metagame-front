@@ -53,7 +53,7 @@ export default function ProfileComponent() {
 		return {
 			...el,
 			type: el.type.toLowerCase(),
-			amount: userMedias.filter((el) => el.id === 1).length,
+			amount: userMedias.filter((media) => media.id === el.id).length,
 			label: labels[el.type],
 		};
 	});
