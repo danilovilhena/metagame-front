@@ -24,6 +24,11 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 	const [filtredMedias, setFiltredMedias] = useState(null);
 	const [filterCategory, setFilterCategory] = useState('Todos');
 
+	const handleSelected = (idx, media) => {
+		if (mediaSelected?.item === media) setMediaSelected(null);
+		else setMediaSelected({ type: idx, item: media });
+	};
+
 	useEffect(() => {
 		if (searchInput) {
 			const delayDebounceFn = setTimeout(async () => {
@@ -161,7 +166,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 											as="button"
 											flexDirection="column"
 											alignItems="center"
-											onClick={() => setMediaSelected({ type: idx, item: media })}
+											onClick={() => handleSelected(idx, media)}
 											key={media.id}
 										>
 											<Image
@@ -215,9 +220,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 											currentMediaType[idx].id === mediaSelected.item.id &&
 											'solid 2px var(--chakra-colors-secondary)'
 										}
-										onClick={() =>
-											setMediaSelected({ type: mediaIndex, item: currentMediaType[idx] })
-										}
+										onClick={() => handleSelected(mediaIndex, currentMediaType[idx])}
 										key={`defaultMedias-${idx}`}
 									>
 										<Image
@@ -249,7 +252,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 					)}
 				</Flex>
 				{mediaSelected && (
-					<VStack spacing="1em" alignItems="start">
+					<VStack spacing="1em" alignItems="start" overflowY="hidden">
 						<Text>
 							<Text as="strong">Name: </Text>
 							{mediaSelected.item.title ||
