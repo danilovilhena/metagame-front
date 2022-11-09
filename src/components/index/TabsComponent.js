@@ -11,6 +11,9 @@ import {
 	Flex,
 } from '@chakra-ui/react';
 import { useMedias } from 'contexts/MediasContext';
+import { getName } from 'utils/mediaTypes';
+
+const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
 
 export default function TabsComponent() {
 	const { medias, getCover, getCoverTitle } = useMedias();
@@ -39,7 +42,7 @@ export default function TabsComponent() {
 							overflow="hidden"
 							key={index}
 						>
-							{tabOption.charAt(0).toUpperCase() + tabOption.slice(1)}
+							{capitalize(getName(tabOption.slice(0, -1)))}s
 						</Tab>
 					))}
 				</TabList>

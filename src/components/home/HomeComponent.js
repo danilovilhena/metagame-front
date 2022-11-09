@@ -1,6 +1,6 @@
 import { Flex, Grid, Text } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import PublicGoal from 'components/goals/PublicGoal';
 import { fetchGoals } from 'store/backend';
@@ -10,19 +10,11 @@ export default function HomeComponent() {
 	const session = useSession();
 	const user = session.data;
 
+	const favoriteGoals = useSelector((state) => state.backend.favoriteGoals);
+
 	useEffect(() => {
 		if (user && user.id) dispatch(fetchGoals(user.id));
 	}, [user]);
-
-	const publicGoals = Array(10).fill({
-		type: 'movie',
-		title: 'Assistir 10 filmes em 3 meses',
-		author: {
-			username: '@murilo.couto',
-			photo: 'https://avatars.githubusercontent.com/u/4872234?v=4',
-		},
-		liked: false,
-	});
 
 	if (user) {
 		return (
@@ -37,7 +29,7 @@ export default function HomeComponent() {
 				minH="calc(100vh - 10rem)"
 			>
 				<Text as="h1" fontSize="3xl" fontWeight="bold">
-					Olá,
+					Olá,{' '}
 					<Text color="secondary" as="span">
 						{user.first_name}
 					</Text>
@@ -47,7 +39,7 @@ export default function HomeComponent() {
 					Conheça metas populares entre outros usuários 🔥
 				</Text>
 				<Grid templateColumns="repeat(2, 1fr)" gap="8" mb="3em">
-					{publicGoals.map((goal, idx) => (
+					{favoriteGoals.map((goal, idx) => (
 						<PublicGoal goal={goal} key={idx} />
 					))}
 				</Grid>
