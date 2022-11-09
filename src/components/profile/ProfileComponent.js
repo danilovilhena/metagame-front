@@ -33,6 +33,7 @@ export default function ProfileComponent() {
 	const session = useSession();
 	const user = session.data;
 
+	const mediaTypes = useSelector((state) => state.backend.mediaTypes);
 	const medias = useSelector((state) => state.backend.medias);
 	const goals = useSelector((state) => state.backend.goals);
 	const [isEdit, setIsEdit] = useState(false);
@@ -46,11 +47,16 @@ export default function ProfileComponent() {
 		}
 	}, [user]);
 
-	const buttons = [
-		{ type: 'movie', amount: '20', label: 'filmes assistidos' },
-		{ type: 'book', amount: '80', label: 'livros lidos' },
-		{ type: 'game', amount: '40', label: 'jogos concluídos' },
-	];
+	const buttons = mediaTypes.map((el) => {
+		const labels = { Movie: 'filmes assistidos', Book: 'livros lidos', Game: 'jogos concluídos' };
+
+		return {
+			...el,
+			type: el.type.toLowerCase(),
+			amount: medias.filter((el) => el.id === 1).length,
+			label: labels[el.type],
+		};
+	});
 
 	const formatDate = (date) => {
 		return new Date(date).toLocaleDateString('pt-BR', {
