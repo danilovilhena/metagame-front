@@ -3,7 +3,6 @@ import { SessionProvider } from 'next-auth/react';
 import { Provider } from 'react-redux';
 import Layout from 'components/layout';
 import 'styles/globals.css';
-import { MediasProvider } from 'contexts/MediasContext';
 import store from 'store';
 
 const colors = {
@@ -20,11 +19,9 @@ function MyApp({ Component, pageProps, ...appProps }) {
 		if (pages.includes(appProps.router.pathname)) return <Component {...pageProps} />;
 		else {
 			return (
-				<MediasProvider>
-					<Layout>
-						<Component {...pageProps} />
-					</Layout>
-				</MediasProvider>
+				<Layout>
+					<Component {...pageProps} />
+				</Layout>
 			);
 		}
 	};

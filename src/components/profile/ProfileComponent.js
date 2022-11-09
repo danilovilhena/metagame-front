@@ -6,7 +6,7 @@ import MediaIcon from 'components/common/MediaIcon';
 import PersonalGoal from './PersonalGoal';
 import { useEffect, useState } from 'react';
 import { Input } from 'components/common/Input';
-import { fetchGoals, fetchMedias } from 'store/backend';
+import { fetchGoals, fetchUserMedias } from 'store/backend';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -34,7 +34,7 @@ export default function ProfileComponent() {
 	const user = session.data;
 
 	const mediaTypes = useSelector((state) => state.backend.mediaTypes);
-	const medias = useSelector((state) => state.backend.medias);
+	const userMedias = useSelector((state) => state.backend.userMedias);
 	const goals = useSelector((state) => state.backend.goals);
 	const [isEdit, setIsEdit] = useState(false);
 	const [name, setName] = useState(user ? `${user.first_name} ${user.last_name}` : '');
@@ -42,7 +42,7 @@ export default function ProfileComponent() {
 
 	useEffect(() => {
 		if (user && user.id) {
-			dispatch(fetchMedias(user.id));
+			dispatch(fetchUserMedias(user.id));
 			dispatch(fetchGoals(user.id));
 		}
 	}, [user]);
@@ -53,7 +53,7 @@ export default function ProfileComponent() {
 		return {
 			...el,
 			type: el.type.toLowerCase(),
-			amount: medias.filter((el) => el.id === 1).length,
+			amount: userMedias.filter((el) => el.id === 1).length,
 			label: labels[el.type],
 		};
 	});
@@ -116,7 +116,7 @@ export default function ProfileComponent() {
 						</Flex>
 						<Flex flexDirection="column" mr="2em">
 							<Text>Número de mídias consumidas</Text>
-							<Text as="strong">{medias.length}</Text>
+							<Text as="strong">{userMedias.length}</Text>
 						</Flex>
 						<Flex flexDirection="column">
 							<Text>Data de cadastro</Text>

@@ -7,7 +7,7 @@ export const backendSlice = createSlice({
 		favoriteGoals: [],
 		goals: [],
 		mediaTypes: [],
-		medias: [],
+		userMedias: [],
 	},
 	reducers: {
 		setFavoriteGoals: (state, action) => {
@@ -19,8 +19,8 @@ export const backendSlice = createSlice({
 		setMediaTypes: (state, action) => {
 			state.mediaTypes = action.payload;
 		},
-		setMedias: (state, action) => {
-			state.medias = action.payload;
+		setUserMedias: (state, action) => {
+			state.userMedias = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -33,8 +33,8 @@ export const backendSlice = createSlice({
 			state.favoriteGoals = action.payload.favorites;
 		});
 
-		builder.addCase(fetchMedias.fulfilled, (state, action) => {
-			state.medias = action.payload;
+		builder.addCase(fetchUserMedias.fulfilled, (state, action) => {
+			state.userMedias = action.payload;
 		});
 	},
 });
@@ -50,7 +50,7 @@ export const fetchGoals = createAsyncThunk('backend/fetchGoals', async (userId) 
 	return { goals: response.data, favorites: favoritesResponse.data };
 });
 
-export const fetchMedias = createAsyncThunk('backend/fetchMedias', async (userId) => {
+export const fetchUserMedias = createAsyncThunk('backend/fetchUserMedias', async (userId) => {
 	const response = await api.get(`/medias/user/${userId}`);
 	return response.data;
 });

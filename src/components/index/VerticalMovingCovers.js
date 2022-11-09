@@ -1,9 +1,10 @@
 import { Box, Flex, Image, useBreakpointValue, keyframes } from '@chakra-ui/react';
-import { useMedias } from 'contexts/MediasContext';
+import { getCover } from 'store/medias';
+import { useSelector } from 'react-redux';
 import styles from 'styles/VerticalMovingCovers.module.css';
 
 export default function VerticalMovingCovers() {
-	const { medias, getCover } = useMedias();
+	const medias = useSelector((state) => state.medias.value);
 	const isWideVersion = useBreakpointValue({
 		base: false,
 		xl: true,
@@ -34,7 +35,7 @@ export default function VerticalMovingCovers() {
 											w="100px"
 											minH="150px"
 											objectFit="cover"
-											src={getCover(idx % 3, currentMedias[idx > 3 ? innerIdx + 9 : innerIdx])}
+											src={getCover(currentMedias[idx > 3 ? innerIdx + 9 : innerIdx])}
 											alt="cover"
 											mb="0.5em"
 											borderRadius="0.5rem"

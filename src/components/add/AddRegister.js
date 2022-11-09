@@ -14,10 +14,10 @@ import Button from 'components/common/Button';
 import getIcon from 'utils/getIcon';
 import { Input } from 'components/common/Input';
 import { useEffect, useState } from 'react';
-import { useMedias } from 'contexts/MediasContext';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useSelector } from 'react-redux';
 import { getConclusion, getName } from 'utils/mediaTypes';
+import { getCover, getCoverTitle } from 'store/medias';
 
 const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
 const fetchSection = async (name, data, url) => {
@@ -66,7 +66,7 @@ const Media = ({ isActive, action, image, title, ...rest }) => (
 );
 
 export default function AddRegister({ isModalOpen, setIsModalOpen }) {
-	const { medias, getCover, getCoverTitle } = useMedias();
+	const medias = useSelector((state) => state.medias.value);
 	const [searchInput, setSearchInput] = useState('');
 	const [mediaSelected, setMediaSelected] = useState(null);
 
@@ -191,8 +191,8 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 											<Media
 												isActive={mediaSelected && media.id === mediaSelected.item.id}
 												action={() => handleSelected(idx, media)}
-												image={getCover(idx, media)}
-												title={getCoverTitle(idx, media)}
+												image={getCover(media)}
+												title={getCoverTitle(media)}
 												key={media.id}
 											/>
 										))}
@@ -216,8 +216,8 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 										<Media
 											isActive={mediaSelected && currentMediaType[idx].id === mediaSelected.item.id}
 											action={() => handleSelected(mediaIndex, currentMediaType[idx])}
-											image={getCover(mediaIndex, currentMediaType[idx])}
-											title={getCoverTitle(mediaIndex, currentMediaType[idx])}
+											image={getCover(currentMediaType[idx])}
+											title={getCoverTitle(currentMediaType[idx])}
 											key={`defaultMedias-${idx}`}
 										/>
 									);
