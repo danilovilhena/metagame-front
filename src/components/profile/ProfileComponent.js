@@ -1,11 +1,11 @@
 import { Grid, Flex, Text, Avatar } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSession } from 'next-auth/react';
 import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
 import PersonalGoal from './PersonalGoal';
 import { useEffect, useState } from 'react';
 import { Input } from 'components/common/Input';
-import { useDispatch, useSelector } from 'react-redux';
 import { fetchGoals, fetchMedias } from 'store/backend';
 
 const Title = ({ children }) => (
