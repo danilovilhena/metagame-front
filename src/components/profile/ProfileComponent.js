@@ -2,7 +2,6 @@ import { Grid, Flex, Text, Avatar } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
-import Activity from './Activity';
 import PersonalGoal from './PersonalGoal';
 import { useEffect, useState } from 'react';
 import { Input } from 'components/common/Input';
@@ -35,6 +34,7 @@ export default function ProfileComponent() {
 	const user = session.data;
 
 	const medias = useSelector((state) => state.backend.medias);
+	const goals = useSelector((state) => state.backend.goals);
 	const [isEdit, setIsEdit] = useState(false);
 	const [name, setName] = useState(user ? `${user.first_name} ${user.last_name}` : '');
 	const [username, setUsername] = useState(user ? user.username : '');
@@ -50,32 +50,6 @@ export default function ProfileComponent() {
 		{ type: 'movie', amount: '20', label: 'filmes assistidos' },
 		{ type: 'book', amount: '80', label: 'livros lidos' },
 		{ type: 'game', amount: '40', label: 'jogos concluídos' },
-	];
-
-	const personalGoals = [
-		{
-			type: 'movie',
-			title: 'Assistir 10 filmes em 3 meses',
-			duration: '10 dias restantes',
-			completion: 50,
-		},
-		{
-			type: 'book',
-			title: 'Ler 3 livros em 2 meses',
-			duration: '1 mês e 3 dias restantes',
-			completion: 33,
-		},
-		{
-			type: 'movie',
-			title: 'Assistir 10 filmes em 3 meses',
-			duration: '10 dias restantes',
-			completion: 50,
-		},
-		{
-			type: 'book',
-			title: 'Ler 3 livros em 2 meses',
-			completion: 100,
-		},
 	];
 
 	const formatDate = (date) => {
@@ -175,7 +149,7 @@ export default function ProfileComponent() {
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas atuais</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
-						{personalGoals.map((goal, idx) => (
+						{goals.map((goal, idx) => (
 							<PersonalGoal goal={goal} key={idx} />
 						))}
 					</Grid>
@@ -183,7 +157,7 @@ export default function ProfileComponent() {
 				{/* últimos registros */}
 				<Flex flexDirection="column" marginTop="1.5em">
 					<Title>Últimos registros</Title>
-					<Activity />
+					{/* <Activity /> */}
 				</Flex>
 			</Flex>
 		);
