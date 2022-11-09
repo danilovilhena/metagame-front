@@ -147,7 +147,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 							mr="1rem"
 						/>
 						<Menu matchWidth>
-							<MenuButton>
+							<MenuButton as="div">
 								<Button
 									variant="styled"
 									background="primary"
