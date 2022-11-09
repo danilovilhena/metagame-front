@@ -66,7 +66,6 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 				closeAllModals();
 				dispatch(fetchGoals(session.data.id));
 			})
-
 			.catch((err) => {
 				showToast(toast, `${err?.response?.data?.error}.` || 'Erro ao adicionar meta!', 'error');
 			});

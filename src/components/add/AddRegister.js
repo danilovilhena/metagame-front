@@ -8,16 +8,21 @@ import {
 	MenuList,
 	MenuItem,
 	Box,
+	useToast,
 } from '@chakra-ui/react';
+import { useSession } from 'next-auth/react';
 import Modal from 'components/common/Modal';
 import Button from 'components/common/Button';
 import getIcon from 'utils/getIcon';
+import showToast from 'utils/showToast';
 import { Input } from 'components/common/Input';
 import { useEffect, useState } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getConclusion, getName } from 'utils/mediaTypes';
 import { getCover, getCoverTitle } from 'store/medias';
+import { api } from 'services/api';
+import { fetchGoals, fetchUserMedias } from 'store/backend';
 
 const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
 const fetchSection = async (name, data, url) => {
@@ -65,22 +70,50 @@ const Media = ({ isActive, action, image, title, ...rest }) => (
 	</Flex>
 );
 
-export default function AddRegister({ isModalOpen, setIsModalOpen }) {
+export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModals }) {
 	const medias = useSelector((state) => state.medias.value);
 	const [searchInput, setSearchInput] = useState('');
 	const [mediaSelected, setMediaSelected] = useState(null);
-
 	const [filteredMedias, setFilteredMedias] = useState(null);
 	const [filterCategory, setFilterCategory] = useState(0);
 	const mediaTypes = useSelector((state) => [
 		{ id: 0, type: 'Todos' },
 		...state.backend.mediaTypes,
 	]);
+	const dispatch = useDispatch();
+	const toast = useToast();
+	const session = useSession();
+
 	const filterCategoryName = mediaTypes.find((el) => el.id === filterCategory)?.type;
 
 	const handleSelected = (idx, media) => {
 		if (mediaSelected?.item === media) setMediaSelected(null);
 		else setMediaSelected({ type: idx, item: media });
+	};
+
+	const resetStates = () => {
+		setSearchInput('');
+		setMediaSelected(null);
+		setFilteredMedias(null);
+		setFilterCategory(0);
+	};
+
+	const addRegister = async () => {
+		api
+			.post('/medias', {
+				mediatype: mediaSelected.type + 1,
+				id_on_api: mediaSelected.item.id,
+			})
+			.then(() => {
+				showToast(toast, 'Mídia adicionada com sucesso!', 'success');
+				resetStates();
+				closeAllModals();
+				dispatch(fetchUserMedias(session.data.id));
+				dispatch(fetchGoals(session.data.id));
+			})
+			.catch((err) => {
+				showToast(toast, `${err?.response?.data?.error}.` || 'Erro ao adicionar mídia!', 'error');
+			});
 	};
 
 	useEffect(() => {
@@ -242,7 +275,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 							mr="1rem"
 							boxShadow="lg"
 							_dark={{ boxShadow: 'dark-lg' }}
-							src={getCover(mediaSelected.type, mediaSelected.item)}
+							src={getCover(mediaSelected.item)}
 						/>
 						<VStack
 							spacing=".5rem"
@@ -281,12 +314,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 					</Flex>
 				)}
 				{/* add button */}
-				<Button
-					isDisabled={!mediaSelected}
-					variant="styled"
-					width="100%"
-					onClick={() => setIsModalOpen(false)}
-				>
+				<Button isDisabled={!mediaSelected} variant="styled" width="100%" onClick={addRegister}>
 					<Image src={getIcon('add_dark')} w="1.5rem" alt="" mr="2" />
 					Marcar {getName(
 						mediaTypes.find((el) => el.id === mediaSelected?.type + 1)?.type
