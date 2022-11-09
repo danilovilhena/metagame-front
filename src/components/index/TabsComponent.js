@@ -67,7 +67,8 @@ export default function TabsComponent() {
 											src={getCover(idx, item)}
 											alt="cover"
 											mb="0.5em"
-											boxShadow="10px 5px 5px rgba(0,0,0,0.3);"
+											boxShadow="lg"
+											_dark={{ boxShadow: 'dark-lg' }}
 										/>
 										<Text
 											color="white"

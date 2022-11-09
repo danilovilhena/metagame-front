@@ -10,9 +10,9 @@ export function MediasProvider({ children }) {
 		if (row === 0) {
 			return `https://image.tmdb.org/t/p/w500${item.poster_path}`;
 		} else if (row == 1) {
-			return item.background_image;
+			return item?.background_image;
 		} else if (row == 2) {
-			return item.volumeInfo.imageLinks.thumbnail;
+			return item?.volumeInfo?.imageLinks?.thumbnail;
 		}
 	};
 
@@ -23,7 +23,7 @@ export function MediasProvider({ children }) {
 			} else if (row === 1 && item.name) {
 				return item.name;
 			} else if (row === 2 && item.volumeInfo && item.volumeInfo.title) {
-				return item.volumeInfo.title;
+				return item?.volumeInfo?.title;
 			}
 		}
 	};

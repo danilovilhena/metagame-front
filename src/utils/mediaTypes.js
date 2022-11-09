@@ -38,12 +38,12 @@ const dateDifferenceAsText = (start_date, limit_date) => {
 
 export default mediaTypes;
 
-export const getName = (name) => name && mediaTypes[name.toLowerCase()].name;
-export const getGroup = (name) => name && `${mediaTypes[name.toLowerCase()].name}s`;
-export const getVerb = (name) => name && mediaTypes[name.toLowerCase()].verb;
-export const getBackground = (name) => name && mediaTypes[name.toLowerCase()].background;
-export const getIcon = (name) => name && mediaTypes[name.toLowerCase()].icon;
-export const getConclusion = (name) => name && mediaTypes[name.toLowerCase()].conclusion;
+export const getName = (name) => name && mediaTypes[name.toLowerCase()]?.name;
+export const getGroup = (name) => name && `${mediaTypes[name.toLowerCase()]?.name}s`;
+export const getVerb = (name) => name && mediaTypes[name.toLowerCase()]?.verb;
+export const getBackground = (name) => name && mediaTypes[name.toLowerCase()]?.background;
+export const getIcon = (name) => name && mediaTypes[name.toLowerCase()]?.icon;
+export const getConclusion = (name) => name && mediaTypes[name.toLowerCase()]?.conclusion;
 export const getTitle = (name, { objective_quantity, start_date, limit_date }) => {
 	let message = `${capitalize(getVerb(name))} ${objective_quantity}`;
 	message += ` ${getGroup(name)} em ${dateDifferenceAsText(start_date, limit_date)}`;
