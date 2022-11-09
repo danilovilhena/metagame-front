@@ -12,7 +12,7 @@ import {
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Modal from 'components/common/Modal';
 import Button from 'components/common/Button';
@@ -22,6 +22,7 @@ import { api } from 'services/api';
 import { getGroup, getVerb } from 'utils/mediaTypes';
 import getIcon from 'utils/getIcon';
 import showToast from 'utils/showToast';
+import { fetchGoals } from 'store/backend';
 
 const getLengthInDays = (length, period) => {
 	switch (period) {
@@ -41,6 +42,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 	const [goalValue, setGoalValue] = useState(0);
 	const [goalLength, setGoalLength] = useState(0);
 	const session = useSession();
+	const dispatch = useDispatch();
 	const toast = useToast();
 
 	const resetStates = () => {
@@ -62,6 +64,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 				showToast(toast, 'Meta adicionada com sucesso!', 'success');
 				resetStates();
 				closeAllModals();
+				dispatch(fetchGoals(session.data.id));
 			})
 
 			.catch((err) => {

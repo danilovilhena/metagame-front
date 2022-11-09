@@ -8,11 +8,16 @@ import {
 	MenuButton,
 	MenuItem,
 	MenuList,
+	useToast,
 } from '@chakra-ui/react';
 import MediaIcon from 'components/common/MediaIcon';
-import { useSelector } from 'react-redux';
+import { useSession } from 'next-auth/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { api } from 'services/api';
+import { fetchGoals } from 'store/backend';
 import getIcon from 'utils/getIcon';
 import { getBackground, getTitle } from 'utils/mediaTypes';
+import showToast from 'utils/showToast';
 
 const Badge = ({ children, background }) => (
 	<Flex background={background} py="1" px="3" borderRadius="1rem">
@@ -24,14 +29,30 @@ const Badge = ({ children, background }) => (
 
 export default function PersonalGoal({ goal, ...rest }) {
 	const mediaTypesArr = useSelector((state) => state.backend.mediaTypes);
-
-	const options = [
-		{ name: 'Copiar link', icon: 'link' },
-		{ name: 'Excluir meta', icon: 'trash' },
-	];
+	const dispatch = useDispatch();
+	const toast = useToast();
+	const session = useSession();
+	const user = session.data;
 
 	const goalType = mediaTypesArr.find((el) => el.id === goal.mediatype)?.type?.toLowerCase();
 	const goalCompletion = (goal.current_quantity / goal.objective_quantity) * 100;
+
+	const deleteGoal = () => {
+		api
+			.delete(`/goals/${goal.id}`)
+			.then(() => {
+				showToast(toast, 'Meta excluída com sucesso!', 'success');
+				dispatch(fetchGoals(user.id));
+			})
+			.catch((err) => {
+				showToast(toast, `${err?.response?.data?.error}.` || 'Erro ao excluir meta!', 'error');
+			});
+	};
+
+	const options = [
+		{ name: 'Copiar link', icon: 'link', action: () => {} },
+		{ name: 'Excluir meta', icon: 'trash', action: deleteGoal },
+	];
 
 	return (
 		<Box>
@@ -64,6 +85,7 @@ export default function PersonalGoal({ goal, ...rest }) {
 								<MenuItem
 									key={idx}
 									icon={<Image src={getIcon(option.icon, false)} alt={option.name} />}
+									onClick={option.action}
 								>
 									{option.name}
 								</MenuItem>
