@@ -37,7 +37,7 @@ const getLengthInDays = (length, period) => {
 
 export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals }) {
 	const mediaTypes = useSelector((state) => state.backend.mediaTypes);
-	const [mediaSelected, setMediaSelected] = useState('');
+	const [mediaSelected, setMediaSelected] = useState('Movie');
 	const [goalPeriod, setGoalPeriod] = useState('dias');
 	const [goalValue, setGoalValue] = useState(0);
 	const [goalLength, setGoalLength] = useState(0);
@@ -53,22 +53,40 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 	};
 
 	const addGoal = async () => {
-		api
-			.post('/goals', {
-				mediatype: mediaTypes.find((media) => media.type === mediaSelected).id,
-				creator: session.data.id,
-				objective_quantity: parseInt(goalValue),
-				limit_days: getLengthInDays(goalLength, goalPeriod),
-			})
-			.then(() => {
-				showToast(toast, 'Meta adicionada com sucesso!', 'success');
-				resetStates();
-				closeAllModals();
-				dispatch(fetchGoals(session.data.id));
-			})
-			.catch((err) => {
-				showToast(toast, `${err?.response?.data?.error}.` || 'Erro ao adicionar meta!', 'error');
-			});
+		if (goalValue > 0 && goalLength > 0) {
+			const mediaType = mediaTypes.find((media) => media.type === mediaSelected);
+			if (mediaType) {
+				console.log('Entrei 2');
+				api
+					.post('/goals', {
+						mediatype: mediaType.id,
+						creator: session.data.id,
+						objective_quantity: parseInt(goalValue),
+						limit_days: getLengthInDays(goalLength, goalPeriod),
+					})
+					.then(() => {
+						showToast(toast, 'Meta adicionada com sucesso!', 'success');
+						resetStates();
+						closeAllModals();
+						dispatch(fetchGoals(session.data.id));
+					})
+					.catch((err) => {
+						showToast(
+							toast,
+							`${err?.response?.data?.error}.` || 'Erro ao adicionar meta!',
+							'error'
+						);
+					});
+			}
+		} else {
+			showToast(
+				toast,
+				!(goalValue > 0)
+					? `Preencha a quantidade de ${getGroup(mediaSelected)}`
+					: `Insira um período válido`,
+				'error'
+			);
+		}
 	};
 
 	return (
