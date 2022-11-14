@@ -10,10 +10,14 @@ import {
 	GridItem,
 	Flex,
 } from '@chakra-ui/react';
-import { useMedias } from 'contexts/MediasContext';
+import { useSelector } from 'react-redux';
+import { getName } from 'utils/mediaTypes';
+import { getCover, getCoverTitle } from 'store/medias';
+
+const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
 
 export default function TabsComponent() {
-	const { medias, getCover, getCoverTitle } = useMedias();
+	const medias = useSelector((state) => state.medias.value);
 
 	return (
 		<Flex
@@ -39,7 +43,7 @@ export default function TabsComponent() {
 							overflow="hidden"
 							key={index}
 						>
-							{tabOption.charAt(0).toUpperCase() + tabOption.slice(1)}
+							{capitalize(getName(tabOption.slice(0, -1)))}s
 						</Tab>
 					))}
 				</TabList>
@@ -61,10 +65,11 @@ export default function TabsComponent() {
 											objectFit="cover"
 											borderRadius="10px"
 											shadow="md"
-											src={getCover(idx, item)}
+											src={getCover(item)}
 											alt="cover"
 											mb="0.5em"
-											boxShadow="10px 5px 5px rgba(0,0,0,0.3);"
+											boxShadow="lg"
+											_dark={{ boxShadow: 'dark-lg' }}
 										/>
 										<Text
 											color="white"
@@ -75,7 +80,7 @@ export default function TabsComponent() {
 											overflow="hidden"
 											className="textElipsis"
 										>
-											{getCoverTitle(idx, item)}
+											{getCoverTitle(item)}
 										</Text>
 									</GridItem>
 								))}

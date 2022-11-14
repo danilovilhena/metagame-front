@@ -1,12 +1,12 @@
 import { Grid, Flex, Text, Avatar } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSession } from 'next-auth/react';
 import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
-import Activity from './Activity';
 import PersonalGoal from './PersonalGoal';
 import { useEffect, useState } from 'react';
-import { api } from 'services/api';
 import { Input } from 'components/common/Input';
+import { fetchGoals, fetchUserMedias } from 'store/backend';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -29,51 +29,34 @@ const InputEdit = ({ name, action, value }) => (
 );
 
 export default function ProfileComponent() {
+	const dispatch = useDispatch();
 	const session = useSession();
 	const user = session.data;
 
+	const mediaTypes = useSelector((state) => state.backend.mediaTypes);
+	const userMedias = useSelector((state) => state.backend.userMedias);
+	const goals = useSelector((state) => state.backend.goals);
 	const [isEdit, setIsEdit] = useState(false);
-	const [medias, setMedias] = useState(0);
 	const [name, setName] = useState(user ? `${user.first_name} ${user.last_name}` : '');
 	const [username, setUsername] = useState(user ? user.username : '');
 
 	useEffect(() => {
 		if (user && user.id) {
-			api.get(`/medias/user/${user.id}`).then((res) => setMedias(res.data.length));
+			dispatch(fetchUserMedias(user.id));
+			dispatch(fetchGoals(user.id));
 		}
 	}, [user]);
 
-	const buttons = [
-		{ type: 'movie', amount: '20', label: 'filmes assistidos' },
-		{ type: 'book', amount: '80', label: 'livros lidos' },
-		{ type: 'game', amount: '40', label: 'jogos concluídos' },
-	];
+	const buttons = mediaTypes.map((el) => {
+		const labels = { Movie: 'filmes assistidos', Book: 'livros lidos', Game: 'jogos concluídos' };
 
-	const personalGoals = [
-		{
-			type: 'movie',
-			title: 'Assistir 10 filmes em 3 meses',
-			duration: '10 dias restantes',
-			completion: 50,
-		},
-		{
-			type: 'book',
-			title: 'Ler 3 livros em 2 meses',
-			duration: '1 mês e 3 dias restantes',
-			completion: 33,
-		},
-		{
-			type: 'movie',
-			title: 'Assistir 10 filmes em 3 meses',
-			duration: '10 dias restantes',
-			completion: 50,
-		},
-		{
-			type: 'book',
-			title: 'Ler 3 livros em 2 meses',
-			completion: 100,
-		},
-	];
+		return {
+			...el,
+			type: el.type.toLowerCase(),
+			amount: userMedias.filter((media) => media.id === el.id).length,
+			label: labels[el.type],
+		};
+	});
 
 	const formatDate = (date) => {
 		return new Date(date).toLocaleDateString('pt-BR', {
@@ -133,7 +116,7 @@ export default function ProfileComponent() {
 						</Flex>
 						<Flex flexDirection="column" mr="2em">
 							<Text>Número de mídias consumidas</Text>
-							<Text as="strong">{medias}</Text>
+							<Text as="strong">{userMedias.length}</Text>
 						</Flex>
 						<Flex flexDirection="column">
 							<Text>Data de cadastro</Text>
@@ -172,7 +155,7 @@ export default function ProfileComponent() {
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas atuais</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
-						{personalGoals.map((goal, idx) => (
+						{goals.map((goal, idx) => (
 							<PersonalGoal goal={goal} key={idx} />
 						))}
 					</Grid>
@@ -180,7 +163,7 @@ export default function ProfileComponent() {
 				{/* últimos registros */}
 				<Flex flexDirection="column" marginTop="1.5em">
 					<Title>Últimos registros</Title>
-					<Activity />
+					{/* <Activity /> */}
 				</Flex>
 			</Flex>
 		);

@@ -10,15 +10,19 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Modal from 'components/common/Modal';
 import Button from 'components/common/Button';
 import { Input } from 'components/common/Input';
+
 import { api } from 'services/api';
 import { getGroup, getVerb } from 'utils/mediaTypes';
 import getIcon from 'utils/getIcon';
 import showToast from 'utils/showToast';
+import { fetchGoals } from 'store/backend';
 
 const getLengthInDays = (length, period) => {
 	switch (period) {
@@ -32,26 +36,17 @@ const getLengthInDays = (length, period) => {
 };
 
 export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals }) {
-	const [mediaTypes, setMediaTypes] = useState([]);
+	const mediaTypes = useSelector((state) => state.backend.mediaTypes);
 	const [mediaSelected, setMediaSelected] = useState('');
 	const [goalPeriod, setGoalPeriod] = useState('dias');
 	const [goalValue, setGoalValue] = useState(0);
 	const [goalLength, setGoalLength] = useState(0);
 	const session = useSession();
+	const dispatch = useDispatch();
 	const toast = useToast();
 
-	useEffect(() => {
-		async function getMediaTypes() {
-			const response = await api.get('/mediatypes');
-			setMediaTypes(response.data);
-			setMediaSelected(response.data[0].type);
-		}
-
-		getMediaTypes();
-	}, []);
-
 	const resetStates = () => {
-		setMediaSelected(mediaTypes[0].type);
+		setMediaSelected(mediaTypes[0]?.type);
 		setGoalPeriod('dias');
 		setGoalValue(0);
 		setGoalLength(0);
@@ -69,8 +64,8 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 				showToast(toast, 'Meta adicionada com sucesso!', 'success');
 				resetStates();
 				closeAllModals();
+				dispatch(fetchGoals(session.data.id));
 			})
-
 			.catch((err) => {
 				showToast(toast, `${err?.response?.data?.error}.` || 'Erro ao adicionar meta!', 'error');
 			});
@@ -112,7 +107,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 								display="flex"
 								justifyContent="space-between"
 							>
-								{getVerb(mediaSelected)}
+								{getVerb(mediaSelected || mediaTypes[0]?.type)}
 								<ChevronDownIcon />
 							</Button>
 						</MenuButton>
@@ -126,12 +121,12 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 					</Menu>
 					<Input
 						type="number"
-						aria-label={`Número de ${mediaSelected.toLowerCase()}s`}
+						aria-label={`Número de ${mediaSelected.toLowerCase() || mediaTypes[0]?.type}s`}
 						value={goalValue}
 						onChange={(e) => setGoalValue(e.target.value)}
 					/>
 					<Text display="flex" alignItems="center" justifyContent="center" minWidth="80px">
-						{getGroup(mediaSelected)} em
+						{getGroup(mediaSelected || mediaTypes[0]?.type)} em
 					</Text>
 					<Input
 						type="number"

@@ -1,7 +1,10 @@
 import { Grid, Flex, Text } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import PersonalGoal from 'components/profile/PersonalGoal';
 import PublicGoal from 'components/goals/PublicGoal';
+import { fetchGoals } from 'store/backend';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -10,55 +13,16 @@ const Title = ({ children }) => (
 );
 
 export default function GoalComponent() {
+	const dispatch = useDispatch();
 	const session = useSession();
 	const user = session.data;
 
-	const personalGoals = [
-		{
-			type: 'movie',
-			title: 'Assistir 10 filmes em 3 meses',
-			duration: '10 dias restantes',
-			completion: 50,
-		},
-		{
-			type: 'book',
-			title: 'Ler 3 livros em 2 meses',
-			duration: '1 mês e 3 dias restantes',
-			completion: 33,
-		},
-		{
-			type: 'movie',
-			title: 'Assistir 10 filmes em 3 meses',
-			duration: '10 dias restantes',
-			completion: 50,
-		},
-		{
-			type: 'book',
-			title: 'Ler 3 livros em 2 meses',
-			completion: 100,
-		},
-	];
+	const goals = useSelector((state) => state.backend.goals);
+	const favoriteGoals = useSelector((state) => state.backend.favoriteGoals);
 
-	const publicGoals = [
-		{
-			type: 'movie',
-			title: 'Assistir 10 filmes em 3 meses',
-			author: {
-				username: '@murilo.couto',
-				photo: 'https://avatars.githubusercontent.com/u/4872234?v=4',
-			},
-			liked: true,
-		},
-		{
-			type: 'movie',
-			title: 'Assistir 10 filmes em 3 meses',
-			author: {
-				username: '@murilo.couto',
-				photo: 'https://avatars.githubusercontent.com/u/4872234?v=4',
-			},
-			liked: true,
-		},
-	];
+	useEffect(() => {
+		if (user && user.id) dispatch(fetchGoals(user.id));
+	}, [user]);
 
 	if (user) {
 		return (
@@ -75,8 +39,8 @@ export default function GoalComponent() {
 				<Flex flexDirection="column" marginTop="1.5em" mb="2rem">
 					<Title>Metas atuais</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
-						{personalGoals
-							.filter((el) => el.completion !== 100)
+						{goals
+							.filter((el) => !el.is_done)
 							.map((goal, idx) => (
 								<PersonalGoal goal={goal} key={idx} />
 							))}
@@ -85,16 +49,16 @@ export default function GoalComponent() {
 				<Flex flexDirection="column" marginTop="1.5em" mb="2rem">
 					<Title>Metas curtidas</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
-						{publicGoals.map((goal, idx) => (
-							<PublicGoal goal={goal} key={idx} />
+						{favoriteGoals.map((goal, idx) => (
+							<PublicGoal goal={goal} key={idx} /> // this element still needs update (after we favorite it)
 						))}
 					</Grid>
 				</Flex>
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas finalizadas</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
-						{personalGoals
-							.filter((el) => el.completion === 100)
+						{goals
+							.filter((el) => el.is_done)
 							.map((goal, idx) => (
 								<PersonalGoal goal={goal} key={idx} />
 							))}
