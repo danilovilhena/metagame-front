@@ -56,7 +56,6 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 		if (goalValue > 0 && goalLength > 0) {
 			const mediaType = mediaTypes.find((media) => media.type === mediaSelected);
 			if (mediaType) {
-				console.log('Entrei 2');
 				api
 					.post('/goals', {
 						mediatype: mediaType.id,
