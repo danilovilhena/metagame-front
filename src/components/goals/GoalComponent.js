@@ -33,7 +33,7 @@ export default function GoalComponent() {
 				color="white"
 				pt="1em"
 				pb="3em"
-				height="100%"
+				flex="1"
 				_dark={{ bg: 'gray.900', color: 'gray.200' }}
 			>
 				<Flex flexDirection="column" marginTop="1.5em" mb="2rem">

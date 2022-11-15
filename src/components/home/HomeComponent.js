@@ -20,13 +20,12 @@ export default function HomeComponent() {
 		return (
 			<Flex
 				flexDirection="column"
+				flex="1"
 				px="6em"
 				background="primary"
 				color="white"
 				py="3em"
-				height="100%"
 				_dark={{ bg: 'gray.900', color: 'gray.200' }}
-				minH="calc(100vh - 10rem)"
 			>
 				<Text as="h1" fontSize="3xl" fontWeight="bold">
 					Olá,{' '}
