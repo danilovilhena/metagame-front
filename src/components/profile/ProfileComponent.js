@@ -54,7 +54,7 @@ export default function ProfileComponent({ userProfile = null }) {
 		return {
 			...el,
 			type: el.type.toLowerCase(),
-			amount: userMedias.filter((media) => media.id === el.id).length,
+			amount: userMedias.filter((media) => media.mediatype === el.id).length,
 			label: labels[el.type],
 		};
 	});
