@@ -28,10 +28,10 @@ const InputEdit = ({ name, action, value }) => (
 	/>
 );
 
-export default function ProfileComponent() {
+export default function ProfileComponent({ userProfile = null }) {
 	const dispatch = useDispatch();
 	const session = useSession();
-	const user = session.data;
+	const user = userProfile || session.data;
 
 	const mediaTypes = useSelector((state) => state.backend.mediaTypes);
 	const userMedias = useSelector((state) => state.backend.userMedias);
@@ -44,6 +44,7 @@ export default function ProfileComponent() {
 		if (user && user.id) {
 			dispatch(fetchUserMedias(user.id));
 			dispatch(fetchGoals(user.id));
+			console.log(user);
 		}
 	}, [user]);
 
@@ -99,7 +100,9 @@ export default function ProfileComponent() {
 							{isEdit ? (
 								<InputEdit name="name" action={(e) => setName(e.target.value)} value={name} />
 							) : (
-								<Text as="strong">{name}</Text>
+								<Text as="strong">
+									{user.first_name} {user.last_name}
+								</Text>
 							)}
 						</Flex>
 						<Flex flexDirection="column">
@@ -111,7 +114,7 @@ export default function ProfileComponent() {
 									value={username}
 								/>
 							) : (
-								<Text as="strong">{username}</Text>
+								<Text as="strong">{user.username}</Text>
 							)}
 						</Flex>
 						<Flex flexDirection="column" mr="2em">

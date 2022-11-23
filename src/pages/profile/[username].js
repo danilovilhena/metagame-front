@@ -11,7 +11,7 @@ export default function Profile() {
 	const routerArray = router.asPath.split('/');
 	const usernameToSearch = routerArray[routerArray.length - 1];
 
-	const [userProfile] = useState(null);
+	const [userProfile, setUserProfile] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
@@ -19,7 +19,7 @@ export default function Profile() {
 			await api
 				.get(`/users/find/${usernameToSearch}`)
 				.then((response) => {
-					console.log(response.data);
+					setUserProfile(response.data);
 				})
 				.catch((err) => {
 					console.log(err.response.data);
@@ -38,14 +38,14 @@ export default function Profile() {
 		);
 	}
 
-	if (!userProfile) {
+	if (!isLoading && !userProfile) {
 		router.push('/404');
 	}
 
 	return (
 		<>
 			<Title title={`Perfil de: ${usernameToSearch}`} />
-			<ProfileComponent />
+			<ProfileComponent userProfile={userProfile} />
 		</>
 	);
 }
