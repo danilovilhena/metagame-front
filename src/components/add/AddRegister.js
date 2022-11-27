@@ -99,10 +99,17 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 	};
 
 	const addRegister = async () => {
+		const banner =
+			mediaSelected.type === 0
+				? mediaSelected.item.backdrop_path
+				: mediaSelected.type === 1
+				? mediaSelected.item.background_image
+				: mediaSelected.item.volumeInfo.imageLinks?.thumbnail;
 		api
 			.post('/medias', {
 				mediatype: mediaSelected.type + 1,
 				id_on_api: mediaSelected.item.id,
+				image_on_api: banner,
 			})
 			.then(() => {
 				showToast(toast, 'Mídia adicionada com sucesso!', 'success');

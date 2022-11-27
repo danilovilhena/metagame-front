@@ -7,6 +7,7 @@ import PersonalGoal from './PersonalGoal';
 import { useEffect, useState } from 'react';
 import { Input } from 'components/common/Input';
 import { fetchGoals, fetchUserMedias } from 'store/backend';
+import Activity from './Activity';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -44,7 +45,6 @@ export default function ProfileComponent({ userProfile = null }) {
 		if (user && user.id) {
 			dispatch(fetchUserMedias(user.id));
 			dispatch(fetchGoals(user.id));
-			console.log(user);
 		}
 	}, [user]);
 
@@ -166,7 +166,7 @@ export default function ProfileComponent({ userProfile = null }) {
 				{/* últimos registros */}
 				<Flex flexDirection="column" marginTop="1.5em">
 					<Title>Últimos registros</Title>
-					{/* <Activity /> */}
+					<Activity />
 				</Flex>
 			</Flex>
 		);
