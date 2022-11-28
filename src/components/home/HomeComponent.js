@@ -3,18 +3,18 @@ import { useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import PublicGoal from 'components/goals/PublicGoal';
-import { fetchGoals } from 'store/backend';
+import { fetchPopularGoals } from 'store/backend';
 
 export default function HomeComponent() {
 	const dispatch = useDispatch();
 	const session = useSession();
 	const user = session.data;
 
-	const favoriteGoals = useSelector((state) => state.backend.favoriteGoals);
+	const popularGoals = useSelector((state) => state.backend.popularGoals);
 
 	useEffect(() => {
-		if (user && user.id) dispatch(fetchGoals(user.id));
-	}, [user]);
+		dispatch(fetchPopularGoals());
+	}, [dispatch]);
 
 	if (user) {
 		return (
@@ -38,7 +38,7 @@ export default function HomeComponent() {
 					Conheça metas populares entre outros usuários 🔥
 				</Text>
 				<Grid templateColumns="repeat(2, 1fr)" gap="8" mb="3em">
-					{favoriteGoals.map((goal, idx) => (
+					{popularGoals.map((goal, idx) => (
 						<PublicGoal goal={goal} key={idx} />
 					))}
 				</Grid>

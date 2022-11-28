@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { Input } from 'components/common/Input';
 import { fetchGoals, fetchUserMedias } from 'store/backend';
 import Activity from './Activity';
+import PublicGoal from 'components/goals/PublicGoal';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -46,7 +47,7 @@ export default function ProfileComponent({ userProfile = null }) {
 			dispatch(fetchUserMedias(user.id));
 			dispatch(fetchGoals(user.id));
 		}
-	}, [user]);
+	}, [user, dispatch]);
 
 	const buttons = mediaTypes.map((el) => {
 		const labels = { Movie: 'filmes assistidos', Book: 'livros lidos', Game: 'jogos concluídos' };
@@ -158,9 +159,12 @@ export default function ProfileComponent({ userProfile = null }) {
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas atuais</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
-						{goals.map((goal, idx) => (
-							<PersonalGoal goal={goal} key={idx} />
-						))}
+						{userProfile && userProfile.id === session.data.id
+							? goals.map((goal, idx) => <PersonalGoal goal={goal} key={idx} />)
+							: goals.map((goal, idx) => {
+									console.log(goal);
+									return <PublicGoal goal={goal} key={idx} />;
+							  })}
 					</Grid>
 				</Flex>
 				{/* últimos registros */}

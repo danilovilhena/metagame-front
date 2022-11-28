@@ -8,10 +8,14 @@ export const backendSlice = createSlice({
 		goals: [],
 		mediaTypes: [],
 		userMedias: [],
+		popularGoals: [],
 	},
 	reducers: {
 		setFavoriteGoals: (state, action) => {
 			state.favoriteGoals = action.payload;
+		},
+		setPopularGoals: (state, action) => {
+			state.popularGoals = action.payload;
 		},
 		setGoals: (state, action) => {
 			state.goals = action.payload;
@@ -32,6 +36,9 @@ export const backendSlice = createSlice({
 			state.goals = action.payload.goals;
 			state.favoriteGoals = action.payload.favorites;
 		});
+		builder.addCase(fetchPopularGoals.fulfilled, (state, action) => {
+			state.popularGoals = action.payload;
+		});
 
 		builder.addCase(fetchUserMedias.fulfilled, (state, action) => {
 			state.userMedias = action.payload;
@@ -50,11 +57,18 @@ export const fetchGoals = createAsyncThunk('backend/fetchGoals', async (userId) 
 	return { goals: response.data, favorites: favoritesResponse.data };
 });
 
+export const fetchPopularGoals = createAsyncThunk('backend/fetchPopularGoals', async () => {
+	const response = await api.get('/goals/favorites');
+	console.log(response.data);
+	return response.data;
+});
+
 export const fetchUserMedias = createAsyncThunk('backend/fetchUserMedias', async (userId) => {
 	const response = await api.get(`/medias/user/${userId}`);
 	return response.data;
 });
 
-export const { setFavoriteGoals, setGoals, setMediaTypes, setMedias } = backendSlice.actions;
+export const { setFavoriteGoals, setPopularGoals, setGoals, setMediaTypes, setMedias } =
+	backendSlice.actions;
 
 export default backendSlice.reducer;
