@@ -10,6 +10,7 @@ import {
 	MenuList,
 	useToast,
 } from '@chakra-ui/react';
+import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
 import { useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,7 +28,7 @@ const Badge = ({ children, background }) => (
 	</Flex>
 );
 
-export default function PersonalGoal({ goal, ...rest }) {
+export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 	const mediaTypesArr = useSelector((state) => state.backend.mediaTypes);
 	const dispatch = useDispatch();
 	const toast = useToast();
@@ -36,6 +37,29 @@ export default function PersonalGoal({ goal, ...rest }) {
 
 	const goalType = mediaTypesArr.find((el) => el.id === goal.mediatype)?.type?.toLowerCase();
 	const goalCompletion = (goal.current_quantity / goal.objective_quantity) * 100;
+
+	function calcDate() {
+		var diff = Math.floor(new Date(goal.limit_date).getTime() - new Date().getTime());
+		var day = 1000 * 60 * 60 * 24;
+
+		var days = Math.floor(diff / day);
+		var months = Math.floor(days / 31);
+		var years = Math.floor(months / 12);
+
+		if (years >= 1) {
+			return 'Mais de 1 ano restante';
+		}
+		if (months >= 1) {
+			return months + ' meses restantes';
+		}
+		if (days > 1) {
+			return days + ' dias restantes';
+		}
+		if (days === 1) {
+			return '1 dia restante';
+		}
+		return 'Fora do prazo';
+	}
 
 	const deleteGoal = () => {
 		api
@@ -73,9 +97,21 @@ export default function PersonalGoal({ goal, ...rest }) {
 					<Text as="strong">{getTitle(goalType, goal)}</Text>
 				</Flex>
 				<Stack direction="row" align="center" minW="max-content" spacing={2}>
-					<Text>{goal.duration}</Text>
-					{!goal?.is_done && <Badge background={getBackground(goalType)}>{goalCompletion}%</Badge>}
+					{!goal?.is_done && (
+						<>
+							<Text>{calcDate()}</Text>
+							<Badge background={getBackground(goalType)}>{goalCompletion}%</Badge>
+						</>
+					)}
 					{goal?.is_done && <Image src={getIcon('check')} w="1.5rem" alt="Meta concluída" />}
+					<Button variant="unstyled" p="0" _hover={{}} onClick={() => handleFavoriteGoal(goal.id)}>
+						<Image
+							src={`/icons/like${goal.is_liked ? '_active' : ''}.svg`}
+							w="1.75rem"
+							role="button"
+							alt="Descurtir"
+						/>
+					</Button>
 					<Menu matchWidth>
 						<MenuButton>
 							<Image src={getIcon('vertical-dots')} w="2rem" role="button" alt="Mais opções" />

@@ -162,7 +162,6 @@ export default function ProfileComponent({ userProfile = null }) {
 						{userProfile && userProfile.id === session.data.id
 							? goals.map((goal, idx) => <PersonalGoal goal={goal} key={idx} />)
 							: goals.map((goal, idx) => {
-									console.log(goal);
 									return <PublicGoal goal={goal} key={idx} />;
 							  })}
 					</Grid>

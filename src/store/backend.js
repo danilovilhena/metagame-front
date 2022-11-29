@@ -59,7 +59,6 @@ export const fetchGoals = createAsyncThunk('backend/fetchGoals', async (userId) 
 
 export const fetchPopularGoals = createAsyncThunk('backend/fetchPopularGoals', async () => {
 	const response = await api.get('/goals/favorites');
-	console.log(response.data);
 	return response.data;
 });
 

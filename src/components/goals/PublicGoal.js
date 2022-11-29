@@ -2,24 +2,17 @@ import { Flex, Text, Image, Stack, Menu, MenuButton, MenuItem, MenuList } from '
 import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
 import { useSelector } from 'react-redux';
-import { api } from 'services/api';
 import getIcon from 'utils/getIcon';
 import { getTitle } from 'utils/mediaTypes';
 
 // TODO: Update this component's styles to match the design
-export default function PublicGoal({ goal, ...rest }) {
-	console.log(goal);
+export default function PublicGoal({ goal, handleFavoriteGoal, ...rest }) {
 	const options = [{ name: 'Copiar link', icon: 'link' }];
 
 	const mediaTypesArr = useSelector((state) => state.backend.mediaTypes);
 	const goalType = mediaTypesArr
 		.find((el) => el.id === (goal.mediatype || goal.mediatype_id))
 		?.type?.toLowerCase();
-	async function handleFavoriteGoal() {
-		await api.post('/goals/favorites', {
-			goal: goal.id,
-		});
-	}
 
 	return (
 		<Flex
@@ -38,7 +31,7 @@ export default function PublicGoal({ goal, ...rest }) {
 					<Text as="strong">{getTitle(goalType, goal)}</Text>
 				</Flex>
 				<Stack direction="row" align="center" minW="max-content" spacing={2}>
-					<Button variant="unstyled" m="0" _hover={{}} onClick={() => handleFavoriteGoal()}>
+					<Button variant="unstyled" m="0" _hover={{}} onClick={() => handleFavoriteGoal(goal.id)}>
 						<Image
 							src={`/icons/like${goal.is_liked ? '_active' : ''}.svg`}
 							w="1.75rem"
@@ -65,7 +58,7 @@ export default function PublicGoal({ goal, ...rest }) {
 			</Flex>
 			<Flex mt="4" alignSelf="flex-end" alignItems="center">
 				<Text>
-					Criado por <Text as="strong">{goal.creator?.username}</Text>
+					Criado por <Text as="strong">@{goal.creator?.username}</Text>
 				</Text>
 				<Image
 					src={goal.creator?.image_url}

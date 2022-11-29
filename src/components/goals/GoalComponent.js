@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import PersonalGoal from 'components/profile/PersonalGoal';
 import PublicGoal from 'components/goals/PublicGoal';
 import { fetchGoals } from 'store/backend';
+import { api } from 'services/api';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -19,6 +20,14 @@ export default function GoalComponent() {
 
 	const goals = useSelector((state) => state.backend.goals);
 	const favoriteGoals = useSelector((state) => state.backend.favoriteGoals);
+	console.log(favoriteGoals);
+	async function handleFavoriteGoal(id) {
+		await api
+			.post('/goals/favorites', {
+				goal: id,
+			})
+			.then(() => dispatch(fetchGoals(user.id)));
+	}
 
 	useEffect(() => {
 		if (user && user.id) dispatch(fetchGoals(user.id));
@@ -42,7 +51,7 @@ export default function GoalComponent() {
 						{goals
 							.filter((el) => !el.is_done)
 							.map((goal, idx) => (
-								<PersonalGoal goal={goal} key={idx} />
+								<PersonalGoal goal={goal} key={idx} handleFavoriteGoal={handleFavoriteGoal} />
 							))}
 					</Grid>
 				</Flex>
@@ -50,7 +59,11 @@ export default function GoalComponent() {
 					<Title>Metas curtidas</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
 						{favoriteGoals.map((goal, idx) => (
-							<PublicGoal goal={goal} key={idx} /> // this element still needs update (after we favorite it)
+							<PublicGoal
+								goal={{ ...goal, is_liked: true }}
+								handleFavoriteGoal={handleFavoriteGoal}
+								key={idx}
+							/> // this element still needs update (after we favorite it)
 						))}
 					</Grid>
 				</Flex>
@@ -60,7 +73,7 @@ export default function GoalComponent() {
 						{goals
 							.filter((el) => el.is_done)
 							.map((goal, idx) => (
-								<PersonalGoal goal={goal} key={idx} />
+								<PersonalGoal goal={goal} handleFavoriteGoal={handleFavoriteGoal} key={idx} />
 							))}
 					</Grid>
 				</Flex>
