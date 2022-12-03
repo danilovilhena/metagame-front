@@ -7,7 +7,7 @@ import PersonalGoal from './PersonalGoal';
 import { useEffect, useState } from 'react';
 import { Input } from 'components/common/Input';
 import { fetchGoals, fetchUserMedias } from 'store/backend';
-import Activity from './Activity';
+import Activities from 'components/profile/Activities';
 import PublicGoal from 'components/goals/PublicGoal';
 
 const Title = ({ children }) => (
@@ -159,7 +159,7 @@ export default function ProfileComponent({ userProfile = null }) {
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas atuais</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
-						{userProfile && userProfile.id === session.data.id
+						{user && user.id === session.data.id
 							? goals.map((goal, idx) => <PersonalGoal goal={goal} key={idx} />)
 							: goals.map((goal, idx) => {
 									console.log(goal);
@@ -170,7 +170,7 @@ export default function ProfileComponent({ userProfile = null }) {
 				{/* últimos registros */}
 				<Flex flexDirection="column" marginTop="1.5em">
 					<Title>Últimos registros</Title>
-					<Activity />
+					<Activities />
 				</Flex>
 			</Flex>
 		);

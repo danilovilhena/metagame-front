@@ -5,7 +5,7 @@ import checkForCookie from 'utils/checkForCookie';
 export default function Profile() {
 	return (
 		<>
-			<Title title="Perfil" />
+			<Title title="Meu Perfil" />
 			<ProfileComponent />
 		</>
 	);

@@ -1,4 +1,14 @@
-import { Flex, Text, Image, Stack, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import {
+	Avatar,
+	Flex,
+	Text,
+	Image,
+	Stack,
+	Menu,
+	MenuButton,
+	MenuItem,
+	MenuList,
+} from '@chakra-ui/react';
 import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
 import { useSelector } from 'react-redux';
@@ -67,12 +77,14 @@ export default function PublicGoal({ goal, ...rest }) {
 				<Text>
 					Criado por <Text as="strong">{goal.creator?.username}</Text>
 				</Text>
-				<Image
-					src={goal.creator?.image_url}
+				<Avatar
 					w="2rem"
-					alt={goal.creator?.username}
-					ml="4"
+					h="2rem"
+					src={goal.creator?.image_url}
+					referrerPolicy="no-referrer"
+					name={goal.creator?.username}
 					borderRadius="50%"
+					ml="4"
 				/>
 			</Flex>
 		</Flex>

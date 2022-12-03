@@ -20,6 +20,7 @@ export default function Profile() {
 				.get(`/users/find/${usernameToSearch}`)
 				.then((response) => {
 					setUserProfile(response.data);
+					console.log(userProfile);
 				})
 				.catch((err) => {
 					console.log(err.response.data);
@@ -29,6 +30,9 @@ export default function Profile() {
 
 		findUserByUsername();
 	}, []);
+
+	const getTitle = () =>
+		userProfile ? userProfile.first_name + ' ' + userProfile.last_name : usernameToSearch;
 
 	if (isLoading) {
 		return (
@@ -44,7 +48,7 @@ export default function Profile() {
 
 	return (
 		<>
-			<Title title={`Perfil de: ${usernameToSearch}`} />
+			<Title title={`Perfil de ${getTitle()}`} />
 			<ProfileComponent userProfile={userProfile} />
 		</>
 	);
