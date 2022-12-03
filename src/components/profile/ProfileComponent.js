@@ -1,14 +1,15 @@
+import { useEffect, useState } from 'react';
 import { Grid, Flex, Text, Avatar } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSession } from 'next-auth/react';
 import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
-import PersonalGoal from './PersonalGoal';
-import { useEffect, useState } from 'react';
+import PersonalGoal from 'components/profile/PersonalGoal';
 import { Input } from 'components/common/Input';
-import { fetchGoals, fetchUserMedias } from 'store/backend';
 import Activities from 'components/profile/Activities';
 import PublicGoal from 'components/goals/PublicGoal';
+import Charts from 'components/profile/Charts';
+import { fetchGoals, fetchUserMedias } from 'store/backend';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -136,6 +137,7 @@ export default function ProfileComponent({ userProfile = null }) {
 						</Flex>
 					</Grid>
 				</Flex>
+				{/* mídias consumidas */}
 				<Grid gridTemplateColumns="1fr 1fr 1fr" gap="2em" mb="3em">
 					{buttons.map((button, idx) => (
 						<Flex
@@ -155,16 +157,21 @@ export default function ProfileComponent({ userProfile = null }) {
 						</Flex>
 					))}
 				</Grid>
+				{/* gráficos */}
+				{user && user.id === session.data.id && <Charts />}
 				{/* metas atuais */}
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas atuais</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
-						{user && user.id === session.data.id
-							? goals.map((goal, idx) => <PersonalGoal goal={goal} key={idx} />)
-							: goals.map((goal, idx) => {
-									console.log(goal);
-									return <PublicGoal goal={goal} key={idx} />;
-							  })}
+						{goals
+							.filter((goal) => !goal.is_done)
+							.map((goal, idx) => {
+								return user && user.id === session.data.id ? (
+									<PersonalGoal goal={goal} key={idx} />
+								) : (
+									<PublicGoal goal={goal} key={idx} />
+								);
+							})}
 					</Grid>
 				</Flex>
 				{/* últimos registros */}

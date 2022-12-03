@@ -36,3 +36,12 @@
 .chakra-alert__title {
 	font-weight: 500 !important;
 }
+
+tspan {
+	fill: var(--chakra-colors-gray-200) !important;
+	font-family: var(--chakra-fonts-body) !important;
+}
+
+line {
+	stroke: var(--chakra-colors-gray-200) !important;
+}
