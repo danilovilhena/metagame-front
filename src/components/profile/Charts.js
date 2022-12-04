@@ -5,6 +5,8 @@ import mediaTypesUtil from 'utils/mediaTypes';
 import { useEffect, useState } from 'react';
 import { capitalize, groupBy, formatDate } from 'utils/functions';
 
+const isEmpty = (arr) => arr && arr.length === 0;
+
 export default function Charts() {
 	const mediaTypes = useSelector((state) => state.backend.mediaTypes);
 	const userMedias = useSelector((state) => state.backend.userMedias);
@@ -50,36 +52,40 @@ export default function Charts() {
 
 	const colorScale = ['#FF4C4D', '#4CFFB8', '#4CA4FF'];
 
-	return (
-		<Flex
-			w="100%"
-			gap="8"
-			h="16rem"
-			my="1rem"
-			alignItems="center"
-			justifyContent="space-around"
-			color="gray.200"
-		>
-			<Flex flexDirection="column" gap="4">
-				{Object.values(mediaTypesUtil).map((el, idx) => (
-					<Flex gap="2" alignItems="center" key={idx}>
-						<Box w="6" h="6" bg={colorScale[idx]} ariaHidden="true" borderRadius="50%" />
-						<Text fontSize="1rem">{capitalize(el.name)}</Text>
-					</Flex>
-				))}
+	if (!isEmpty(barData) && !isEmpty(pieData)) {
+		return (
+			<Flex
+				w="100%"
+				gap="8"
+				h="16rem"
+				my="1rem"
+				alignItems="center"
+				justifyContent="space-around"
+				color="gray.200"
+			>
+				<Flex flexDirection="column" gap="4">
+					{Object.values(mediaTypesUtil).map((el, idx) => (
+						<Flex gap="2" alignItems="center" key={idx}>
+							<Box w="6" h="6" bg={colorScale[idx]} ariaHidden="true" borderRadius="50%" />
+							<Text fontSize="1rem">{capitalize(el.name)}</Text>
+						</Flex>
+					))}
+				</Flex>
+				<Box>
+					<VictoryPie data={pieData} colorScale={colorScale} height="300" />
+				</Box>
+				<Box>
+					<VictoryChart height="300">
+						<VictoryGroup colorScale={colorScale} offset="30">
+							{barData.map((el, idx) => (
+								<VictoryBar data={el} key={idx} />
+							))}
+						</VictoryGroup>
+					</VictoryChart>
+				</Box>
 			</Flex>
-			<Box>
-				<VictoryPie data={pieData} colorScale={colorScale} height="300" />
-			</Box>
-			<Box>
-				<VictoryChart height="300">
-					<VictoryGroup colorScale={colorScale} offset="30">
-						{barData.map((el, idx) => (
-							<VictoryBar data={el} key={idx} />
-						))}
-					</VictoryGroup>
-				</VictoryChart>
-			</Box>
-		</Flex>
-	);
+		);
+	}
+
+	return <></>;
 }
