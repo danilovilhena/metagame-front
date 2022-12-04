@@ -1,26 +1,11 @@
-import {
-	Avatar,
-	Flex,
-	Text,
-	Image,
-	Stack,
-	Menu,
-	MenuButton,
-	MenuItem,
-	MenuList,
-} from '@chakra-ui/react';
+import { Avatar, Flex, Text, Image } from '@chakra-ui/react';
 import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
 import { useSelector } from 'react-redux';
 import { api } from 'services/api';
-import getIcon from 'utils/getIcon';
 import { getTitle } from 'utils/mediaTypes';
 
-// TODO: Update this component's styles to match the design
 export default function PublicGoal({ goal, ...rest }) {
-	console.log(goal);
-	const options = [{ name: 'Copiar link', icon: 'link' }];
-
 	const mediaTypesArr = useSelector((state) => state.backend.mediaTypes);
 	const goalType = mediaTypesArr
 		.find((el) => el.id === (goal.mediatype || goal.mediatype_id))
@@ -47,31 +32,14 @@ export default function PublicGoal({ goal, ...rest }) {
 					<MediaIcon type={goalType} />
 					<Text as="strong">{getTitle(goalType, goal)}</Text>
 				</Flex>
-				<Stack direction="row" align="center" minW="max-content" spacing={2}>
-					<Button variant="unstyled" m="0" _hover={{}} onClick={() => handleFavoriteGoal()}>
-						<Image
-							src={`/icons/like${goal.is_liked ? '_active' : ''}.svg`}
-							w="1.75rem"
-							role="button"
-							alt="Descurtir"
-						/>
-					</Button>
-					<Menu matchWidth>
-						<MenuButton>
-							<Image src={getIcon('vertical-dots')} w="2rem" role="button" alt="Mais opções" />
-						</MenuButton>
-						<MenuList minW="max-content">
-							{options.map((option, idx) => (
-								<MenuItem
-									key={idx}
-									icon={<Image src={getIcon(option.icon, false)} alt={option.name} />}
-								>
-									{option.name}
-								</MenuItem>
-							))}
-						</MenuList>
-					</Menu>
-				</Stack>
+				<Button variant="unstyled" m="0" px="0" _hover={{}} onClick={() => handleFavoriteGoal()}>
+					<Image
+						src={`/icons/like${goal.is_liked ? '_active' : ''}.svg`}
+						w="1.75rem"
+						role="button"
+						alt="Descurtir"
+					/>
+				</Button>
 			</Flex>
 			<Flex mt="4" alignSelf="flex-end" alignItems="center">
 				<Text>

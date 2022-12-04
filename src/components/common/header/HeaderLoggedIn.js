@@ -17,7 +17,7 @@ import {
 import { IoMdSearch } from 'react-icons/io';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Button from 'components/common/Button';
 import getIcon from 'utils/getIcon';
@@ -26,12 +26,17 @@ import AddGoal from 'components/add/AddGoal';
 import AddRegister from 'components/add/AddRegister';
 
 export default function HeaderLoggedIn({ user }) {
+	const router = useRouter();
+	const [search, setSearch] = useState(router.asPath.split('/search/')[1] || '');
 	const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 	const [isAddMediaModalOpen, setIsAddMediaModalOpen] = useState(false);
 	const [isAddGoalModalOpen, setIsAddGoalModalOpen] = useState(false);
-	const router = useRouter();
 	const { colorMode, toggleColorMode } = useColorMode();
 	const isLight = colorMode === 'light';
+
+	useEffect(() => {
+		if (!router.asPath.includes('search')) setSearch('');
+	}, [router.asPath]);
 
 	const closeAllModals = () => {
 		setIsAddModalOpen(false);
@@ -66,11 +71,27 @@ export default function HeaderLoggedIn({ user }) {
 				alignItems="center"
 				_dark={{ color: 'gray.200', borderColor: 'gray.600' }}
 			>
-				<InputLeftElement pointerEvents="none">
+				<InputLeftElement
+					cursor="pointer"
+					onClick={() => {
+						router.push(`/search/${search}`);
+					}}
+				>
 					<Icon boxSize={5} as={IoMdSearch} />
 				</InputLeftElement>
 
-				<Input type="text" placeholder="Buscar" fontSize="1em" />
+				<Input
+					type="text"
+					placeholder="Buscar"
+					fontSize="1em"
+					value={search}
+					onInput={(e) => setSearch(e.target.value)}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') {
+							router.push(`/search/${search}`);
+						}
+					}}
+				/>
 			</InputGroup>
 			<HStack color="primary" spacing="0.5em">
 				{buttons.map((btn, idx) => (

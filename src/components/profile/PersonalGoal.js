@@ -50,7 +50,7 @@ export default function PersonalGoal({ goal, ...rest }) {
 	};
 
 	const options = [
-		{ name: 'Copiar link', icon: 'link', action: () => {} },
+		// { name: 'Copiar link', icon: 'link', action: () => {} },
 		{ name: 'Excluir meta', icon: 'trash', action: deleteGoal },
 	];
 
