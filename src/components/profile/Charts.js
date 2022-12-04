@@ -43,6 +43,7 @@ export default function Charts() {
 				barData[idx].push(el2);
 			});
 		});
+		barData.map((el) => el.reverse());
 
 		setBarData(barData);
 	}, [mediaTypes, userMedias]);
@@ -72,7 +73,7 @@ export default function Charts() {
 			</Box>
 			<Box>
 				<VictoryChart height="300">
-					<VictoryGroup colorScale={colorScale} offset="60">
+					<VictoryGroup colorScale={colorScale} offset="30">
 						{barData.map((el, idx) => (
 							<VictoryBar data={el} key={idx} />
 						))}
