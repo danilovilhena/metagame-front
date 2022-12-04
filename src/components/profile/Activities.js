@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { api } from 'services/api';
 import mediaTypes from 'utils/mediaTypes';
-
-const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
+import { capitalize } from 'utils/functions';
 
 export default function Activities() {
 	const userMedias = useSelector((state) => state.backend.userMedias);

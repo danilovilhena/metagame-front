@@ -23,8 +23,8 @@ import { getConclusion, getName } from 'utils/mediaTypes';
 import { getCover, getCoverTitle } from 'store/medias';
 import { api } from 'services/api';
 import { fetchGoals, fetchUserMedias } from 'store/backend';
+import { capitalize } from 'utils/functions';
 
-const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
 const fetchSection = async (name, data, url) => {
 	try {
 		const res = await fetch(url);

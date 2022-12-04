@@ -1,5 +1,6 @@
 import moment from 'moment';
 import 'moment-precise-range-plugin';
+import { capitalize } from 'utils/functions';
 
 const mediaTypes = {
 	movie: {
@@ -25,7 +26,6 @@ const mediaTypes = {
 	},
 };
 
-const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
 const dateDifferenceAsText = (start_date, limit_date) => {
 	const m1 = moment(start_date, 'YYYY-MM-DD').locale('pt-br');
 	const m2 = moment(limit_date, 'YYYY-MM-DD').locale('pt-br');

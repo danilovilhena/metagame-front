@@ -3,21 +3,7 @@ import { useSelector } from 'react-redux';
 import { VictoryBar, VictoryChart, VictoryGroup, VictoryPie } from 'victory';
 import mediaTypesUtil from 'utils/mediaTypes';
 import { useEffect, useState } from 'react';
-
-const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
-const groupBy = (xs, key) => {
-	return xs.reduce((rv, x) => {
-		(rv[x[key]] = rv[x[key]] || []).push(x);
-		return rv;
-	}, {});
-};
-const formatDate = (date) => {
-	return new Date(date).toLocaleDateString('pt-BR', {
-		year: 'numeric',
-		month: '2-digit',
-		day: '2-digit',
-	});
-};
+import { capitalize, groupBy, formatDate } from 'utils/functions';
 
 export default function Charts() {
 	const mediaTypes = useSelector((state) => state.backend.mediaTypes);

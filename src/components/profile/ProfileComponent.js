@@ -10,6 +10,7 @@ import Activities from 'components/profile/Activities';
 import PublicGoal from 'components/goals/PublicGoal';
 import Charts from 'components/profile/Charts';
 import { fetchGoals, fetchUserMedias } from 'store/backend';
+import { formatDate } from 'utils/functions';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -60,14 +61,6 @@ export default function ProfileComponent({ userProfile = null }) {
 			label: labels[el.type],
 		};
 	});
-
-	const formatDate = (date) => {
-		return new Date(date).toLocaleDateString('pt-BR', {
-			year: 'numeric',
-			month: '2-digit',
-			day: '2-digit',
-		});
-	};
 
 	const toggleIsEdit = () => setIsEdit(!isEdit);
 
