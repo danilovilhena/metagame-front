@@ -54,6 +54,19 @@ export default function PersonalGoal({ goal, ...rest }) {
 		{ name: 'Excluir meta', icon: 'trash', action: deleteGoal },
 	];
 
+	const getGoalStatus = (goal) => {
+		if (!goal?.is_active && !goal?.is_done)
+			return (
+				<>
+					<Badge background={getBackground(goalType)}>{goalCompletion}%</Badge>
+					<Image src={getIcon('alert')} w="1.5rem" title="Meta atrasada" />
+				</>
+			);
+		else if (!goal?.is_done)
+			return <Badge background={getBackground(goalType)}>{goalCompletion}%</Badge>;
+		else return <Image src={getIcon('check')} w="1.5rem" alt="Meta concluída" />;
+	};
+
 	return (
 		<Box>
 			<Flex
@@ -74,8 +87,7 @@ export default function PersonalGoal({ goal, ...rest }) {
 				</Flex>
 				<Stack direction="row" align="center" minW="max-content" spacing={2}>
 					<Text>{goal.duration}</Text>
-					{!goal?.is_done && <Badge background={getBackground(goalType)}>{goalCompletion}%</Badge>}
-					{goal?.is_done && <Image src={getIcon('check')} w="1.5rem" alt="Meta concluída" />}
+					{getGoalStatus(goal)}
 					<Menu matchWidth>
 						<MenuButton>
 							<Image src={getIcon('vertical-dots')} w="2rem" role="button" alt="Mais opções" />
