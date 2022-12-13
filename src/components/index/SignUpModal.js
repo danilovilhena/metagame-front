@@ -1,5 +1,5 @@
 import { Flex, Icon, VStack, Text, keyframes } from '@chakra-ui/react';
-import { IoLogoGoogle, IoLogoApple, IoMdEye, IoMdEyeOff } from 'react-icons/io';
+import { IoLogoGoogle, IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import { signIn } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -126,10 +126,10 @@ export default function SignUpModal({
 								<Icon as={IoLogoGoogle} mr="8px" fontSize={22} />
 								Continuar com Google
 							</Button>
-							<Button variant="styled" width="100%">
+							{/* <Button variant="styled" width="100%">
 								<Icon as={IoLogoApple} mr="8px" fontSize={22} />
 								Continuar com Apple
-							</Button>
+							</Button> */}
 							<Button variant="styled" width="100%" onClick={() => setShowEmailInputs(true)}>
 								Continuar com E-mail
 							</Button>
