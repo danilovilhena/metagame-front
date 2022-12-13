@@ -190,7 +190,7 @@ export default function ProfileComponent({ userProfile = null }) {
 				{/* últimos registros */}
 				<Flex flexDirection="column" marginTop="1.5em">
 					<Title>Últimos registros</Title>
-					<Activities />
+					{user && <Activities userProfile={user} />}
 				</Flex>
 			</Flex>
 		);

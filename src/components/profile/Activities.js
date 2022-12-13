@@ -1,16 +1,14 @@
 import { Flex, Image, SimpleGrid, Text } from '@chakra-ui/react';
-import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { api } from 'services/api';
 import mediaTypes from 'utils/mediaTypes';
 import { capitalize } from 'utils/functions';
 
-export default function Activities() {
+export default function Activities({ userProfile = null }) {
 	const userMedias = useSelector((state) => state.backend.userMedias);
 	const [activities, setActivities] = useState(null);
-	const session = useSession();
-	const user = session.data;
+	const user = userProfile;
 
 	const getActivitiesText = (item) => {
 		const content = Object.keys(mediaTypes)[item.mediatype - 1];
@@ -49,6 +47,7 @@ export default function Activities() {
 	}, [userMedias]);
 
 	if (!activities) return <></>;
+	console.log('Entrei');
 
 	return (
 		<SimpleGrid columns="2" spacing="4">
