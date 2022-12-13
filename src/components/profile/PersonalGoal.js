@@ -103,11 +103,11 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 							{calcDate() ? (
 								<>
 									<Text>{calcDate()}</Text>
-									<Badge background={getBackground(goalType)}>{goalCompletion}%</Badge>
+									<Badge background={getBackground(goalType)}>{Math.ceil(goalCompletion)}%</Badge>
 								</>
 							) : (
 								<>
-									<Badge background={getBackground(goalType)}>{goalCompletion}%</Badge>
+									<Badge background={getBackground(goalType)}>{Math.ceil(goalCompletion)}%</Badge>
 									<Box position="absolute" top="-6px" right="-14px">
 										<Tooltip label="Meta atrasada" placement="top-start">
 											<Text fontSize="5rem" color="#FDAD15FF" lineHeight="0">
