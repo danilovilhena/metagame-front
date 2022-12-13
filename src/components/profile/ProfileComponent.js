@@ -182,11 +182,9 @@ export default function ProfileComponent({ userProfile = null }) {
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas atuais</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
-						{userProfile && userProfile.id === session.data.id
+						{!userProfile || (userProfile && userProfile.id === session.data.id)
 							? goals.map((goal, idx) => <PersonalGoal goal={goal} key={idx} />)
-							: goals.map((goal, idx) => {
-									return <PublicGoal goal={goal} key={idx} />;
-							  })}
+							: goals.map((goal, idx) => <PublicGoal goal={goal} key={idx} />)}
 					</Grid>
 				</Flex>
 				{/* últimos registros */}
