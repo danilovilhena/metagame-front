@@ -9,6 +9,7 @@ import {
 	MenuItem,
 	MenuList,
 	useToast,
+	Tooltip,
 } from '@chakra-ui/react';
 import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
@@ -58,7 +59,7 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 		if (days === 1) {
 			return '1 dia restante';
 		}
-		return 'Fora do prazo';
+		return false;
 	}
 
 	const deleteGoal = () => {
@@ -74,12 +75,12 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 	};
 
 	const options = [
-		{ name: 'Copiar link', icon: 'link', action: () => {} },
+		// { name: 'Copiar link', icon: 'link', action: () => {} },
 		{ name: 'Excluir meta', icon: 'trash', action: deleteGoal },
 	];
 
 	return (
-		<Box>
+		<Box position="relative">
 			<Flex
 				align="center"
 				justify="space-between"
@@ -99,8 +100,23 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 				<Stack direction="row" align="center" minW="max-content" spacing={2}>
 					{!goal?.is_done && (
 						<>
-							<Text>{calcDate()}</Text>
-							<Badge background={getBackground(goalType)}>{goalCompletion}%</Badge>
+							{calcDate() ? (
+								<>
+									<Text>{calcDate()}</Text>
+									<Badge background={getBackground(goalType)}>{goalCompletion}%</Badge>
+								</>
+							) : (
+								<>
+									<Badge background={getBackground(goalType)}>{goalCompletion}%</Badge>
+									<Box position="absolute" top="-6px" right="-14px">
+										<Tooltip label="Meta atrasada" placement="top-start">
+											<Text fontSize="5rem" color="#FDAD15FF" lineHeight="0">
+												•
+											</Text>
+										</Tooltip>
+									</Box>
+								</>
+							)}
 						</>
 					)}
 					{goal?.is_done && <Image src={getIcon('check')} w="1.5rem" alt="Meta concluída" />}

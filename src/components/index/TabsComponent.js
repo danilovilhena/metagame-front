@@ -13,8 +13,7 @@ import {
 import { useSelector } from 'react-redux';
 import { getName } from 'utils/mediaTypes';
 import { getCover, getCoverTitle } from 'store/medias';
-
-const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
+import { capitalize } from 'utils/functions';
 
 export default function TabsComponent() {
 	const medias = useSelector((state) => state.medias.value);

@@ -1,14 +1,18 @@
-import { Grid, Flex, Text, Avatar } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { Grid, Flex, Text, Avatar, useToast } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSession } from 'next-auth/react';
 import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
-import PersonalGoal from './PersonalGoal';
-import { useEffect, useState } from 'react';
+import PersonalGoal from 'components/profile/PersonalGoal';
 import { Input } from 'components/common/Input';
-import { fetchGoals, fetchUserMedias } from 'store/backend';
-import Activity from './Activity';
+import Activities from 'components/profile/Activities';
 import PublicGoal from 'components/goals/PublicGoal';
+import Charts from 'components/profile/Charts';
+import { fetchGoals, fetchUserMedias } from 'store/backend';
+import { formatDate } from 'utils/functions';
+import showToast from 'utils/showToast';
+import { api } from 'services/api';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -33,6 +37,7 @@ const InputEdit = ({ name, action, value }) => (
 export default function ProfileComponent({ userProfile = null }) {
 	const dispatch = useDispatch();
 	const session = useSession();
+	const toast = useToast();
 	const user = userProfile || session.data;
 
 	const mediaTypes = useSelector((state) => state.backend.mediaTypes);
@@ -46,6 +51,8 @@ export default function ProfileComponent({ userProfile = null }) {
 		if (user && user.id) {
 			dispatch(fetchUserMedias(user.id));
 			dispatch(fetchGoals(user.id));
+			setName(`${user.first_name} ${user.last_name}`);
+			setUsername(user.username);
 		}
 	}, [user, dispatch]);
 
@@ -60,15 +67,30 @@ export default function ProfileComponent({ userProfile = null }) {
 		};
 	});
 
-	const formatDate = (date) => {
-		return new Date(date).toLocaleDateString('pt-BR', {
-			year: 'numeric',
-			month: '2-digit',
-			day: '2-digit',
-		});
+	const toggleIsEdit = async () => {
+		const hasChanged =
+			username !== user.username || name !== `${user.first_name} ${user.last_name}`;
+		if (isEdit && hasChanged) {
+			const nameArr = name.split(' ');
+			api
+				.put(`/users/${user.id}`, {
+					username: username,
+					email: user.email,
+					first_name: nameArr ? nameArr[0] : user.first_name,
+					last_name: nameArr ? nameArr[nameArr.length - 1] : user.last_name,
+					provider: user.userinfo.provider,
+					image_url: user.userinfo.image_url,
+					password: '',
+				})
+				.then(() => {
+					showToast(toast, 'Perfil editado com sucesso!', 'success');
+				})
+				.catch((err) => {
+					showToast(toast, `${err?.response?.data?.error}.` || 'Erro ao editar perfil!', 'error');
+				});
+		}
+		setIsEdit(!isEdit);
 	};
-
-	const toggleIsEdit = () => setIsEdit(!isEdit);
 
 	if (user) {
 		return (
@@ -101,9 +123,7 @@ export default function ProfileComponent({ userProfile = null }) {
 							{isEdit ? (
 								<InputEdit name="name" action={(e) => setName(e.target.value)} value={name} />
 							) : (
-								<Text as="strong">
-									{user.first_name} {user.last_name}
-								</Text>
+								<Text as="strong">{name}</Text>
 							)}
 						</Flex>
 						<Flex flexDirection="column">
@@ -115,7 +135,7 @@ export default function ProfileComponent({ userProfile = null }) {
 									value={username}
 								/>
 							) : (
-								<Text as="strong">{user.username}</Text>
+								<Text as="strong">{username}</Text>
 							)}
 						</Flex>
 						<Flex flexDirection="column" mr="2em">
@@ -136,6 +156,7 @@ export default function ProfileComponent({ userProfile = null }) {
 						</Flex>
 					</Grid>
 				</Flex>
+				{/* mídias consumidas */}
 				<Grid gridTemplateColumns="1fr 1fr 1fr" gap="2em" mb="3em">
 					{buttons.map((button, idx) => (
 						<Flex
@@ -155,6 +176,8 @@ export default function ProfileComponent({ userProfile = null }) {
 						</Flex>
 					))}
 				</Grid>
+				{/* gráficos */}
+				{user && user.id === session.data.id && <Charts />}
 				{/* metas atuais */}
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas atuais</Title>
@@ -169,7 +192,7 @@ export default function ProfileComponent({ userProfile = null }) {
 				{/* últimos registros */}
 				<Flex flexDirection="column" marginTop="1.5em">
 					<Title>Últimos registros</Title>
-					<Activity />
+					<Activities />
 				</Flex>
 			</Flex>
 		);

@@ -1,4 +1,14 @@
-import { Flex, Text, Image, Stack, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import {
+	Avatar,
+	Flex,
+	Text,
+	Image,
+	Stack,
+	Menu,
+	MenuButton,
+	MenuList,
+	MenuItem,
+} from '@chakra-ui/react';
 import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
 import { useSelector } from 'react-redux';
@@ -31,7 +41,7 @@ export default function PublicGoal({ goal, handleFavoriteGoal, ...rest }) {
 					<Text as="strong">{getTitle(goalType, goal)}</Text>
 				</Flex>
 				<Stack direction="row" align="center" minW="max-content" spacing={2}>
-					<Button variant="unstyled" m="0" _hover={{}} onClick={() => handleFavoriteGoal(goal.id)}>
+					<Button variant="unstyled" m="0" px="0" _hover={{}} onClick={() => handleFavoriteGoal()}>
 						<Image
 							src={`/icons/like${goal.is_liked ? '_active' : ''}.svg`}
 							w="1.75rem"
@@ -60,12 +70,14 @@ export default function PublicGoal({ goal, handleFavoriteGoal, ...rest }) {
 				<Text>
 					Criado por <Text as="strong">@{goal.creator?.username}</Text>
 				</Text>
-				<Image
-					src={goal.creator?.image_url}
+				<Avatar
 					w="2rem"
-					alt={goal.creator?.username}
-					ml="4"
+					h="2rem"
+					src={goal.creator?.image_url}
+					referrerPolicy="no-referrer"
+					name={goal.creator?.username}
 					borderRadius="50%"
+					ml="4"
 				/>
 			</Flex>
 		</Flex>

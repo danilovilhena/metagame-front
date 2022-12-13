@@ -1,5 +1,6 @@
 import moment from 'moment';
 import 'moment-precise-range-plugin';
+import { capitalize } from 'utils/functions';
 
 const mediaTypes = {
 	movie: {
@@ -9,13 +10,6 @@ const mediaTypes = {
 		verb: 'assistir',
 		conclusion: 'assistidos',
 	},
-	book: {
-		icon: '/icons/book.svg',
-		background: '#4CA4FF',
-		name: 'livro',
-		verb: 'ler',
-		conclusion: 'lidos',
-	},
 	game: {
 		icon: '/icons/game.svg',
 		background: '#4CFFB8',
@@ -23,9 +17,15 @@ const mediaTypes = {
 		verb: 'jogar',
 		conclusion: 'concluídos',
 	},
+	book: {
+		icon: '/icons/book.svg',
+		background: '#4CA4FF',
+		name: 'livro',
+		verb: 'ler',
+		conclusion: 'lidos',
+	},
 };
 
-const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
 const dateDifferenceAsText = (start_date, limit_date) => {
 	const m1 = moment(start_date, 'YYYY-MM-DD').locale('pt-br');
 	const m2 = moment(limit_date, 'YYYY-MM-DD').locale('pt-br');
