@@ -7,7 +7,6 @@ import {
 	MenuButton,
 	MenuList,
 	MenuItem,
-	Box,
 	useToast,
 } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
@@ -29,6 +28,7 @@ const fetchSection = async (name, data, url) => {
 	try {
 		const res = await fetch(url);
 		const response = await res.json();
+		console.log(response);
 		data[name] = name === 'books' ? response.items : response.results.slice(0, 10);
 	} catch (err) {
 		console.log(err);
@@ -127,7 +127,6 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 		if (searchInput) {
 			const delayDebounceFn = setTimeout(async () => {
 				let data = {};
-
 				if ([0, 1].includes(filterCategory)) {
 					await fetchSection(
 						'movies',
@@ -151,6 +150,8 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 						`https://www.googleapis.com/books/v1/volumes?orderBy=relevance&filter=paid-ebooks&&page_size=10&q=${searchInput}`
 					);
 				} else data = { ...data, books: [] };
+				console.log('----------');
+				console.log(data);
 				setFilteredMedias(data);
 			}, 100);
 
@@ -224,20 +225,26 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 					>
 						{searchInput ? (
 							filteredMedias &&
-							Object.keys(filteredMedias).every((key) => filteredMedias[key]?.length > 0) ? (
-								Object.values(filteredMedias).map((medias, idx) => (
-									<Box key={idx}>
-										{medias.map((media) => (
-											<Media
-												isActive={mediaSelected && media.id === mediaSelected.item.id}
-												action={() => handleSelected(idx, media)}
-												image={getCover(media)}
-												title={getCoverTitle(media)}
-												key={media.id}
-											/>
-										))}
-									</Box>
-								))
+							// If has any key with length > 0, show content
+							Object.keys(filteredMedias).find((key) => filteredMedias[key]?.length > 0) ? (
+								Object.values(filteredMedias).map((medias, idx) => {
+									if (medias.length > 0) {
+										return (
+											<Flex wrap="wrap" justifyContent="center" key={idx}>
+												{medias.map((media) => (
+													<Media
+														isActive={mediaSelected && media.id === mediaSelected.item.id}
+														action={() => handleSelected(idx, media)}
+														image={getCover(media)}
+														title={getCoverTitle(media)}
+														key={media.id}
+													/>
+												))}
+											</Flex>
+										);
+									}
+									return null;
+								})
 							) : (
 								<Text fontWeight="bold" alignSelf="center">
 									Mídia não encontrada
@@ -247,7 +254,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 							[...Array(10)].map((_, idx) => {
 								// Counting from 0 to 2
 								const mediaIndex = idx % 3;
-								if (filterCategory !== 0 && filterCategory !== mediaIndex) {
+								if (filterCategory !== 0 && filterCategory - 1 !== mediaIndex) {
 									return;
 								}
 								const currentMediaType = Object.values(medias)[mediaIndex];
