@@ -92,6 +92,14 @@ export default function ProfileComponent({ userProfile = null }) {
 		setIsEdit(!isEdit);
 	};
 
+	async function handleFavoriteGoal(id) {
+		await api
+			.post('/goals/favorites', {
+				goal: id,
+			})
+			.then(() => dispatch(fetchGoals(user.id)));
+	}
+
 	if (user) {
 		return (
 			<Flex
@@ -183,8 +191,12 @@ export default function ProfileComponent({ userProfile = null }) {
 					<Title>Metas atuais</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
 						{!userProfile || (userProfile && userProfile.id === session.data.id)
-							? goals.map((goal, idx) => <PersonalGoal goal={goal} key={idx} />)
-							: goals.map((goal, idx) => <PublicGoal goal={goal} key={idx} />)}
+							? goals.map((goal, idx) => (
+									<PersonalGoal handleFavoriteGoal={handleFavoriteGoal} goal={goal} key={idx} />
+							  ))
+							: goals.map((goal, idx) => (
+									<PublicGoal handleFavoriteGoal={handleFavoriteGoal} goal={goal} key={idx} />
+							  ))}
 					</Grid>
 				</Flex>
 				{/* últimos registros */}

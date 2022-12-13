@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import PublicGoal from 'components/goals/PublicGoal';
 import { fetchPopularGoals } from 'store/backend';
+import { api } from 'services/api';
 
 export default function HomeComponent() {
 	const dispatch = useDispatch();
@@ -11,6 +12,14 @@ export default function HomeComponent() {
 	const user = session.data;
 
 	const popularGoals = useSelector((state) => state.backend.popularGoals);
+
+	async function handleFavoriteGoal(id) {
+		await api
+			.post('/goals/favorites', {
+				goal: id,
+			})
+			.then(() => dispatch(fetchPopularGoals(user.id)));
+	}
 
 	useEffect(() => {
 		dispatch(fetchPopularGoals());
@@ -39,7 +48,7 @@ export default function HomeComponent() {
 				</Text>
 				<Grid templateColumns="repeat(2, 1fr)" gap="8" mb="3em">
 					{popularGoals.map((goal, idx) => (
-						<PublicGoal goal={goal} key={idx} />
+						<PublicGoal handleFavoriteGoal={handleFavoriteGoal} goal={goal} key={idx} />
 					))}
 				</Grid>
 			</Flex>

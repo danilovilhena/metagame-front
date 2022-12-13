@@ -41,7 +41,13 @@ export default function PublicGoal({ goal, handleFavoriteGoal, ...rest }) {
 					<Text as="strong">{getTitle(goalType, goal)}</Text>
 				</Flex>
 				<Stack direction="row" align="center" minW="max-content" spacing={2}>
-					<Button variant="unstyled" m="0" px="0" _hover={{}} onClick={() => handleFavoriteGoal()}>
+					<Button
+						variant="unstyled"
+						m="0"
+						px="0"
+						_hover={{}}
+						onClick={() => handleFavoriteGoal(goal.id)}
+					>
 						<Image
 							src={`/icons/like${goal.is_liked ? '_active' : ''}.svg`}
 							w="1.75rem"

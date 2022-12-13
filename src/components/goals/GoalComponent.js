@@ -20,7 +20,6 @@ export default function GoalComponent() {
 
 	const goals = useSelector((state) => state.backend.goals);
 	const favoriteGoals = useSelector((state) => state.backend.favoriteGoals);
-	console.log(favoriteGoals);
 	async function handleFavoriteGoal(id) {
 		await api
 			.post('/goals/favorites', {
