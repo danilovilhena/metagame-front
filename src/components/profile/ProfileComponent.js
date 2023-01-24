@@ -151,16 +151,16 @@ export default function ProfileComponent({ userProfile = null }) {
 							<Text as="strong">{userMedias.length}</Text>
 						</Flex>
 						<Flex flexDirection="column">
-							<Text>Data de cadastro</Text>
-							<Text as="strong">{formatDate(user.date_joined)}</Text>
+							<Text>Número de metas concluídas</Text>
+							<Text as="strong">{goals.filter((goal) => goal.is_done).length}</Text>
 						</Flex>
 						<Flex flexDirection="column" mr="2em">
 							<Text>E-mail</Text>
 							<Text as="strong">{user.email}</Text>
 						</Flex>
 						<Flex flexDirection="column">
-							<Text>Número de seguidores</Text>
-							<Text as="strong">_</Text>
+							<Text>Data de cadastro</Text>
+							<Text as="strong">{formatDate(user.date_joined)}</Text>
 						</Flex>
 					</Grid>
 				</Flex>
@@ -191,12 +191,16 @@ export default function ProfileComponent({ userProfile = null }) {
 					<Title>Metas atuais</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
 						{!userProfile || (userProfile && userProfile.id === session.data.id)
-							? goals.map((goal, idx) => (
-									<PersonalGoal handleFavoriteGoal={handleFavoriteGoal} goal={goal} key={idx} />
-							  ))
-							: goals.map((goal, idx) => (
-									<PublicGoal handleFavoriteGoal={handleFavoriteGoal} goal={goal} key={idx} />
-							  ))}
+							? goals
+									.filter((goal) => goal.is_active)
+									.map((goal, idx) => (
+										<PersonalGoal handleFavoriteGoal={handleFavoriteGoal} goal={goal} key={idx} />
+									))
+							: goals
+									.filter((goal) => goal.is_active)
+									.map((goal, idx) => (
+										<PublicGoal handleFavoriteGoal={handleFavoriteGoal} goal={goal} key={idx} />
+									))}
 					</Grid>
 				</Flex>
 				{/* últimos registros */}

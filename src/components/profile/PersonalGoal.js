@@ -125,8 +125,9 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 							src={`/icons/like${goal.is_liked ? '_active' : ''}.svg`}
 							w="1.75rem"
 							role="button"
-							alt="Descurtir"
+							alt={goal.is_liked ? 'Descurtir' : 'Curtir'}
 						/>
+						<Text ml="0.2rem">{goal.likes}</Text>
 					</Button>
 					<Menu matchWidth>
 						<MenuButton>

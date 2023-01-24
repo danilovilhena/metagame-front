@@ -48,7 +48,7 @@ export default function GoalComponent() {
 					<Title>Metas atuais</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
 						{goals
-							.filter((el) => !el.is_done)
+							.filter((el) => el.is_active)
 							.map((goal, idx) => (
 								<PersonalGoal goal={goal} key={idx} handleFavoriteGoal={handleFavoriteGoal} />
 							))}
@@ -70,7 +70,7 @@ export default function GoalComponent() {
 					<Title>Metas finalizadas</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
 						{goals
-							.filter((el) => el.is_done)
+							.filter((el) => !el.is_active)
 							.map((goal, idx) => (
 								<PersonalGoal goal={goal} handleFavoriteGoal={handleFavoriteGoal} key={idx} />
 							))}
