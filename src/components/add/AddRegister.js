@@ -19,21 +19,61 @@ import { useEffect, useState } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getConclusion, getName } from 'utils/mediaTypes';
-import { getCover, getCoverTitle } from 'store/medias';
 import { api } from 'services/api';
 import { fetchGoals, fetchUserMedias } from 'store/backend';
 import { capitalize } from 'utils/functions';
 
-const fetchSection = async (name, data, url) => {
-	try {
-		const res = await fetch(url);
-		const response = await res.json();
-		console.log(response);
-		data[name] = name === 'books' ? response.items : response.results.slice(0, 10);
-	} catch (err) {
-		console.log(err);
-	}
+const fetchMovies = async (searchInput) => {
+	const res = await fetch(
+		`https://api.themoviedb.org/3/search/movie?api_key=${process.env.NEXT_PUBLIC_TMDB}&page=1&include_adult=false&include_video=false&query=${searchInput}&language=pt-BR&include_video=false`
+	);
+	const response = await res.json();
+	return response?.results?.slice(0, 10)?.map((movie) => {
+		return {
+			title: movie.title,
+			description: movie.overview,
+			image: `https://image.tmdb.org/t/p/w500${movie.poster_path || movie.backdrop_path}`,
+			idOnApi: movie.id,
+			releaseDate: movie.release_date,
+			type: 0,
+		};
+	});
 };
+
+const fetchGames = async (searchInput) => {
+	const res = await fetch(
+		`https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG}&maxResults=10&search=${searchInput}`
+	);
+	const response = await res.json();
+	return response?.results?.map((game) => {
+		return {
+			title: game.name,
+			description: '',
+			image: game.background_image,
+			idOnApi: game.id,
+			releaseDate: game.released,
+			type: 1,
+		};
+	});
+};
+
+const fetchBooks = async (searchInput) => {
+	const res = await fetch(
+		`https://www.googleapis.com/books/v1/volumes?orderBy=relevance&filter=paid-ebooks&&page_size=10&q=${searchInput}`
+	);
+	const response = await res.json();
+	return response?.items?.map((book) => {
+		return {
+			title: book?.volumeInfo?.title,
+			description: book?.volumeInfo?.description,
+			image: book?.volumeInfo?.imageLinks?.thumbnail,
+			idOnApi: book.id,
+			releaseDate: book.volumeInfo.publishedDate,
+			type: 2,
+		};
+	});
+};
+
 const Media = ({ isActive, action, image, title, ...rest }) => (
 	<Flex
 		as="button"
@@ -76,15 +116,20 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 	const [mediaSelected, setMediaSelected] = useState(null);
 	const [filteredMedias, setFilteredMedias] = useState(null);
 	const [filterCategory, setFilterCategory] = useState(0);
+
 	const mediaTypes = useSelector((state) => [
 		{ id: 0, type: 'Todos' },
 		...state.backend.mediaTypes,
 	]);
+
 	const dispatch = useDispatch();
 	const toast = useToast();
 	const session = useSession();
 
-	const filterCategoryName = mediaTypes.find((el) => el.id === filterCategory)?.type;
+	const filterCategoryName = () => {
+		const name = mediaTypes.find((el) => el.id === filterCategory)?.type;
+		return filterCategory === 0 ? name : `${capitalize(getName(name))}s`;
+	};
 
 	const handleSelected = (idx, media) => {
 		if (mediaSelected?.item === media) setMediaSelected(null);
@@ -99,17 +144,11 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 	};
 
 	const addRegister = async () => {
-		const banner =
-			mediaSelected.type === 0
-				? mediaSelected.item.backdrop_path
-				: mediaSelected.type === 1
-				? mediaSelected.item.background_image
-				: mediaSelected.item.volumeInfo.imageLinks?.thumbnail;
 		api
 			.post('/medias', {
 				mediatype: mediaSelected.type + 1,
-				id_on_api: mediaSelected.item.id,
-				image_on_api: banner,
+				id_on_api: mediaSelected.item.idOnApi,
+				image_on_api: mediaSelected.item.image,
 			})
 			.then(() => {
 				showToast(toast, 'Mídia adicionada com sucesso!', 'success');
@@ -126,32 +165,28 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 	useEffect(() => {
 		if (searchInput) {
 			const delayDebounceFn = setTimeout(async () => {
-				let data = {};
-				if ([0, 1].includes(filterCategory)) {
-					await fetchSection(
-						'movies',
-						data,
-						`https://api.themoviedb.org/3/search/movie/?api_key=${process.env.NEXT_PUBLIC_TMDB}&language=pt-BR&sort_by=popularity.desc&include_adult=false&include_video=false&query=${searchInput}`
-					);
-				} else data = { ...data, movies: [] };
+				let data = [];
 
-				if ([0, 2].includes(filterCategory)) {
-					await fetchSection(
-						'games',
-						data,
-						`https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG}&maxResults=10&search=${searchInput}`
-					);
-				} else data = { ...data, games: [] };
+				if (filterCategory === 0) {
+					const books = await fetchBooks(searchInput);
+					const movies = await fetchMovies(searchInput);
+					const games = await fetchGames(searchInput);
+					let i = 0;
 
-				if ([0, 3].includes(filterCategory)) {
-					await fetchSection(
-						'books',
-						data,
-						`https://www.googleapis.com/books/v1/volumes?orderBy=relevance&filter=paid-ebooks&&page_size=10&q=${searchInput}`
-					);
-				} else data = { ...data, books: [] };
-				console.log('----------');
-				console.log(data);
+					while (i < books.length && i < movies.length && i < games.length) {
+						if (books[i]) data.push(books[i]);
+						if (movies[i]) data.push(movies[i]);
+						if (games[i]) data.push(games[i]);
+						i++;
+					}
+				} else if (filterCategory === 1) {
+					data = await fetchMovies(searchInput);
+				} else if (filterCategory === 2) {
+					data = await fetchGames(searchInput);
+				} else if (filterCategory === 3) {
+					data = await fetchBooks(searchInput);
+				}
+
 				setFilteredMedias(data);
 			}, 100);
 
@@ -196,9 +231,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 									display="flex"
 									justifyContent="space-between"
 								>
-									{filterCategory === 0
-										? filterCategoryName
-										: `${capitalize(getName(filterCategoryName))}s`}
+									{filterCategoryName()}
 									<ChevronDownIcon />
 								</Button>
 							</MenuButton>
@@ -224,27 +257,16 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 						maxH="600px"
 					>
 						{searchInput ? (
-							filteredMedias &&
-							// If has any key with length > 0, show content
-							Object.keys(filteredMedias).find((key) => filteredMedias[key]?.length > 0) ? (
-								Object.values(filteredMedias).map((medias, idx) => {
-									if (medias.length > 0) {
-										return (
-											<Flex wrap="wrap" justifyContent="center" key={idx}>
-												{medias.map((media) => (
-													<Media
-														isActive={mediaSelected && media.id === mediaSelected.item.id}
-														action={() => handleSelected(idx, media)}
-														image={getCover(media)}
-														title={getCoverTitle(media)}
-														key={media.id}
-													/>
-												))}
-											</Flex>
-										);
-									}
-									return null;
-								})
+							filteredMedias && filteredMedias.length > 0 ? (
+								filteredMedias.map((media, idx) => (
+									<Media
+										key={idx}
+										isActive={mediaSelected && media.id === mediaSelected.item.id}
+										action={() => handleSelected(idx, media)}
+										image={media.image}
+										title={media.title}
+									/>
+								))
 							) : (
 								<Text fontWeight="bold" alignSelf="center">
 									Mídia não encontrada
@@ -254,17 +276,17 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 							[...Array(10)].map((_, idx) => {
 								// Counting from 0 to 2
 								const mediaIndex = idx % 3;
-								if (filterCategory !== 0 && filterCategory - 1 !== mediaIndex) {
-									return;
-								}
+								if (filterCategory !== 0 && filterCategory !== mediaIndex) return;
 								const currentMediaType = Object.values(medias)[mediaIndex];
 								if (currentMediaType) {
 									return (
 										<Media
 											isActive={mediaSelected && currentMediaType[idx].id === mediaSelected.item.id}
-											action={() => handleSelected(mediaIndex, currentMediaType[idx])}
-											image={getCover(currentMediaType[idx])}
-											title={getCoverTitle(currentMediaType[idx])}
+											action={() =>
+												handleSelected(mediaIndex, { ...currentMediaType[idx], type: mediaIndex })
+											}
+											image={currentMediaType[idx].image}
+											title={currentMediaType[idx].title}
 											key={`defaultMedias-${idx}`}
 										/>
 									);
@@ -289,7 +311,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 							mr="1rem"
 							boxShadow="lg"
 							_dark={{ boxShadow: 'dark-lg' }}
-							src={getCover(mediaSelected.item)}
+							src={mediaSelected.item.image}
 						/>
 						<VStack
 							spacing=".5rem"
@@ -300,29 +322,20 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 							pr=".5rem"
 						>
 							<Text>
-								<Text as="strong">Name: </Text>
-								{mediaSelected.item.title ||
-									mediaSelected.item.name ||
-									mediaSelected.item.volumeInfo.title}
+								<Text as="strong">Nome: </Text>
+								{mediaSelected.item.title}
 							</Text>
 							<Text>
 								<Text as="strong">Categoria: </Text>
-								{mediaSelected.type === 0 ? 'Filme' : mediaSelected.type === 1 ? 'Jogo' : 'Livro'}
+								{{ 0: 'Filme', 1: 'Jogo', 2: 'Livro' }[mediaSelected.item.type]}
 							</Text>
 							<Text>
 								<Text as="strong">Ano de lançamento: </Text>
-								{new Date(
-									mediaSelected.item.release_date ||
-										(mediaSelected.item.volumeInfo &&
-											mediaSelected.item.volumeInfo.publishedDate) ||
-										mediaSelected.item.released
-								).getFullYear()}
+								{new Date(mediaSelected.item.releaseDate).getFullYear()}
 							</Text>
 							<Text>
 								<Text as="strong">Descrição: </Text>
-								{mediaSelected.item.overview ||
-									(mediaSelected.item.volumeInfo && mediaSelected.item.volumeInfo.description) ||
-									'Sem descrição'}
+								{mediaSelected.item.description || 'Sem descrição'}
 							</Text>
 						</VStack>
 					</Flex>
