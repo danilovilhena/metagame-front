@@ -12,7 +12,6 @@ import {
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { getName } from 'utils/mediaTypes';
-import { getCover, getCoverTitle } from 'store/medias';
 import { capitalize } from 'utils/functions';
 
 export default function TabsComponent() {
@@ -64,7 +63,7 @@ export default function TabsComponent() {
 											objectFit="cover"
 											borderRadius="10px"
 											shadow="md"
-											src={getCover(item)}
+											src={item.image}
 											alt="cover"
 											mb="0.5em"
 											boxShadow="lg"
@@ -79,7 +78,7 @@ export default function TabsComponent() {
 											overflow="hidden"
 											className="textElipsis"
 										>
-											{getCoverTitle(item)}
+											{item.title}
 										</Text>
 									</GridItem>
 								))}

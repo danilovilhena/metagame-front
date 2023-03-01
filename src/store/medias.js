@@ -29,21 +29,45 @@ const getMediaContent = async (max_items) => {
 		}`
 	);
 	let response = await res.json();
-	data.movies = response.results.slice(0, max_items);
+	data.movies = response.results.slice(0, max_items).map((movie) => {
+		return {
+			title: movie.title,
+			description: movie.overview,
+			image: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+			idOnApi: movie.id,
+			releaseDate: movie.release_date,
+		};
+	});
 
 	// Games
 	res = await fetch(
 		`https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG}&page_size=${max_items}&page=2`
 	);
 	response = await res.json();
-	data.games = response.results;
+	data.games = response.results.map((game) => {
+		return {
+			title: game.name,
+			description: '',
+			image: game.background_image,
+			idOnApi: game.id,
+			releaseDate: game.released,
+		};
+	});
 
 	// Books
 	res = await fetch(
 		`https://www.googleapis.com/books/v1/volumes?q=${randomWords()}&maxResults=${max_items}&orderBy=relevance&filter=paid-ebooks`
 	);
 	response = await res.json();
-	data.books = response.items;
+	data.books = response.items.map((book) => {
+		return {
+			title: book?.volumeInfo?.title,
+			description: book?.volumeInfo?.description,
+			image: book?.volumeInfo?.imageLinks?.thumbnail,
+			idOnApi: book.id,
+			releaseDate: book.volumeInfo.publishedDate,
+		};
+	});
 	return data;
 };
 
@@ -53,28 +77,3 @@ export const fetchMediaContent = createAsyncThunk('medias/fetchMediaContent', as
 });
 
 export default mediasSlice.reducer;
-
-// utility functions
-const detectMedia = (media) => {
-	if (media?.poster_path) return 'movie';
-	else if (media?.volumeInfo) return 'book';
-	else return 'game';
-};
-
-export const getCover = (item) => {
-	if (item) {
-		const media = detectMedia(item);
-		if (media === 'movie') return `https://image.tmdb.org/t/p/w500${item?.poster_path}`;
-		else if (media === 'game') return item?.background_image;
-		else return item?.volumeInfo?.imageLinks?.thumbnail;
-	}
-};
-
-export const getCoverTitle = (item) => {
-	if (item) {
-		const media = detectMedia(item);
-		if (media === 'movie') return item?.title;
-		else if (media === 'game') return item?.name;
-		else return item?.volumeInfo?.title;
-	}
-};

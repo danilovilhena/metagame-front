@@ -1,5 +1,4 @@
 import { Box, Flex, Image, useBreakpointValue, keyframes } from '@chakra-ui/react';
-import { getCover } from 'store/medias';
 import { useSelector } from 'react-redux';
 import styles from 'styles/VerticalMovingCovers.module.css';
 
@@ -35,7 +34,7 @@ export default function VerticalMovingCovers() {
 											w="100px"
 											minH="150px"
 											objectFit="cover"
-											src={getCover(currentMedias[idx > 3 ? innerIdx + 9 : innerIdx])}
+											src={currentMedias[idx > 3 ? innerIdx + 9 : innerIdx].image}
 											alt="cover"
 											mb="0.5em"
 											borderRadius="0.5rem"
