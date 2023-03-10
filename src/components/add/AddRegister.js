@@ -133,7 +133,9 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 
 	const handleSelected = (idx, media) => {
 		if (mediaSelected?.item === media) setMediaSelected(null);
-		else setMediaSelected({ type: idx, item: media });
+		else {
+			setMediaSelected({ type: media.type, item: media });
+		}
 	};
 
 	const resetStates = () => {
@@ -168,9 +170,9 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 				let data = [];
 
 				if (filterCategory === 0) {
-					const books = await fetchBooks(searchInput);
 					const movies = await fetchMovies(searchInput);
 					const games = await fetchGames(searchInput);
+					const books = await fetchBooks(searchInput);
 					let i = 0;
 
 					while (i < books.length && i < movies.length && i < games.length) {
@@ -262,7 +264,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 									<Media
 										key={idx}
 										isActive={mediaSelected && media.id === mediaSelected.item.id}
-										action={() => handleSelected(idx, media)}
+										action={() => handleSelected(idx % 3, media)}
 										image={media.image}
 										title={media.title}
 									/>
@@ -343,13 +345,24 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 				{/* add button */}
 				<Button isDisabled={!mediaSelected} variant="styled" width="100%" onClick={addRegister}>
 					<Image src={getIcon('add_dark')} w="1.5rem" alt="" mr="2" />
-					Marcar {getName(
-						mediaTypes.find((el) => el.id === mediaSelected?.type + 1)?.type
-					)} como{' '}
-					{getConclusion(mediaTypes.find((el) => el.id === mediaSelected?.type + 1)?.type)?.slice(
-						0,
-						-1
-					)}
+					Marcar{' '}
+					{getName(
+						mediaTypes
+							.slice(1)
+							.map((media, idx) => {
+								return { ...media, id: idx };
+							})
+							.find((el) => el.id === mediaSelected?.type)?.type
+					)}{' '}
+					como{' '}
+					{getConclusion(
+						mediaTypes
+							.slice(1)
+							.map((media, idx) => {
+								return { ...media, id: idx };
+							})
+							.find((el) => el.id === mediaSelected?.type)?.type
+					)?.slice(0, -1)}
 				</Button>
 			</VStack>
 		</Modal>
