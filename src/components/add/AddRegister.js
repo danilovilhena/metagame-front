@@ -74,7 +74,7 @@ const fetchBooks = async (searchInput) => {
 	});
 };
 
-const Media = ({ isActive, action, image, title, ...rest }) => (
+export const Media = ({ isActive, action, image, title, ...rest }) => (
 	<Flex
 		as="button"
 		flexDirection="column"

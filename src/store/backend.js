@@ -9,9 +9,11 @@ export const backendSlice = createSlice({
 		mediaTypes: [],
 		userMedias: [],
 		popularGoals: [],
+		popularMedias: [],
 	},
 	reducers: {
 		setFavoriteGoals: (state, action) => {
+			console.log('Entrei 2');
 			state.favoriteGoals = action.payload;
 		},
 		setPopularGoals: (state, action) => {
@@ -26,6 +28,9 @@ export const backendSlice = createSlice({
 		setUserMedias: (state, action) => {
 			state.userMedias = action.payload;
 		},
+		setPopularMedias: (state, action) => {
+			state.popularMedias = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchMediaTypes.fulfilled, (state, action) => {
@@ -38,6 +43,9 @@ export const backendSlice = createSlice({
 		});
 		builder.addCase(fetchPopularGoals.fulfilled, (state, action) => {
 			state.popularGoals = action.payload;
+		});
+		builder.addCase(fetchPopularMedias.fulfilled, (state, action) => {
+			state.popularMedias = action.payload;
 		});
 
 		builder.addCase(fetchUserMedias.fulfilled, (state, action) => {
@@ -61,13 +69,24 @@ export const fetchPopularGoals = createAsyncThunk('backend/fetchPopularGoals', a
 	const response = await api.get('/goals/favorites');
 	return response.data;
 });
+export const fetchPopularMedias = createAsyncThunk('backend/fetchPopularMedias', async () => {
+	const response = await api.get('/medias/top');
+	console.log(response.data);
+	return response.data;
+});
 
 export const fetchUserMedias = createAsyncThunk('backend/fetchUserMedias', async (userId) => {
 	const response = await api.get(`/medias/user/${userId}`);
 	return response.data;
 });
 
-export const { setFavoriteGoals, setPopularGoals, setGoals, setMediaTypes, setMedias } =
-	backendSlice.actions;
+export const {
+	setFavoriteGoals,
+	setPopularGoals,
+	setGoals,
+	setMediaTypes,
+	setMedias,
+	setPopularMedias,
+} = backendSlice.actions;
 
 export default backendSlice.reducer;
