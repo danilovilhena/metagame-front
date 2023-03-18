@@ -11,11 +11,11 @@ import {
 } from '@chakra-ui/react';
 import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import getIcon from 'utils/getIcon';
 import { getTitle } from 'utils/mediaTypes';
 
-// TODO: Update this component's styles to match the design
 export default function PublicGoal({ goal, handleFavoriteGoal, ...rest }) {
 	const options = [{ name: 'Copiar link', icon: 'link' }];
 
@@ -75,7 +75,12 @@ export default function PublicGoal({ goal, handleFavoriteGoal, ...rest }) {
 			</Flex>
 			<Flex mt="4" alignSelf="flex-end" alignItems="center">
 				<Text>
-					Criado por <Text as="strong">@{goal.creator?.username}</Text>
+					Criado por{' '}
+					<Link href={`/profile/${goal.creator?.username}`}>
+						<Text as="strong" cursor="pointer">
+							@{goal.creator?.username}
+						</Text>
+					</Link>
 				</Text>
 				<Avatar
 					w="2rem"

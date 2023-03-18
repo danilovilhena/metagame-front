@@ -20,10 +20,9 @@ export default function Profile() {
 				.get(`/users/find/${usernameToSearch}`)
 				.then((response) => {
 					setUserProfile(response.data);
-					console.log(userProfile);
 				})
 				.catch((err) => {
-					console.log(err.response.data);
+					console.error(err.response.data);
 				});
 			setIsLoading(false);
 		}

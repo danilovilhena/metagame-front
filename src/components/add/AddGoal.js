@@ -92,7 +92,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 	};
 
 	const repeatedGoalsOfSameType = () => {
-		const selectedId = mediaTypes.find((media) => media.type === mediaSelected).id;
+		const selectedId = mediaTypes?.find((media) => media.type === mediaSelected)?.id;
 		const lastTwoGoals = goals.length > 1 && goals.slice(-2);
 
 		return (

@@ -93,7 +93,7 @@ export const authOptions = {
 			try {
 				await api.get('/logout');
 			} catch (err) {
-				console.log(err);
+				console.error(err);
 			}
 		},
 	},

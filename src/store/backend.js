@@ -10,10 +10,10 @@ export const backendSlice = createSlice({
 		userMedias: [],
 		popularGoals: [],
 		popularMedias: [],
+		ranking: [],
 	},
 	reducers: {
 		setFavoriteGoals: (state, action) => {
-			console.log('Entrei 2');
 			state.favoriteGoals = action.payload;
 		},
 		setPopularGoals: (state, action) => {
@@ -31,12 +31,14 @@ export const backendSlice = createSlice({
 		setPopularMedias: (state, action) => {
 			state.popularMedias = action.payload;
 		},
+		setRanking: (state, action) => {
+			state.ranking = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchMediaTypes.fulfilled, (state, action) => {
 			state.mediaTypes = action.payload;
 		});
-
 		builder.addCase(fetchGoals.fulfilled, (state, action) => {
 			state.goals = action.payload.goals;
 			state.favoriteGoals = action.payload.favorites;
@@ -47,9 +49,11 @@ export const backendSlice = createSlice({
 		builder.addCase(fetchPopularMedias.fulfilled, (state, action) => {
 			state.popularMedias = action.payload;
 		});
-
 		builder.addCase(fetchUserMedias.fulfilled, (state, action) => {
 			state.userMedias = action.payload;
+		});
+		builder.addCase(fetchRanking.fulfilled, (state, action) => {
+			state.ranking = action.payload;
 		});
 	},
 });
@@ -71,13 +75,26 @@ export const fetchPopularGoals = createAsyncThunk('backend/fetchPopularGoals', a
 });
 export const fetchPopularMedias = createAsyncThunk('backend/fetchPopularMedias', async () => {
 	const response = await api.get('/medias/top');
-	console.log(response.data);
 	return response.data;
 });
 
 export const fetchUserMedias = createAsyncThunk('backend/fetchUserMedias', async (userId) => {
 	const response = await api.get(`/medias/user/${userId}`);
 	return response.data;
+});
+
+export const fetchRanking = createAsyncThunk('backend/fetchRanking', async () => {
+	const response = await api.get('/ranking');
+	const ranking = response.data;
+
+	const mappedRanking = await Promise.all(
+		ranking.map(async (user) => {
+			const response = await api.get(`/users/${user.user_id}`);
+			return { ...user, ...response.data };
+		})
+	);
+
+	return mappedRanking;
 });
 
 export const {

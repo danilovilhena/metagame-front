@@ -16,7 +16,7 @@ const apiClient = () => {
 			return request;
 		},
 		(error) => {
-			console.log(`error`, error);
+			console.error(error);
 			throw new Error(error.response.data.message);
 		}
 	);

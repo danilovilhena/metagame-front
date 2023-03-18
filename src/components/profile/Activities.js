@@ -47,7 +47,6 @@ export default function Activities({ userProfile = null }) {
 	}, [userMedias]);
 
 	if (!activities) return <></>;
-	console.log('Entrei');
 
 	return (
 		<SimpleGrid columns="2" spacing="4">

@@ -288,8 +288,8 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 											action={() =>
 												handleSelected(mediaIndex, { ...currentMediaType[idx], type: mediaIndex })
 											}
-											image={currentMediaType[idx].image}
-											title={currentMediaType[idx].title}
+											image={currentMediaType[idx]?.image}
+											title={currentMediaType[idx]?.title}
 											key={`defaultMedias-${idx}`}
 										/>
 									);

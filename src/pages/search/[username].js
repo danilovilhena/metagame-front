@@ -33,10 +33,9 @@ export default function Search() {
 				.get(`/users`)
 				.then((response) => {
 					setResult(findRelatedUsers(response.data));
-					console.log(findRelatedUsers(response.data));
 				})
 				.catch((err) => {
-					console.log(err);
+					console.error(err);
 				});
 			setIsLoading(false);
 		}
@@ -61,7 +60,3 @@ export default function Search() {
 }
 
 export { checkForCookie as getServerSideProps };
-
-// TODO: Create index page that just says to type in a user name to search
-// TODO: Remove share goal button
-// TODO: Responsivity

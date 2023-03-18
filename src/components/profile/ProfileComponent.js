@@ -112,10 +112,16 @@ export default function ProfileComponent({ userProfile = null }) {
 				_dark={{ bg: 'gray.900', color: 'gray.200' }}
 			>
 				<Flex width="100%" justifyContent="space-between" mb="1em">
-					<Title>Meu Perfil</Title>
-					<Button variant="styled" fontSize="1rem" onClick={toggleIsEdit}>
-						{isEdit ? 'Salvar mudanças' : 'Editar Perfil'}
-					</Button>
+					{user.username === session.data.username ? (
+						<>
+							<Title>Meu Perfil</Title>
+							<Button variant="styled" fontSize="1rem" onClick={toggleIsEdit}>
+								{isEdit ? 'Salvar mudanças' : 'Editar Perfil'}
+							</Button>
+						</>
+					) : (
+						<Title>Perfil de {user.first_name}</Title>
+					)}
 				</Flex>
 				<Flex mb="3em">
 					<Avatar
