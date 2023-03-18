@@ -8,6 +8,8 @@ import {
 	MenuList,
 	MenuItem,
 	useToast,
+	Alert,
+	AlertIcon,
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
@@ -37,6 +39,7 @@ const getLengthInDays = (length, period) => {
 
 export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals }) {
 	const mediaTypes = useSelector((state) => state.backend.mediaTypes);
+	const goals = useSelector((state) => state.backend.goals);
 	const [mediaSelected, setMediaSelected] = useState('Movie');
 	const [goalPeriod, setGoalPeriod] = useState('dias');
 	const [goalValue, setGoalValue] = useState(0);
@@ -86,6 +89,17 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 				'error'
 			);
 		}
+	};
+
+	const repeatedGoalsOfSameType = () => {
+		const selectedId = mediaTypes.find((media) => media.type === mediaSelected).id;
+		const lastTwoGoals = goals.length > 1 && goals.slice(-2);
+
+		return (
+			lastTwoGoals?.length === 2 &&
+			lastTwoGoals[0].mediatype === selectedId &&
+			lastTwoGoals[1].mediatype === selectedId
+		);
 	};
 
 	return (
@@ -171,6 +185,13 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 						</MenuList>
 					</Menu>
 				</Grid>
+				{repeatedGoalsOfSameType() && (
+					<Alert status="warning" textAlign="left">
+						<AlertIcon />
+						Experimente criar metas de outros tipos! Essa é sua terceira meta seguida de{' '}
+						{getGroup(mediaSelected || mediaTypes[0]?.type)}.
+					</Alert>
+				)}
 				<Button variant="styled" width="100%" onClick={addGoal}>
 					<Image src={getIcon('goal-add')} w="1.5rem" alt="" mr="2" />
 					Criar meta de consumo

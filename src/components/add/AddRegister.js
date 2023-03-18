@@ -149,6 +149,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen, closeAllModal
 		api
 			.post('/medias', {
 				mediatype: mediaSelected.type + 1,
+				name_on_api: mediaSelected.item.title,
 				id_on_api: mediaSelected.item.idOnApi,
 				image_on_api: mediaSelected.item.image,
 			})
