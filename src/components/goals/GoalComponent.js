@@ -6,7 +6,6 @@ import PersonalGoal from 'components/profile/PersonalGoal';
 import PublicGoal from 'components/goals/PublicGoal';
 import { fetchGoals, fetchPopularMedias } from 'store/backend';
 import { api } from 'services/api';
-import { Media } from 'components/add/AddRegister';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -21,7 +20,6 @@ export default function GoalComponent() {
 
 	const goals = useSelector((state) => state.backend.goals);
 	const favoriteGoals = useSelector((state) => state.backend.favoriteGoals);
-	const popularMedias = useSelector((state) => state.backend.popularMedias);
 	async function handleFavoriteGoal(id) {
 		await api
 			.post('/goals/favorites', {
@@ -80,25 +78,6 @@ export default function GoalComponent() {
 								<PersonalGoal goal={goal} handleFavoriteGoal={handleFavoriteGoal} key={idx} />
 							))}
 					</Grid>
-				</Flex>
-				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
-					<Title>Mídias mais populares</Title>
-					<Flex gap="4">
-						{popularMedias
-							.slice(0, 8)
-							.filter((el) => !el.is_active)
-							.map((media, idx) => (
-								<Media
-									image={
-										media.mediatype_id === 1
-											? `https://image.tmdb.org/t/p/w500${media.image_on_api}`
-											: media.image_on_api
-									}
-									title={media.name}
-									key={idx}
-								/>
-							))}
-					</Flex>
 				</Flex>
 			</Flex>
 		);
