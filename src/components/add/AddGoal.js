@@ -192,6 +192,9 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 						{getGroup(mediaSelected || mediaTypes[0]?.type)}.
 					</Alert>
 				)}
+				<Text alignSelf="start" fontSize="14px" opacity="0.6">
+					Lembre-se de criar metas compatíveis com sua rotina
+				</Text>
 				<Button variant="styled" width="100%" onClick={addGoal}>
 					<Image src={getIcon('goal-add')} w="1.5rem" alt="" mr="2" />
 					Criar meta de consumo
