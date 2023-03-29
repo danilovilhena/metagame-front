@@ -107,6 +107,7 @@ export default function HomeComponent() {
 							.filter((el) => !el.is_active)
 							.map((media, idx) => (
 								<Media
+									cursor="default"
 									image={
 										media.mediatype_id === 1
 											? `https://image.tmdb.org/t/p/w500${media.image_on_api}`

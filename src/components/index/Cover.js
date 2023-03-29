@@ -50,7 +50,7 @@ export default function Cover() {
 							1
 						</Text>
 						<Text flex="1">
-							Crie listas ou por busque por listas populares de livros, filmes e jogos
+							Crie metas ou por busque por metas populares de livros, filmes e jogos
 						</Text>
 					</Flex>
 					<Flex
@@ -70,7 +70,7 @@ export default function Cover() {
 						>
 							2
 						</Text>
-						<Text flex="1">Defina em quanto tempo você deseja completar essa lista</Text>
+						<Text flex="1">Defina em quanto tempo você deseja completar essa meta</Text>
 					</Flex>
 					<Flex flexDirection={{ base: 'row', md: 'column' }}>
 						<Text
@@ -86,7 +86,7 @@ export default function Cover() {
 							3
 						</Text>
 						<Text flex="1">
-							A cada livro, filme ou jogo consumido, acompanhe seu progresso na lista
+							A cada livro, filme ou jogo consumido, acompanhe seu progresso na meta
 						</Text>
 					</Flex>
 				</Flex>
