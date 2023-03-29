@@ -11,6 +11,7 @@ export const backendSlice = createSlice({
 		popularGoals: [],
 		popularMedias: [],
 		ranking: [],
+		userRanking: [],
 	},
 	reducers: {
 		setFavoriteGoals: (state, action) => {
@@ -34,6 +35,9 @@ export const backendSlice = createSlice({
 		setRanking: (state, action) => {
 			state.ranking = action.payload;
 		},
+		setUserRanking: (state, action) => {
+			state.userRanking = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchMediaTypes.fulfilled, (state, action) => {
@@ -54,6 +58,9 @@ export const backendSlice = createSlice({
 		});
 		builder.addCase(fetchRanking.fulfilled, (state, action) => {
 			state.ranking = action.payload;
+		});
+		builder.addCase(fetchUserRanking.fulfilled, (state, action) => {
+			state.userRanking = action.payload;
 		});
 	},
 });
@@ -95,6 +102,12 @@ export const fetchRanking = createAsyncThunk('backend/fetchRanking', async () =>
 	);
 
 	return mappedRanking;
+});
+export const fetchUserRanking = createAsyncThunk('backend/fetchUserRanking', async (userId) => {
+	const response = await api.get(`/ranking/user/${userId}`);
+	const ranking = response.data[0].points;
+
+	return ranking;
 });
 
 export const {

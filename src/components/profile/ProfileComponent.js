@@ -9,7 +9,7 @@ import { Input } from 'components/common/Input';
 import Activities from 'components/profile/Activities';
 import PublicGoal from 'components/goals/PublicGoal';
 import Charts from 'components/profile/Charts';
-import { fetchGoals, fetchUserMedias } from 'store/backend';
+import { fetchGoals, fetchUserMedias, fetchUserRanking } from 'store/backend';
 import { formatDate } from 'utils/functions';
 import showToast from 'utils/showToast';
 import { api } from 'services/api';
@@ -39,9 +39,10 @@ export default function ProfileComponent({ userProfile = null }) {
 	const session = useSession();
 	const toast = useToast();
 	const user = userProfile || session.data;
-
 	const mediaTypes = useSelector((state) => state.backend.mediaTypes);
 	const userMedias = useSelector((state) => state.backend.userMedias);
+	const userPoints = useSelector((state) => state.backend.userRanking);
+
 	const goals = useSelector((state) => state.backend.goals);
 	const [isEdit, setIsEdit] = useState(false);
 	const [name, setName] = useState(user ? `${user.first_name} ${user.last_name}` : '');
@@ -51,6 +52,7 @@ export default function ProfileComponent({ userProfile = null }) {
 		if (user && user.id) {
 			dispatch(fetchUserMedias(user.id));
 			dispatch(fetchGoals(user.id));
+			dispatch(fetchUserRanking(user.id));
 			setName(`${user.first_name} ${user.last_name}`);
 			setUsername(user.username);
 		}
@@ -131,7 +133,7 @@ export default function ProfileComponent({ userProfile = null }) {
 						name={user.first_name}
 						borderRadius="1rem"
 					/>
-					<Grid ml="2em" gridTemplateColumns="1fr 1fr" gap="1em">
+					<Grid ml="2em" gridTemplateColumns="1fr 1fr 1fr" gap="1em">
 						<Flex flexDirection="column" mr="2em">
 							<Text>Nome</Text>
 							{isEdit ? (
@@ -152,6 +154,10 @@ export default function ProfileComponent({ userProfile = null }) {
 								<Text as="strong">{username}</Text>
 							)}
 						</Flex>
+						<Flex flexDirection="column">
+							<Text>Data de cadastro</Text>
+							<Text as="strong">{formatDate(user.date_joined)}</Text>
+						</Flex>
 						<Flex flexDirection="column" mr="2em">
 							<Text>Número de mídias consumidas</Text>
 							<Text as="strong">{userMedias.length}</Text>
@@ -161,12 +167,8 @@ export default function ProfileComponent({ userProfile = null }) {
 							<Text as="strong">{goals.filter((goal) => goal.is_done).length}</Text>
 						</Flex>
 						<Flex flexDirection="column" mr="2em">
-							<Text>E-mail</Text>
-							<Text as="strong">{user.email}</Text>
-						</Flex>
-						<Flex flexDirection="column">
-							<Text>Data de cadastro</Text>
-							<Text as="strong">{formatDate(user.date_joined)}</Text>
+							<Text>Pontos</Text>
+							<Text as="strong">{userPoints}</Text>
 						</Flex>
 					</Grid>
 				</Flex>
