@@ -1,4 +1,4 @@
-import { Flex, Grid, Text, Avatar } from '@chakra-ui/react';
+import { Flex, Grid, Text, Avatar, Skeleton } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -55,6 +55,12 @@ export default function HomeComponent() {
 					🔥 Conheça metas populares entre outros usuários
 				</Text>
 				<Grid templateColumns="repeat(2, 1fr)" gap="8" mb="3em">
+					{popularGoals.length <= 0 && (
+						<>
+							<Skeleton height={112} width={500} borderRadius={10} />
+							<Skeleton height={112} width={500} borderRadius={10} />
+						</>
+					)}
 					{popularGoals.map((goal, idx) => (
 						<PublicGoal handleFavoriteGoal={handleFavoriteGoal} goal={goal} key={idx} />
 					))}
@@ -63,6 +69,12 @@ export default function HomeComponent() {
 					🏆 Descubra os principais usuários do Metagame!
 				</Text>
 				<Grid templateColumns="repeat(2, 1fr)" gap="8" mb="3em">
+					{ranking.length <= 0 && (
+						<>
+							<Skeleton height="56px" width="100%" borderRadius={10} />
+							<Skeleton height="56px" width="100%" borderRadius={10} />
+						</>
+					)}
 					{ranking.map((user, idx) => (
 						<Flex
 							flexDir="row"
@@ -102,6 +114,16 @@ export default function HomeComponent() {
 						Mídias mais populares
 					</Text>
 					<Flex gap="4">
+						{popularMedias.length <= 0 && (
+							<Flex>
+								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
+								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
+								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
+								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
+								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
+								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
+							</Flex>
+						)}
 						{popularMedias
 							.slice(0, 8)
 							.filter((el) => !el.is_active)

@@ -1,4 +1,4 @@
-import { Grid, Flex, Text } from '@chakra-ui/react';
+import { Grid, Flex, Text, Skeleton } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -50,6 +50,12 @@ export default function GoalComponent() {
 				<Flex flexDirection="column" marginTop="1.5em" mb="2rem">
 					<Title>Metas atuais</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
+						{goals.length <= 0 && (
+							<>
+								<Skeleton height="80px" width="100%" borderRadius="10px" />
+								<Skeleton height="80px" width="100%" borderRadius="10px" />
+							</>
+						)}
 						{goals
 							.filter((el) => el.is_active)
 							.map((goal, idx) => (
@@ -60,6 +66,12 @@ export default function GoalComponent() {
 				<Flex flexDirection="column" marginTop="1.5em" mb="2rem">
 					<Title>Metas curtidas</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
+						{favoriteGoals.length <= 0 && (
+							<>
+								<Skeleton height="124px" width="100%" borderRadius="10px" />
+								<Skeleton height="124px" width="100%" borderRadius="10px" />
+							</>
+						)}
 						{favoriteGoals.map((goal, idx) => (
 							<PublicGoal
 								goal={{ ...goal, is_liked: true }}
@@ -72,6 +84,12 @@ export default function GoalComponent() {
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas finalizadas</Title>
 					<Grid templateColumns="repeat(2, 1fr)" gap="4">
+						{goals.length <= 0 && (
+							<>
+								<Skeleton height="80px" width="100%" borderRadius="10px" />
+								<Skeleton height="80px" width="100%" borderRadius="10px" />
+							</>
+						)}
 						{goals
 							.filter((el) => !el.is_active)
 							.map((goal, idx) => (

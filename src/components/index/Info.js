@@ -11,7 +11,6 @@ export default function Info() {
 			px={{ base: '2rem', xl: '11.5em' }}
 			py="3rem"
 			id="info"
-			height="100vh"
 			_dark={{ color: 'gray.200' }}
 		>
 			<Text

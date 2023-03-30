@@ -9,6 +9,7 @@ import {
 	Grid,
 	GridItem,
 	Flex,
+	Skeleton,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { getName } from 'utils/mediaTypes';
@@ -46,6 +47,26 @@ export default function TabsComponent() {
 					))}
 				</TabList>
 				<TabPanels>
+					{Object.keys(medias).length <= 0 && (
+						<>
+							<Flex flexDirection="row" gap="60px" padding="16px 20px">
+								<Skeleton width="130px" height="200px" borderRadius="10px" />
+								<Skeleton width="130px" height="200px" borderRadius="10px" />
+								<Skeleton width="130px" height="200px" borderRadius="10px" />
+								<Skeleton width="130px" height="200px" borderRadius="10px" />
+								<Skeleton width="130px" height="200px" borderRadius="10px" />
+								<Skeleton width="130px" height="200px" borderRadius="10px" />
+							</Flex>
+							<Flex flexDirection="row" gap="60px" padding="16px 20px">
+								<Skeleton width="130px" height="200px" borderRadius="10px" />
+								<Skeleton width="130px" height="200px" borderRadius="10px" />
+								<Skeleton width="130px" height="200px" borderRadius="10px" />
+								<Skeleton width="130px" height="200px" borderRadius="10px" />
+								<Skeleton width="130px" height="200px" borderRadius="10px" />
+								<Skeleton width="130px" height="200px" borderRadius="10px" />
+							</Flex>
+						</>
+					)}
 					{Object.entries(medias).map((tabOptionContent, idx) => (
 						<TabPanel key={`panel-${idx}`}>
 							<Grid templateColumns="repeat(auto-fill,minmax(160px, 1fr));" gap={18}>
