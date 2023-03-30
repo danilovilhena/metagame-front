@@ -106,7 +106,7 @@ export default function ProfileComponent({ userProfile = null }) {
 		return (
 			<Flex
 				flexDirection="column"
-				px="6em"
+				px={['2em', '6em']}
 				background="primary"
 				color="white"
 				py="3em"
@@ -125,7 +125,7 @@ export default function ProfileComponent({ userProfile = null }) {
 						<Title>Perfil de {user.first_name}</Title>
 					)}
 				</Flex>
-				<Flex mb="3em">
+				<Flex mb="3em" flexDirection={['column', 'row']} alignItems={['center', 'start']}>
 					<Avatar
 						size="2xl"
 						src={user.userinfo.image_url}
@@ -133,8 +133,14 @@ export default function ProfileComponent({ userProfile = null }) {
 						name={user.first_name}
 						borderRadius="1rem"
 					/>
-					<Grid ml="2em" gridTemplateColumns="1fr 1fr 1fr" gap="1em">
-						<Flex flexDirection="column" mr="2em">
+					<Grid
+						ml={['0px', '2em']}
+						mt={['2em', '0px']}
+						gridTemplateColumns={['1fr 1fr', '1fr 1fr 1fr']}
+						gap="1em"
+						textAlign="start"
+					>
+						<Flex flexDirection="column" mr={['0px', '2em']}>
 							<Text>Nome</Text>
 							{isEdit ? (
 								<InputEdit name="name" action={(e) => setName(e.target.value)} value={name} />
@@ -151,29 +157,29 @@ export default function ProfileComponent({ userProfile = null }) {
 									value={username}
 								/>
 							) : (
-								<Text as="strong">{username}</Text>
+								<Text as="strong">@{username}</Text>
 							)}
 						</Flex>
 						<Flex flexDirection="column">
 							<Text>Data de cadastro</Text>
 							<Text as="strong">{formatDate(user.date_joined)}</Text>
 						</Flex>
-						<Flex flexDirection="column" mr="2em">
-							<Text>Número de mídias consumidas</Text>
+						<Flex flexDirection="column" mr={['0px', '2em']}>
+							<Text>Mídias consumidas</Text>
 							<Text as="strong">{userMedias.length}</Text>
 						</Flex>
 						<Flex flexDirection="column">
-							<Text>Número de metas concluídas</Text>
+							<Text>Metas concluídas</Text>
 							<Text as="strong">{goals.filter((goal) => goal.is_done).length}</Text>
 						</Flex>
-						<Flex flexDirection="column" mr="2em">
+						<Flex flexDirection="column" mr={['0px', '2em']}>
 							<Text>Pontos</Text>
 							<Text as="strong">{userPoints}</Text>
 						</Flex>
 					</Grid>
 				</Flex>
 				{/* mídias consumidas */}
-				<Grid gridTemplateColumns="1fr 1fr 1fr" gap="2em" mb="3em">
+				<Grid gridTemplateColumns={['1fr', '1fr 1fr 1fr']} gap="2em" mb="3em">
 					{buttons.map((button, idx) => (
 						<Flex
 							background="tertiary"
@@ -197,7 +203,7 @@ export default function ProfileComponent({ userProfile = null }) {
 				{/* metas atuais */}
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas atuais</Title>
-					<Grid templateColumns="repeat(2, 1fr)" gap="4">
+					<Grid templateColumns={['1fr', 'repeat(2, 1fr)']} gap="4">
 						{!userProfile || (userProfile && userProfile.id === session.data.id)
 							? goals
 									.filter((goal) => goal.is_active)
@@ -214,7 +220,7 @@ export default function ProfileComponent({ userProfile = null }) {
 				{/* últimos registros */}
 				<Flex flexDirection="column" marginTop="1.5em">
 					<Title>Últimos registros</Title>
-					{user && <Activities userProfile={user} />}
+					<Activities userProfile={user} />
 				</Flex>
 			</Flex>
 		);

@@ -13,6 +13,8 @@ import {
 	MenuItem,
 	Divider,
 	useColorMode,
+	useBreakpointValue,
+	VStack,
 } from '@chakra-ui/react';
 import { IoMdSearch } from 'react-icons/io';
 import { signOut } from 'next-auth/react';
@@ -24,6 +26,7 @@ import getIcon from 'utils/getIcon';
 import AddModal from 'components/add/AddModal';
 import AddGoal from 'components/add/AddGoal';
 import AddRegister from 'components/add/AddRegister';
+import SideBarDrawer from 'components/index/SideBarDrawer';
 
 export default function HeaderLoggedIn({ user }) {
 	const router = useRouter();
@@ -31,6 +34,8 @@ export default function HeaderLoggedIn({ user }) {
 	const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 	const [isAddMediaModalOpen, setIsAddMediaModalOpen] = useState(false);
 	const [isAddGoalModalOpen, setIsAddGoalModalOpen] = useState(false);
+	const isWideVersion = useBreakpointValue({ base: false, lg: true });
+	const [callOnClose, setCallOnClose] = useState(false);
 	const { colorMode, toggleColorMode } = useColorMode();
 	const isLight = colorMode === 'light';
 
@@ -50,8 +55,8 @@ export default function HeaderLoggedIn({ user }) {
 			alt: 'Adicionar',
 			action: () => setIsAddModalOpen(true),
 		},
-		{ icon: 'home', alt: 'Início', route: '/home', action: () => {} },
-		{ icon: 'goal', alt: 'Minhas metas', route: '/goals', action: () => {} },
+		{ icon: 'home', alt: 'Início', route: '/home', action: null },
+		{ icon: 'goal', alt: 'Minhas metas', route: '/goals', action: null },
 	];
 
 	return (
@@ -63,11 +68,17 @@ export default function HeaderLoggedIn({ user }) {
 			align="center"
 			width="100%"
 		>
-			<Image src={isLight ? '/logo.svg' : '/logo_dark.svg'} alt="Metagame" />
+			<Link href="/home">
+				<Image
+					src={isLight ? '/logo.svg' : '/logo_dark.svg'}
+					alt="Metagame"
+					width={['120px', 'auto']}
+				/>
+			</Link>
 			<InputGroup
 				borderColor="primary"
 				color="primary"
-				maxWidth="256px"
+				maxWidth={['128px', '256px']}
 				alignItems="center"
 				_dark={{ color: 'gray.200', borderColor: 'gray.600' }}
 			>
@@ -93,56 +104,121 @@ export default function HeaderLoggedIn({ user }) {
 					}}
 				/>
 			</InputGroup>
-			<HStack color="primary" spacing="0.5em">
-				{buttons.map((btn, idx) => (
-					<Link href={btn.route || ''} key={idx}>
-						<a>
-							<Button variant="unstyled" mr="0" onClick={btn.action}>
-								<Image src={getIcon(btn.icon, router.pathname === btn.route)} alt={btn.alt} />
-							</Button>
-						</a>
-					</Link>
-				))}
-				<Menu isLazy>
-					<MenuButton ml="1rem !important">
-						{user && user.userinfo && (
-							<Avatar
-								src={user.userinfo.image_url}
-								referrerPolicy="no-referrer"
-								name={user.first_name}
-								size="sm"
-								outline={router.pathname === '/profile' ? '2px solid' : ''}
-								outlineColor="secondary"
-							/>
-						)}
-					</MenuButton>
-					<MenuList minW="fit-content">
-						<Link href="/profile">
+			{isWideVersion ? (
+				<HStack color="primary" spacing="0.5em">
+					{buttons.map((btn, idx) => (
+						<Link href={btn.route || ''} key={idx}>
+							<a>
+								<Button variant="unstyled" mr="0" onClick={btn.action} padding={0}>
+									<Image src={getIcon(btn.icon, router.pathname === btn.route)} alt={btn.alt} />
+								</Button>
+							</a>
+						</Link>
+					))}
+					<Menu isLazy>
+						<MenuButton ml="1rem !important">
+							{user && user.userinfo && (
+								<Avatar
+									src={user.userinfo.image_url}
+									referrerPolicy="no-referrer"
+									name={user.first_name}
+									size="sm"
+									outline={router.pathname === '/profile' ? '2px solid' : ''}
+									outlineColor="secondary"
+								/>
+							)}
+						</MenuButton>
+						<MenuList minW="fit-content">
+							<Link href="/profile">
+								<MenuItem
+									icon={<Image src={getIcon('user', false)} alt="Perfil" />}
+									mr="8"
+									_dark={{ color: 'gray.200' }}
+								>
+									Perfil
+								</MenuItem>
+							</Link>
 							<MenuItem
-								icon={<Image src={getIcon('user', false)} alt="Perfil" />}
+								icon={
+									<Image
+										src={getIcon('moon', false)}
+										alt={`Modo ${isLight ? 'escuro' : 'claro'}`}
+									/>
+								}
 								mr="8"
 								_dark={{ color: 'gray.200' }}
+								onClick={toggleColorMode}
 							>
-								Perfil
+								Modo {isLight ? 'escuro' : 'claro'}
 							</MenuItem>
-						</Link>
-						<MenuItem
-							icon={
-								<Image src={getIcon('moon', false)} alt={`Modo ${isLight ? 'escuro' : 'claro'}`} />
+							<Divider opacity="1" my="2" borderBottomWidth="2px" />
+							<MenuItem onClick={() => signOut({ callbackUrl: '/' })} _dark={{ color: 'gray.200' }}>
+								Sair da conta
+							</MenuItem>
+						</MenuList>
+					</Menu>
+				</HStack>
+			) : (
+				<SideBarDrawer callOnClose={callOnClose} setCallOnClose={setCallOnClose}>
+					<VStack
+						as="nav"
+						fontSize="1.5rem"
+						alignItems="start"
+						mt="50px"
+						fontWeight="bold"
+						spacing="5"
+						_dark={{ color: 'gray.200' }}
+					>
+						{buttons.map((btn, idx) => {
+							if (btn.action) {
+								return (
+									<Button
+										variant="unstyled"
+										mr="0"
+										onClick={() => {
+											setCallOnClose(true);
+											btn.action();
+										}}
+										padding={0}
+										key={idx}
+									>
+										<Image
+											src={getIcon(btn.icon, router.pathname === btn.route)}
+											alt={btn.alt}
+											marginRight="10px"
+										/>
+										{btn.alt}
+									</Button>
+								);
 							}
-							mr="8"
-							_dark={{ color: 'gray.200' }}
-							onClick={toggleColorMode}
-						>
-							Modo {isLight ? 'escuro' : 'claro'}
-						</MenuItem>
-						<Divider opacity="1" my="2" borderBottomWidth="2px" />
-						<MenuItem onClick={() => signOut({ callbackUrl: '/' })} _dark={{ color: 'gray.200' }}>
-							Sair da conta
-						</MenuItem>
-					</MenuList>
-				</Menu>
-			</HStack>
+							return (
+								<Button
+									variant="unstyled"
+									onClick={() => setCallOnClose(true)}
+									padding={0}
+									key={idx}
+								>
+									<Link href={btn.route ?? ''}>
+										<Flex>
+											<Image
+												src={getIcon(btn.icon, router.pathname === btn.route)}
+												alt={btn.alt}
+												marginRight="10px"
+											/>
+											{btn.alt}
+										</Flex>
+									</Link>
+								</Button>
+							);
+						})}
+
+						<Button variant="unstyled" mr="0" onClick={() => setCallOnClose(true)} padding={0}>
+							<Link href="/profile">Perfil</Link>
+						</Button>
+					</VStack>
+				</SideBarDrawer>
+			)}
+
 			<AddModal
 				isModalOpen={isAddModalOpen}
 				setIsModalOpen={setIsAddModalOpen}

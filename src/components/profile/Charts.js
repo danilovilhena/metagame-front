@@ -66,17 +66,17 @@ export default function Charts() {
 				<Flex flexDirection="column" gap="4">
 					{Object.values(mediaTypesUtil).map((el, idx) => (
 						<Flex gap="2" alignItems="center" key={idx}>
-							<Box w="6" h="6" bg={colorScale[idx]} ariaHidden="true" borderRadius="50%" />
+							<Box w="6" h="6" bg={colorScale[idx]} aria-hidden="true" borderRadius="50%" />
 							<Text fontSize="1rem">{capitalize(el.name)}</Text>
 						</Flex>
 					))}
 				</Flex>
 				<Box>
-					<VictoryPie data={pieData} colorScale={colorScale} height="300" />
+					<VictoryPie data={pieData} colorScale={colorScale} height={300} />
 				</Box>
 				<Box>
-					<VictoryChart height="300">
-						<VictoryGroup colorScale={colorScale} offset="30">
+					<VictoryChart height={300}>
+						<VictoryGroup colorScale={colorScale} offset={30}>
 							{barData.map((el, idx) => (
 								<VictoryBar data={el} key={idx} />
 							))}

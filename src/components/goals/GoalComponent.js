@@ -1,4 +1,4 @@
-import { Grid, Flex, Text, Skeleton } from '@chakra-ui/react';
+import { Grid, Flex, Text, Skeleton, useBreakpointValue } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -14,6 +14,7 @@ const Title = ({ children }) => (
 );
 
 export default function GoalComponent() {
+	const isWideVersion = useBreakpointValue({ base: false, lg: true });
 	const dispatch = useDispatch();
 	const session = useSession();
 	const user = session.data;
@@ -33,13 +34,13 @@ export default function GoalComponent() {
 			dispatch(fetchGoals(user.id));
 			dispatch(fetchPopularMedias());
 		}
-	}, [user]);
+	}, [user, dispatch]);
 
 	if (user) {
 		return (
 			<Flex
 				flexDirection="column"
-				px="6em"
+				px={['2em', '6em']}
 				background="primary"
 				color="white"
 				pt="1em"
@@ -49,7 +50,7 @@ export default function GoalComponent() {
 			>
 				<Flex flexDirection="column" marginTop="1.5em" mb="2rem">
 					<Title>Metas atuais</Title>
-					<Grid templateColumns="repeat(2, 1fr)" gap="4">
+					<Grid templateColumns={isWideVersion ? 'repeat(2, 1fr)' : '1fr'} gap="4">
 						{goals.length <= 0 && (
 							<>
 								<Skeleton height="80px" width="100%" borderRadius="10px" />
@@ -65,7 +66,7 @@ export default function GoalComponent() {
 				</Flex>
 				<Flex flexDirection="column" marginTop="1.5em" mb="2rem">
 					<Title>Metas curtidas</Title>
-					<Grid templateColumns="repeat(2, 1fr)" gap="4">
+					<Grid templateColumns={isWideVersion ? 'repeat(2, 1fr)' : '1fr'} gap="4">
 						{favoriteGoals.length <= 0 && (
 							<>
 								<Skeleton height="124px" width="100%" borderRadius="10px" />
@@ -83,7 +84,7 @@ export default function GoalComponent() {
 				</Flex>
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas finalizadas</Title>
-					<Grid templateColumns="repeat(2, 1fr)" gap="4">
+					<Grid templateColumns={isWideVersion ? 'repeat(2, 1fr)' : '1fr'} gap="4">
 						{goals.length <= 0 && (
 							<>
 								<Skeleton height="80px" width="100%" borderRadius="10px" />

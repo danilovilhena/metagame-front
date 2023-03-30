@@ -12,9 +12,17 @@ import {
 import { IoMdMenu } from 'react-icons/io';
 
 import Button from 'components/common/Button';
+import { useEffect } from 'react';
 
-export default function SideBarDrawer({ children }) {
+export default function SideBarDrawer({ children, callOnClose, setCallOnClose }) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
+
+	useEffect(() => {
+		if (callOnClose) {
+			setCallOnClose(false);
+			onClose();
+		}
+	}, [callOnClose, onClose]);
 
 	return (
 		<>

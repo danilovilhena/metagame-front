@@ -61,13 +61,15 @@ export default function Activities({ userProfile = null }) {
 			});
 		}
 		getActivities();
-	}, [userMedias]);
+	}, [userMedias, user.id]);
 
-	if (!activities) return <></>;
+	if (!user || activities) {
+		return <></>;
+	}
 
 	return (
-		<SimpleGrid columns="2" spacing="4">
-			{activities.map((item, idx) => (
+		<SimpleGrid columns={['1', '2']} spacing="4">
+			{activities?.map((item, idx) => (
 				<Flex
 					justifyContent="space-between"
 					alignItems="center"

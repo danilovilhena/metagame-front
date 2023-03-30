@@ -1,4 +1,4 @@
-import { Flex, Grid, Text, Avatar, Skeleton } from '@chakra-ui/react';
+import { Flex, Grid, Text, Avatar, Skeleton, useMediaQuery } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -10,6 +10,7 @@ import { Media } from 'components/add/AddRegister';
 import Link from 'next/link';
 
 export default function HomeComponent() {
+	const [isMobile] = useMediaQuery('(max-width: 1080px)');
 	const dispatch = useDispatch();
 	const session = useSession();
 	const user = session.data;
@@ -38,10 +39,10 @@ export default function HomeComponent() {
 			<Flex
 				flexDirection="column"
 				flex="1"
-				px="6em"
+				px={['2em', '6em']}
 				background="primary"
 				color="white"
-				py="3em"
+				py={['1em', '3em']}
 				_dark={{ bg: 'gray.900', color: 'gray.200' }}
 			>
 				<Text as="h1" fontSize="3xl" fontWeight="bold">
@@ -54,7 +55,7 @@ export default function HomeComponent() {
 				<Text as="h2" fontSize="2xl" fontWeight="medium" mb="4">
 					🔥 Conheça metas populares entre outros usuários
 				</Text>
-				<Grid templateColumns="repeat(2, 1fr)" gap="8" mb="3em">
+				<Grid templateColumns={isMobile ? '1fr' : 'repeat(2, 1fr)'} gap="8" mb="3em">
 					{popularGoals.length <= 0 && (
 						<>
 							<Skeleton height={112} width={500} borderRadius={10} />
@@ -68,7 +69,7 @@ export default function HomeComponent() {
 				<Text as="h2" fontSize="2xl" fontWeight="medium" mb="4">
 					🏆 Descubra os principais usuários do Metagame!
 				</Text>
-				<Grid templateColumns="repeat(2, 1fr)" gap="8" mb="3em">
+				<Grid templateColumns={isMobile ? '1fr' : 'repeat(2, 1fr)'} gap="8" mb="3em">
 					{ranking.length <= 0 && (
 						<>
 							<Skeleton height="56px" width="100%" borderRadius={10} />
@@ -113,7 +114,7 @@ export default function HomeComponent() {
 					<Text as="h2" fontSize="2xl" fontWeight="medium" mb="4">
 						Mídias mais populares
 					</Text>
-					<Flex gap="4">
+					<Flex gap="4" flexWrap="wrap" justifyContent={isMobile ? 'center' : 'flex-start'}>
 						{popularMedias.length <= 0 && (
 							<Flex>
 								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
