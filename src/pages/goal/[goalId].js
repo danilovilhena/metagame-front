@@ -69,7 +69,7 @@ export default function Goal() {
 			flex="1"
 			px={['2em', '6em']}
 			background="primary"
-			maxWidth="600px"
+			maxWidth={['300px', '600px']}
 			width="100%"
 			mx="auto"
 			borderRadius="20px"

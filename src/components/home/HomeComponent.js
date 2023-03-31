@@ -116,14 +116,14 @@ export default function HomeComponent() {
 					</Text>
 					<Flex gap="4" flexWrap="wrap" justifyContent={isMobile ? 'center' : 'flex-start'}>
 						{popularMedias.length <= 0 && (
-							<Flex>
+							<>
 								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
 								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
 								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
 								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
 								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
 								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
-							</Flex>
+							</>
 						)}
 						{popularMedias
 							.slice(0, 8)

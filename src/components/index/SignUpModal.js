@@ -1,4 +1,4 @@
-import { Flex, Icon, VStack, Text, keyframes } from '@chakra-ui/react';
+import { Flex, Icon, VStack, Text, keyframes, InputRightAddon, InputGroup } from '@chakra-ui/react';
 import { IoLogoGoogle, IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import { signIn } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -29,7 +29,10 @@ export default function SignUpModal({
 		username: yup.string().required('Nome de usuário obrigatório'),
 		email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
 		password: yup.string().required('Senha obrigatória'),
-		confirm_password: yup.string().required('Confirmação de senha obrigatório'),
+		confirm_password: yup
+			.string()
+			.required('Confirmação de senha obrigatório')
+			.oneOf([yup.ref('password'), null], 'Senhas não coincidem'),
 	});
 	const { register, handleSubmit, formState } = useForm({
 		resolver: yupResolver(signUpFormSchema),
@@ -86,22 +89,31 @@ export default function SignUpModal({
 										{...register('email')}
 										error={errors.email}
 									/>
-									<Input
-										placeholder="Senha"
-										type={showPassword ? 'text' : 'password'}
-										{...register('password')}
-										error={errors.password}
-										rightIcon={showPassword ? IoMdEyeOff : IoMdEye}
-										rightIconAction={() => setShowPassword(!showPassword)}
-									/>
-									<Input
-										placeholder="Confirmar senha"
-										type={showConfirmPassword ? 'text' : 'password'}
-										{...register('confirm_password')}
-										error={errors.confirm_password}
-										rightIcon={showConfirmPassword ? IoMdEyeOff : IoMdEye}
-										rightIconAction={() => setShowConfirmPassword(!showConfirmPassword)}
-									/>
+									<InputGroup>
+										<Input
+											placeholder="Senha"
+											type={showPassword ? 'text' : 'password'}
+											{...register('password')}
+											error={errors.password}
+										/>
+										<InputRightAddon onClick={() => setShowPassword(!showPassword)}>
+											{showPassword ? <IoMdEyeOff /> : <IoMdEye />}
+										</InputRightAddon>
+									</InputGroup>
+									<InputGroup>
+										<Input
+											placeholder="Confirmar senha"
+											type={showConfirmPassword ? 'text' : 'password'}
+											{...register('confirm_password')}
+											error={errors.confirm_password}
+										/>
+										<InputRightAddon
+											pointerEvents="none"
+											onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+										>
+											{showConfirmPassword ? <IoMdEyeOff /> : <IoMdEye />}
+										</InputRightAddon>
+									</InputGroup>
 									<Button variant="styled" width="100%" type="submit">
 										Criar conta
 									</Button>

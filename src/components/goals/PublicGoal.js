@@ -58,7 +58,7 @@ export default function PublicGoal({ goal, handleFavoriteGoal, ...rest }) {
 						/>
 						<Text ml="0.2rem">{goal.likes}</Text>
 					</Button>
-					<Menu matchWidth>
+					<Menu matchWidth flip>
 						<MenuButton>
 							<Image src={getIcon('vertical-dots')} w="2rem" role="button" alt="Mais opções" />
 						</MenuButton>

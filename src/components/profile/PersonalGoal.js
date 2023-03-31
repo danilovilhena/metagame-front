@@ -136,7 +136,7 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 						/>
 						<Text ml="0.2rem">{goal.likes}</Text>
 					</Button>
-					<Menu matchWidth>
+					<Menu>
 						<MenuButton>
 							<Image src={getIcon('vertical-dots')} w="2rem" role="button" alt="Mais opções" />
 						</MenuButton>
