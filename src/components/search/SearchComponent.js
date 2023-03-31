@@ -1,4 +1,4 @@
-import { Flex, Text, SimpleGrid } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import SearchUserProfile from 'components/search/SearchUserProfile';
 
@@ -16,7 +16,7 @@ export default function SearchComponent({ searchResult = null }) {
 		return (
 			<Flex
 				flexDirection="column"
-				px="6em"
+				px={['2em', '6em']}
 				background="primary"
 				color="white"
 				py="3em"
@@ -28,11 +28,11 @@ export default function SearchComponent({ searchResult = null }) {
 					<Title>Resultados encontrados</Title>
 				</Flex>
 				{searchResult && searchResult.length > 0 ? (
-					<SimpleGrid columns="2" spacing="4">
+					<Flex flexWrap="wrap" gap={4}>
 						{searchResult.map((user, idx) => (
 							<SearchUserProfile user={user} key={idx} />
 						))}
-					</SimpleGrid>
+					</Flex>
 				) : (
 					<Text>Nenhum resultado encontrado.</Text>
 				)}

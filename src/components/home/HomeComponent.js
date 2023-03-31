@@ -58,8 +58,8 @@ export default function HomeComponent() {
 				<Grid templateColumns={isMobile ? '1fr' : 'repeat(2, 1fr)'} gap="8" mb="3em">
 					{popularGoals.length <= 0 && (
 						<>
-							<Skeleton height={112} width={500} borderRadius={10} />
-							<Skeleton height={112} width={500} borderRadius={10} />
+							<Skeleton height={112} width="100%" borderRadius={10} />
+							<Skeleton height={112} width="100%" borderRadius={10} />
 						</>
 					)}
 					{popularGoals.map((goal, idx) => (
@@ -94,7 +94,7 @@ export default function HomeComponent() {
 								<Avatar
 									w="2rem"
 									h="2rem"
-									src={user?.image_url}
+									src={user.userinfo.image_url}
 									referrerPolicy="no-referrer"
 									name={user?.username}
 									borderRadius="50%"

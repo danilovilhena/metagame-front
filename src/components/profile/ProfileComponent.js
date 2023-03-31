@@ -20,8 +20,10 @@ const Title = ({ children }) => (
 	</Text>
 );
 
-const InputEdit = ({ name, action, value }) => (
+const InputEdit = ({ name, action, value, error, ...rest }) => (
 	<Input
+		{...rest}
+		error={error}
 		name={name}
 		value={value}
 		placeholder={value}
@@ -72,7 +74,13 @@ export default function ProfileComponent({ userProfile = null }) {
 	const toggleIsEdit = async () => {
 		const hasChanged =
 			username !== user.username || name !== `${user.first_name} ${user.last_name}`;
-		if (isEdit && hasChanged) {
+		const isValid = name.length > 0 && username.length > 0;
+
+		if (!isValid) {
+			return;
+		}
+
+		if (isEdit && hasChanged && isValid) {
 			const nameArr = name.split(' ');
 			api
 				.put(`/users/${user.id}`, {
@@ -143,7 +151,13 @@ export default function ProfileComponent({ userProfile = null }) {
 						<Flex flexDirection="column" mr={['0px', '2em']}>
 							<Text>Nome</Text>
 							{isEdit ? (
-								<InputEdit name="name" action={(e) => setName(e.target.value)} value={name} />
+								<InputEdit
+									autoComplete="off"
+									error={name.length < 3 ? { message: 'No mínimo 3 caracteres' } : null}
+									name="name"
+									action={(e) => setName(e.target.value)}
+									value={name}
+								/>
 							) : (
 								<Text as="strong">{name}</Text>
 							)}
@@ -152,6 +166,8 @@ export default function ProfileComponent({ userProfile = null }) {
 							<Text>Nome de usuário</Text>
 							{isEdit ? (
 								<InputEdit
+									autoComplete="off"
+									error={username.length < 3 ? { message: 'No mínimo 3 caracteres' } : null}
 									name="username"
 									action={(e) => setUsername(e.target.value)}
 									value={username}

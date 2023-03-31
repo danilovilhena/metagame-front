@@ -85,7 +85,6 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 		},
 		{ name: 'Excluir meta', icon: 'trash', action: deleteGoal },
 	];
-	console.log(goal);
 
 	return (
 		<Box position="relative">

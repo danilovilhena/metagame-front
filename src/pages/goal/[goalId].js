@@ -87,7 +87,9 @@ export default function Goal() {
 					Status:
 					{isGoalLoaded ? (
 						!goal.is_active ? (
-							'Finalizada'
+							<Text as="span" ml="5px">
+								Finalizada
+							</Text>
 						) : isLate < 0 && goal.is_active ? (
 							<Text as="span" color="#FDAD15FF" ml="5px">
 								Atrasada

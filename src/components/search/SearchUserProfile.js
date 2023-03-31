@@ -20,15 +20,15 @@ export default function SearchUserProfile({ user, ...rest }) {
 			justify="space-between"
 			background="#FFFFFF"
 			color="primary"
-			minW="50%"
 			borderRadius="8px"
+			flex="1"
 			p="3"
 			pb="4"
 			{...rest}
 			_dark={{ bg: 'gray.700', color: 'gray.200' }}
 		>
 			<Flex align="center" gap="4" w="100%" justifyContent="space-between">
-				<Flex gap="4" align="center">
+				<Flex flex="1" gap="4" align="center">
 					<Avatar
 						w="3rem"
 						h="3rem"
@@ -44,7 +44,7 @@ export default function SearchUserProfile({ user, ...rest }) {
 						</Text>
 					</Text>
 				</Flex>
-				<Button variant="styled" justifySelf="flex-end" onClick={goToProfile}>
+				<Button width="100px" variant="styled" justifySelf="flex-end" onClick={goToProfile}>
 					Ver perfil
 				</Button>
 			</Flex>
