@@ -22,6 +22,7 @@ import { getConclusion, getName } from 'utils/mediaTypes';
 import { api } from 'services/api';
 import { fetchGoals, fetchUserMedias } from 'store/backend';
 import { capitalize } from 'utils/functions';
+import { getMediaColor } from 'utils/getMediaColor';
 
 const fetchMovies = async (searchInput) => {
 	const res = await fetch(
@@ -73,20 +74,6 @@ const fetchBooks = async (searchInput) => {
 		};
 	});
 };
-
-function getMediaColor(mediaType) {
-	if (mediaType === 1) {
-		return 'rgba(255, 76, 77, 0.75) 0px 13px 27px -5px, rgba(0, 0, 0, 0.8) 0px 8px 16px -8px';
-	}
-	if (mediaType === 2) {
-		return 'rgba(76, 255, 184, 0.75) 0px 13px 27px -5px, rgba(0, 0, 0, 0.8) 0px 8px 16px -8px';
-	}
-	if (mediaType === 3) {
-		return 'rgba(76, 164, 255, 0.75) 0px 13px 27px -5px, rgba(0, 0, 0, 0.8) 0px 8px 16px -8px';
-	}
-
-	return 'dark-lg';
-}
 
 export const Media = ({ isActive, action, image, title, mediaType, ...rest }) => (
 	<Flex

@@ -12,12 +12,14 @@ import {
 import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import getIcon from 'utils/getIcon';
 import { getTitle } from 'utils/mediaTypes';
 
 export default function PublicGoal({ goal, handleFavoriteGoal, ...rest }) {
-	const options = [{ name: 'Copiar link', icon: 'link' }];
+	const router = useRouter();
+	const options = [{ name: 'Abrir detalhe', icon: 'share', extention: 'png' }];
 
 	const mediaTypesArr = useSelector((state) => state.backend.mediaTypes);
 	const goalType = mediaTypesArr
@@ -64,7 +66,10 @@ export default function PublicGoal({ goal, handleFavoriteGoal, ...rest }) {
 							{options.map((option, idx) => (
 								<MenuItem
 									key={idx}
-									icon={<Image src={getIcon(option.icon, false)} alt={option.name} />}
+									onClick={() => router.push(`/goal/${goal.id}`)}
+									icon={
+										<Image src={getIcon(option.icon, false, option.extention)} alt={option.name} />
+									}
 								>
 									{option.name}
 								</MenuItem>

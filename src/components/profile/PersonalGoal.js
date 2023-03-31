@@ -14,6 +14,7 @@ import {
 import Button from 'components/common/Button';
 import MediaIcon from 'components/common/MediaIcon';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { api } from 'services/api';
 import { fetchGoals } from 'store/backend';
@@ -30,6 +31,7 @@ const Badge = ({ children, background }) => (
 );
 
 export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
+	const router = useRouter();
 	const mediaTypesArr = useSelector((state) => state.backend.mediaTypes);
 	const dispatch = useDispatch();
 	const toast = useToast();
@@ -75,9 +77,15 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 	};
 
 	const options = [
-		// { name: 'Copiar link', icon: 'link', action: () => {} },
+		{
+			name: 'Abrir detalhe',
+			icon: 'share',
+			extention: 'png',
+			action: () => router.push(`/goal/${goal.id}`),
+		},
 		{ name: 'Excluir meta', icon: 'trash', action: deleteGoal },
 	];
+	console.log(goal);
 
 	return (
 		<Box position="relative">
@@ -119,7 +127,7 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 							)}
 						</>
 					)}
-					{goal?.is_done && <Image src={getIcon('check')} w="1.5rem" alt="Meta concluída" />}
+					{goal?.is_done && <Image src={getIcon('check', 'png')} w="1.5rem" alt="Meta concluída" />}
 					<Button variant="unstyled" p="0" _hover={{}} onClick={() => handleFavoriteGoal(goal.id)}>
 						<Image
 							src={`/icons/like${goal.is_liked ? '_active' : ''}.svg`}
@@ -137,7 +145,9 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 							{options.map((option, idx) => (
 								<MenuItem
 									key={idx}
-									icon={<Image src={getIcon(option.icon, false)} alt={option.name} />}
+									icon={
+										<Image src={getIcon(option.icon, false, option.extention)} alt={option.name} />
+									}
 									onClick={option.action}
 								>
 									{option.name}

@@ -72,6 +72,7 @@ export default function HeaderLoggedIn({ user }) {
 				<Image
 					src={isLight ? '/logo.svg' : '/logo_dark.svg'}
 					alt="Metagame"
+					cursor="pointer"
 					width={['120px', 'auto']}
 				/>
 			</Link>
