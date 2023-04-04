@@ -31,11 +31,12 @@ const getMediaContent = async (max_items) => {
 	let response = await res.json();
 	data.movies = response.results.slice(0, max_items).map((movie) => {
 		return {
-			title: movie.title,
+			name_on_api: movie.title,
 			description: movie.overview,
-			image: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-			idOnApi: movie.id,
+			image_on_api: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+			id_on_api: movie.id,
 			releaseDate: movie.release_date,
+			mediatype_id: 1,
 		};
 	});
 
@@ -46,11 +47,12 @@ const getMediaContent = async (max_items) => {
 	response = await res.json();
 	data.games = response.results.map((game) => {
 		return {
-			title: game.name,
+			name_on_api: game.name,
 			description: '',
-			image: game.background_image,
-			idOnApi: game.id,
+			image_on_api: game.background_image,
+			id_on_api: game.id,
 			releaseDate: game.released,
+			mediatype_id: 2,
 		};
 	});
 
@@ -61,11 +63,12 @@ const getMediaContent = async (max_items) => {
 	response = await res.json();
 	data.books = response.items.map((book) => {
 		return {
-			title: book?.volumeInfo?.title,
+			name_on_api: book?.volumeInfo?.title,
 			description: book?.volumeInfo?.description,
-			image: book?.volumeInfo?.imageLinks?.thumbnail,
-			idOnApi: book.id,
+			image_on_api: book?.volumeInfo?.imageLinks?.thumbnail,
+			id_on_api: book.id,
 			releaseDate: book.volumeInfo.publishedDate,
+			mediatype_id: 3,
 		};
 	});
 	return data;

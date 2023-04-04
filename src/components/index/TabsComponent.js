@@ -80,11 +80,12 @@ export default function TabsComponent() {
 										overflow="hidden"
 									>
 										<Image
+											loading="eager"
 											boxSize="200px"
 											objectFit="cover"
 											borderRadius="10px"
 											shadow="md"
-											src={item.image}
+											src={item.image_on_api}
 											alt="cover"
 											mb="0.5em"
 											boxShadow="lg"
@@ -99,7 +100,7 @@ export default function TabsComponent() {
 											overflow="hidden"
 											className="textElipsis"
 										>
-											{item.title}
+											{item.name_on_api}
 										</Text>
 									</GridItem>
 								))}

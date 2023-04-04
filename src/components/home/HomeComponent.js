@@ -5,9 +5,9 @@ import { useEffect } from 'react';
 import PublicGoal from 'components/goals/PublicGoal';
 import { fetchPopularGoals, fetchRanking, fetchPopularMedias } from 'store/backend';
 import { api } from 'services/api';
-import { Media } from 'components/add/AddRegister';
 
 import Link from 'next/link';
+import { Media } from 'components/common/Media';
 
 export default function HomeComponent() {
 	const [isMobile] = useMediaQuery('(max-width: 1080px)');
@@ -130,14 +130,14 @@ export default function HomeComponent() {
 							.filter((el) => !el.is_active)
 							.map((media, idx) => (
 								<Media
-									cursor="default"
-									image={
-										media.mediatype_id === 1
-											? `https://image.tmdb.org/t/p/w500${media.image_on_api}`
-											: media.image_on_api
-									}
-									title={media.name_on_api}
-									mediaType={media.mediatype_id}
+									media={media}
+									// image={
+									// 	media.mediatype_id === 1
+									// 		? `https://image.tmdb.org/t/p/w500${media.image_on_api}`
+									// 		: media.image_on_api
+									// }
+									// title={media.name_on_api}
+									// mediaType={media.mediatype_id}
 									key={idx}
 								/>
 							))}

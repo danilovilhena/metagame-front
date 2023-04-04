@@ -47,11 +47,12 @@ export default function VerticalMovingCovers() {
 								<div className={idx % 2 == 0 ? styles['slide-track'] : styles['slide-track-b']}>
 									{currentMedias.map((_, innerIdx) => (
 										<Image
+											loading="eager"
 											animation={`${easeIn} 4s`}
 											w="100px"
 											minH="150px"
 											objectFit="cover"
-											src={currentMedias[idx > 3 ? innerIdx + 9 : innerIdx].image}
+											src={currentMedias[idx > 3 ? innerIdx + 9 : innerIdx].image_on_api}
 											alt="cover"
 											mb="0.5em"
 											borderRadius="0.5rem"

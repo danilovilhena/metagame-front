@@ -8,21 +8,24 @@ const mediaTypes = {
 		background: '#FF4C4D',
 		name: 'filme',
 		verb: 'assistir',
-		conclusion: 'assistidos',
+		conclusion: 'assistido',
+		conclusion_plural: 'assistidos',
 	},
 	game: {
 		icon: '/icons/game.svg',
 		background: '#4CFFB8',
 		name: 'jogo',
 		verb: 'jogar',
-		conclusion: 'concluídos',
+		conclusion: 'concluído',
+		conclusion_plural: 'concluídos',
 	},
 	book: {
 		icon: '/icons/book.svg',
 		background: '#4CA4FF',
 		name: 'livro',
 		verb: 'ler',
-		conclusion: 'lidos',
+		conclusion: 'lido',
+		conclusion_plural: 'lidos',
 	},
 };
 
@@ -44,6 +47,8 @@ export const getVerb = (name) => name && mediaTypes[name.toLowerCase()]?.verb;
 export const getBackground = (name) => name && mediaTypes[name.toLowerCase()]?.background;
 export const getIcon = (name) => name && mediaTypes[name.toLowerCase()]?.icon;
 export const getConclusion = (name) => name && mediaTypes[name.toLowerCase()]?.conclusion;
+export const getPluralConclusion = (name) =>
+	name && mediaTypes[name.toLowerCase()]?.conclusion_plural;
 export const getTitle = (name, { objective_quantity, start_date, limit_date }) => {
 	let message = `${capitalize(getVerb(name))} ${objective_quantity}`;
 	message += ` ${getGroup(name)} em ${dateDifferenceAsText(start_date, limit_date)}`;
