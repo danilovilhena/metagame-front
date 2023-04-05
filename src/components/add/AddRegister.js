@@ -117,7 +117,7 @@ export default function AddRegister({ isModalOpen, setIsModalOpen }) {
 			ModalTitle="Adicionar registro"
 			isOpen={isModalOpen}
 			setIsOpen={setIsModalOpen}
-			modalSize="2xl"
+			modalSize={['sm', '2xl']}
 		>
 			<VStack
 				alignItems="start"

@@ -43,8 +43,9 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 
 	function calcDate() {
 		var diff = Math.floor(new Date(goal.limit_date).getTime() - new Date().getTime());
+		var hour = 1000 * 60 * 60;
+		var hours = Math.floor(diff / hour);
 		var day = 1000 * 60 * 60 * 24;
-
 		var days = Math.floor(diff / day);
 		var months = Math.floor(days / 31);
 		var years = Math.floor(months / 12);
@@ -60,6 +61,9 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 		}
 		if (days === 1) {
 			return '1 dia restante';
+		}
+		if (hours) {
+			return hours + ' horas restantes';
 		}
 		return false;
 	}
@@ -100,18 +104,25 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 				{...rest}
 				_dark={{ bg: 'gray.700', color: 'gray.200' }}
 			>
-				<Flex align="center">
+				<Flex align="center" width="100%" mr="10px">
 					<MediaIcon type={goalType} />
-					<Text as="strong">{getTitle(goalType, goal)}</Text>
+					<Flex
+						flexDir={['column', 'row']}
+						justifyContent={['', 'space-between']}
+						alignItems={['start', 'center']}
+						flex="1"
+					>
+						<Text as="strong" maxWidth="120px">
+							{getTitle(goalType, goal)}
+						</Text>
+						<Text>{calcDate()}</Text>
+					</Flex>
 				</Flex>
 				<Stack direction="row" align="center" minW="max-content" spacing={2}>
 					{!goal?.is_done && (
 						<>
 							{calcDate() ? (
-								<>
-									<Text>{calcDate()}</Text>
-									<Badge background={getBackground(goalType)}>{Math.ceil(goalCompletion)}%</Badge>
-								</>
+								<Badge background={getBackground(goalType)}>{Math.ceil(goalCompletion)}%</Badge>
 							) : (
 								<>
 									<Badge background={getBackground(goalType)}>{Math.ceil(goalCompletion)}%</Badge>

@@ -137,22 +137,29 @@ export const Media = ({ showBorder = false, showShadow = true, media, ...rest })
 			</Flex>
 			<Modal
 				variant="unstyled"
-				ModalTitle="Adicionar"
+				ModalTitle="Adicionar registro"
 				isOpen={isMediaDetailOpen}
 				setIsOpen={setIsMediaDetalOpen}
-				modalSize="xl"
+				modalSize={['sm', 'xl']}
 			>
-				<Flex w="100%" flexDir="row">
-					<Button variant="unstyled" mr=".5rem" onClick={() => setIsMediaDetalOpen(false)} px="0">
+				<Flex w="100%" flexDir={['column', 'row']} alignItems={['center', 'start']}>
+					<Button
+						alignSelf="start"
+						variant="unstyled"
+						mr=".5rem"
+						onClick={() => setIsMediaDetalOpen(false)}
+						px="0"
+					>
 						<Image src={getIcon('chevron-left')} alt="Voltar" />
 					</Button>
 					<Image
-						width="120px"
-						height="180px"
+						width={['150px', '120px']}
+						height={['220px', '180px']}
 						objectFit="cover"
 						borderRadius="10px"
 						alt="cover"
 						mr="1rem"
+						mb={['20px', 0]}
 						boxShadow="lg"
 						_dark={{ boxShadow: 'dark-lg' }}
 						src={media.image_on_api}

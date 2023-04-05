@@ -108,7 +108,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 			ModalTitle="Criar meta"
 			isOpen={isModalOpen}
 			setIsOpen={setIsModalOpen}
-			modalSize="2xl"
+			modalSize={['sm', '2xl']}
 		>
 			<VStack
 				textAlign="center"
@@ -122,7 +122,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 			>
 				<Grid
 					width="100%"
-					gridTemplateColumns="1fr 2fr 1fr 1fr 1fr 2fr "
+					gridTemplateColumns={['1fr 1fr 1fr ', '1fr 2fr 1fr 1fr 1fr 2fr ']}
 					gap="1rem"
 					alignItems="center"
 				>
@@ -153,16 +153,21 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 					<Input
 						type="number"
 						aria-label={`Número de ${mediaSelected.toLowerCase() || mediaTypes[0]?.type}s`}
-						value={goalValue}
+						value={Number(goalValue).toString()}
 						onChange={(e) => setGoalValue(e.target.value)}
 					/>
-					<Text display="flex" alignItems="center" justifyContent="center" minWidth="80px">
+					<Text
+						display="flex"
+						alignItems="center"
+						justifyContent={['start', 'center']}
+						minWidth="80px"
+					>
 						{getGroup(mediaSelected || mediaTypes[0]?.type)} em
 					</Text>
 					<Input
 						type="number"
 						aria-label={`Número de ${goalPeriod}`}
-						value={goalLength}
+						value={Number(goalLength).toString()}
 						onChange={(e) => setGoalLength(e.target.value)}
 					/>
 					<Menu matchWidth>

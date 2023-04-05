@@ -42,7 +42,8 @@ const dateDifferenceAsText = (start_date, limit_date) => {
 export default mediaTypes;
 
 export const getName = (name) => name && mediaTypes[name.toLowerCase()]?.name;
-export const getGroup = (name) => name && `${mediaTypes[name.toLowerCase()]?.name}s`;
+export const getGroup = (name, qnt) =>
+	name && `${mediaTypes[name.toLowerCase()]?.name}${qnt > 1 ? 's' : ''}`;
 export const getVerb = (name) => name && mediaTypes[name.toLowerCase()]?.verb;
 export const getBackground = (name) => name && mediaTypes[name.toLowerCase()]?.background;
 export const getIcon = (name) => name && mediaTypes[name.toLowerCase()]?.icon;
@@ -51,6 +52,9 @@ export const getPluralConclusion = (name) =>
 	name && mediaTypes[name.toLowerCase()]?.conclusion_plural;
 export const getTitle = (name, { objective_quantity, start_date, limit_date }) => {
 	let message = `${capitalize(getVerb(name))} ${objective_quantity}`;
-	message += ` ${getGroup(name)} em ${dateDifferenceAsText(start_date, limit_date)}`;
+	message += ` ${getGroup(name, objective_quantity)} em ${dateDifferenceAsText(
+		start_date,
+		limit_date
+	)}`;
 	return message;
 };
