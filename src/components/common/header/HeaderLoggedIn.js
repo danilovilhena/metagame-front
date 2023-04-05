@@ -51,12 +51,22 @@ export default function HeaderLoggedIn({ user }) {
 
 	const buttons = [
 		{
-			icon: 'add',
+			icon: getIcon('add'),
 			alt: 'Adicionar',
 			action: () => setIsAddModalOpen(true),
 		},
-		{ icon: 'home', alt: 'Início', route: '/home', action: null },
-		{ icon: 'goal', alt: 'Minhas metas', route: '/goals', action: null },
+		{
+			icon: getIcon('home', router.pathname === '/home'),
+			alt: 'Início',
+			route: '/home',
+			action: null,
+		},
+		{
+			icon: getIcon('goal', router.pathname === '/goals'),
+			alt: 'Minhas metas',
+			route: '/goals',
+			action: null,
+		},
 	];
 
 	return (
@@ -107,15 +117,16 @@ export default function HeaderLoggedIn({ user }) {
 			</InputGroup>
 			{isWideVersion ? (
 				<HStack color="primary" spacing="0.5em">
-					{buttons.map((btn, idx) => (
-						<Link href={btn.route || ''} key={idx}>
-							<a>
-								<Button variant="unstyled" mr="0" onClick={btn.action} padding={0}>
-									<Image src={getIcon(btn.icon, router.pathname === btn.route)} alt={btn.alt} />
-								</Button>
-							</a>
-						</Link>
-					))}
+					{buttons.map((btn, idx) => {
+						return (
+							<Button variant="unstyled" onClick={btn.action} padding={0} margin={0} key={idx}>
+								<Link href={btn.route ?? ''}>
+									<Image src={btn.icon} alt={btn.alt} />
+								</Link>
+							</Button>
+						);
+					})}
+
 					<Menu isLazy>
 						<MenuButton ml="1rem !important">
 							{user && user.userinfo && (
