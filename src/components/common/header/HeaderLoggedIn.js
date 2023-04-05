@@ -213,8 +213,25 @@ export default function HeaderLoggedIn({ user }) {
 							);
 						})}
 
-						<Button variant="unstyled" mr="0" onClick={() => setCallOnClose(true)} padding={0}>
+						<Button
+							variant="unstyled"
+							mr="0"
+							padding={0}
+							display="flex"
+							justifyContent="start"
+							onClick={() => setCallOnClose(true)}
+						>
 							<Link href="/profile">Perfil</Link>
+						</Button>
+						<Button
+							variant="unstyled"
+							mr="0"
+							onClick={() => signOut({ callbackUrl: '/' })}
+							padding={0}
+							display="flex"
+							justifyContent="start"
+						>
+							Sair
 						</Button>
 					</VStack>
 				</SideBarDrawer>
