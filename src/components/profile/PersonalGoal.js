@@ -126,7 +126,7 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 							)}
 						</>
 					)}
-					{goal?.is_done && <Image src={getIcon('check', 'png')} w="1.5rem" alt="Meta concluída" />}
+					{goal?.is_done && <Image src={getIcon('check')} w="1.5rem" alt="Meta concluída" />}
 					<Button variant="unstyled" p="0" _hover={{}} onClick={() => handleFavoriteGoal(goal.id)}>
 						<Image
 							src={`/icons/like${goal.is_liked ? '_active' : ''}.svg`}

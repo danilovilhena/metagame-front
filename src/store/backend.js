@@ -92,7 +92,10 @@ export const fetchGoal = createAsyncThunk('backend/fetchGoal', async (goalId) =>
 });
 export const fetchGoalMedias = createAsyncThunk('backend/fetchGoalMedias', async (goalId) => {
 	const response = await api.get(`/medias/goal/${goalId}`);
-	return { goalMedias: response.data };
+	const formatedResponse = response.data.map((goal) => {
+		return { ...goal, mediatype_id: goal.mediatype };
+	});
+	return { goalMedias: formatedResponse };
 });
 
 export const fetchPopularGoals = createAsyncThunk('backend/fetchPopularGoals', async () => {

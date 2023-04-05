@@ -50,7 +50,7 @@ export default function Activities({ userProfile = null }) {
 		getActivities();
 	}, [userMedias, user.id]);
 
-	if (!user || activities) {
+	if (!user || !activities) {
 		return <></>;
 	}
 

@@ -1,6 +1,6 @@
 import { Flex, Image, Progress, Skeleton, Text } from '@chakra-ui/react';
-import { Media } from 'components/add/AddRegister';
 import Button from 'components/common/Button';
+import { Media } from 'components/common/Media';
 import MediaIcon from 'components/common/MediaIcon';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -151,24 +151,11 @@ export default function Goal() {
 					)}
 				</Text>
 			</Flex>
-			<Flex align="center" mt="10px">
-				{/* {goalMedias?.map(()=>)} */}
-			</Flex>
+			<Flex align="center" mt="10px"></Flex>
 			<Progress value={progress} />
 			<Flex marginTop="20px" flexWrap="wrap" justify="center">
 				{isGoalMediasLoaded ? (
-					goalMedias.map((media, idx) => (
-						<Media
-							cursor="default"
-							image={
-								media.mediatype_id === 1
-									? `https://image.tmdb.org/t/p/w500${media.image_on_api}`
-									: media.image_on_api
-							}
-							title={media.name_on_api}
-							key={idx}
-						/>
-					))
+					goalMedias.map((media, idx) => <Media media={media} key={idx} />)
 				) : (
 					<>
 						<Skeleton height="180px" width="120px" borderRadius="10px" m="10px" />

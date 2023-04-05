@@ -129,17 +129,7 @@ export default function HomeComponent() {
 							.slice(0, 8)
 							.filter((el) => !el.is_active)
 							.map((media, idx) => (
-								<Media
-									media={media}
-									// image={
-									// 	media.mediatype_id === 1
-									// 		? `https://image.tmdb.org/t/p/w500${media.image_on_api}`
-									// 		: media.image_on_api
-									// }
-									// title={media.name_on_api}
-									// mediaType={media.mediatype_id}
-									key={idx}
-								/>
+								<Media media={media} key={idx} />
 							))}
 					</Flex>
 				</Flex>

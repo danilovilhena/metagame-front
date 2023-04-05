@@ -82,7 +82,10 @@ export const Media = ({ showBorder = false, showShadow = true, media, ...rest })
 				mediatype: media.mediatype_id,
 				name_on_api: media.name_on_api,
 				id_on_api: media.id_on_api,
-				image_on_api: media.image_on_api,
+				image_on_api:
+					media.mediatype_id === 3
+						? `https://image.tmdb.org/t/p/w500${media.image_on_api}`
+						: media.image_on_api,
 			})
 			.then(() => {
 				showToast(toast, 'Mídia adicionada com sucesso!', 'success');
