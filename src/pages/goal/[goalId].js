@@ -87,7 +87,7 @@ export default function Goal() {
 					Status:
 					{isGoalLoaded ? (
 						!goal.is_active ? (
-							<Text as="span" ml="5px">
+							<Text as="span" ml="5px" color="green.300">
 								Finalizada
 							</Text>
 						) : isLate < 0 && goal.is_active ? (
@@ -127,7 +127,7 @@ export default function Goal() {
 					)}
 				</Text>
 				{isGoalLoaded ? (
-					<Text as="strong" width="180px" textAlign="end" display="flex">
+					<Text as="strong" width="180px" textAlign="end" display="flex" justifyContent="flex-end">
 						{finishedGoalDate ? `Encerrou: ${finishedGoalDate}` : `Encerra: ${goalEndDate}`}
 					</Text>
 				) : (
@@ -142,7 +142,7 @@ export default function Goal() {
 				) : (
 					<Skeleton height="25px" width="80px" borderRadius="10px" />
 				)}
-				<Text as="strong" width="180px" display="flex" justifyContent="flex-end">
+				<Text as="strong" width="180px" display="flex" justifyContent="flex-end" textAlign="end">
 					Progresso:{' '}
 					{isGoalLoaded ? (
 						`${progress}%`
