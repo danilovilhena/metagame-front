@@ -13,6 +13,7 @@ import { fetchGoals, fetchUserMedias, fetchUserRanking } from 'store/backend';
 import { formatDate } from 'utils/functions';
 import showToast from 'utils/showToast';
 import { api } from 'services/api';
+import DOMPurify from 'dompurify';
 
 const Title = ({ children }) => (
 	<Text as="strong" fontSize="3xl" mb="1.5rem">
@@ -82,12 +83,14 @@ export default function ProfileComponent({ userProfile = null }) {
 
 		if (isEdit && hasChanged && isValid) {
 			const nameArr = name.split(' ');
+			const cleanUsername = DOMPurify.sanitize(username);
+			const cleanNameArr = DOMPurify.sanitize(nameArr);
 			api
 				.put(`/users/${user.id}`, {
-					username: username,
+					username: cleanUsername,
 					email: user.email,
-					first_name: nameArr ? nameArr[0] : user.first_name,
-					last_name: nameArr ? nameArr[nameArr.length - 1] : user.last_name,
+					first_name: cleanNameArr ? cleanNameArr[0] : user.first_name,
+					last_name: cleanNameArr ? cleanNameArr[cleanNameArr.length - 1] : user.last_name,
 					provider: user.userinfo.provider,
 					image_url: user.userinfo.image_url,
 					password: '',

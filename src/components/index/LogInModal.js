@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import DOMPurify from 'dompurify';
 
 import Modal from 'components/common/Modal';
 import Button from 'components/common/Button';
@@ -44,9 +45,11 @@ export default function LogInModal({
 
 	const handleLogIn = async ({ email, password }, event) => {
 		event.preventDefault();
+		const cleanEmail = DOMPurify.sanitize(email);
+		const cleanPassword = DOMPurify.sanitize(password);
 		const response = await signIn('credentials', {
-			email,
-			password,
+			email: cleanEmail,
+			password: cleanPassword,
 			redirect: false,
 		});
 		if (response && response.error) {

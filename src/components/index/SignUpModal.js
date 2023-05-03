@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import DOMPurify from 'dompurify';
 
 import Modal from 'components/common/Modal';
 import Button from 'components/common/Button';
@@ -42,11 +43,16 @@ export default function SignUpModal({
 	const handleSignUp = async (values, event) => {
 		event.preventDefault();
 		const { name, username, email, password } = values;
+
+		const cleanName = DOMPurify.sanitize(name);
+		const cleanUsername = DOMPurify.sanitize(username);
+		const cleanEmail = DOMPurify.sanitize(email);
+		const cleanPassword = DOMPurify.sanitize(password);
 		const user_created = await userCreation({
-			name,
-			username,
-			email,
-			password,
+			name: cleanName,
+			username: cleanUsername,
+			email: cleanEmail,
+			password: cleanPassword,
 		});
 		if (user_created) {
 			await signIn('credentials', { email, password });
@@ -79,7 +85,7 @@ export default function SignUpModal({
 								<VStack spacing="12px" color="gray" width="100%" _dark={{ color: 'gray.200' }}>
 									<Input placeholder="Nome completo" {...register('name')} error={errors.name} />
 									<Input
-										autocomplete="off"
+										autoComplete="off"
 										placeholder="Nome de usuário"
 										{...register('username')}
 										error={errors.username}

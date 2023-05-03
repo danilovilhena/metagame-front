@@ -15,6 +15,7 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useDispatch, useSelector } from 'react-redux';
+import DOMPurify from 'dompurify';
 
 import Modal from 'components/common/Modal';
 import Button from 'components/common/Button';
@@ -58,13 +59,16 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 	const addGoal = async () => {
 		if (goalValue > 0 && goalLength > 0) {
 			const mediaType = mediaTypes.find((media) => media.type === mediaSelected);
+			const cleanGoalValue = DOMPurify.sanitize(goalValue);
+			const cleanGoalLength = DOMPurify.sanitize(goalLength);
+			const cleanGoalPeriod = DOMPurify.sanitize(goalPeriod);
 			if (mediaType) {
 				api
 					.post('/goals', {
 						mediatype: mediaType.id,
 						creator: session.data.id,
-						objective_quantity: parseInt(goalValue),
-						limit_days: getLengthInDays(goalLength, goalPeriod),
+						objective_quantity: parseInt(cleanGoalValue),
+						limit_days: getLengthInDays(cleanGoalLength, cleanGoalPeriod),
 					})
 					.then(() => {
 						showToast(toast, 'Meta adicionada com sucesso!', 'success');
