@@ -79,13 +79,14 @@ export default function SignUpModal({
 								<VStack spacing="12px" color="gray" width="100%" _dark={{ color: 'gray.200' }}>
 									<Input placeholder="Nome completo" {...register('name')} error={errors.name} />
 									<Input
+										autocomplete="off"
 										placeholder="Nome de usuário"
 										{...register('username')}
 										error={errors.username}
 									/>
 									<Input
+										autoComplete="off"
 										placeholder="E-mail"
-										type="email"
 										{...register('email')}
 										error={errors.email}
 									/>
@@ -96,7 +97,10 @@ export default function SignUpModal({
 											{...register('password')}
 											error={errors.password}
 										/>
-										<InputRightAddon onClick={() => setShowPassword(!showPassword)}>
+										<InputRightAddon
+											cursor="pointer"
+											onClick={() => setShowPassword(!showPassword)}
+										>
 											{showPassword ? <IoMdEyeOff /> : <IoMdEye />}
 										</InputRightAddon>
 									</InputGroup>
@@ -108,7 +112,7 @@ export default function SignUpModal({
 											error={errors.confirm_password}
 										/>
 										<InputRightAddon
-											pointerEvents="none"
+											cursor="pointer"
 											onClick={() => setShowConfirmPassword(!showConfirmPassword)}
 										>
 											{showConfirmPassword ? <IoMdEyeOff /> : <IoMdEye />}
