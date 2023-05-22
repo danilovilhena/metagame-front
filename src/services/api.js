@@ -1,9 +1,14 @@
 import axios from 'axios';
 import { getSession } from 'next-auth/react';
 
+const baseURL =
+	process.env.NODE_ENV === 'development'
+		? 'http://127.0.0.1:8000/api'
+		: 'http://18.231.155.132:8000/api';
+
 const apiClient = () => {
 	const api = axios.create({
-		baseURL: 'http://127.0.0.1:8000/api',
+		baseURL: baseURL,
 	});
 
 	api.interceptors.request.use(
