@@ -51,6 +51,8 @@ export default function ProfileComponent({ userProfile = null }) {
 	const [name, setName] = useState(user ? `${user.first_name} ${user.last_name}` : '');
 	const [username, setUsername] = useState(user ? user.username : '');
 
+	const isUserProfile = !userProfile || (userProfile && userProfile.id === session.data.id);
+
 	useEffect(() => {
 		if (user && user.id) {
 			dispatch(fetchUserMedias(user.id));
@@ -193,7 +195,7 @@ export default function ProfileComponent({ userProfile = null }) {
 						</Flex>
 						<Flex flexDirection="column" mr={['0px', '2em']}>
 							<Text>Pontos</Text>
-							<Text as="strong">{userPoints}</Text>
+							<Text as="strong">{userPoints.length <= 0 ? 0 : userPoints}</Text>
 						</Flex>
 					</Grid>
 				</Flex>
@@ -223,17 +225,25 @@ export default function ProfileComponent({ userProfile = null }) {
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas atuais</Title>
 					<Grid templateColumns={['1fr', 'repeat(2, 1fr)']} gap="4">
-						{!userProfile || (userProfile && userProfile.id === session.data.id)
-							? goals
+						{goals.lenght > 0 ? (
+							isUserProfile ? (
+								goals
 									.filter((goal) => goal.is_active)
 									.map((goal, idx) => (
 										<PersonalGoal handleFavoriteGoal={handleFavoriteGoal} goal={goal} key={idx} />
 									))
-							: goals
+							) : (
+								goals
 									.filter((goal) => goal.is_active)
 									.map((goal, idx) => (
 										<PublicGoal handleFavoriteGoal={handleFavoriteGoal} goal={goal} key={idx} />
-									))}
+									))
+							)
+						) : (
+							<Text as="h3" fontSize="xl" fontWeight="medium" mb="4">
+								Nenhuma meta sendo feita no momento
+							</Text>
+						)}
 					</Grid>
 				</Flex>
 				{/* últimos registros */}

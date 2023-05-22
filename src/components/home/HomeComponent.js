@@ -56,66 +56,78 @@ export default function HomeComponent() {
 					🔥 Conheça metas populares entre outros usuários
 				</Text>
 				<Grid templateColumns={isMobile ? '1fr' : 'repeat(2, 1fr)'} gap="8" mb="3em">
-					{popularGoals.length <= 0 && (
+					{!popularGoals ? (
 						<>
 							<Skeleton height={112} width="100%" borderRadius={10} />
 							<Skeleton height={112} width="100%" borderRadius={10} />
 						</>
+					) : popularGoals.length > 0 ? (
+						popularGoals.map((goal, idx) => (
+							<PublicGoal handleFavoriteGoal={handleFavoriteGoal} goal={goal} key={idx} />
+						))
+					) : (
+						<Text as="h3" fontSize="xl" fontWeight="medium" mb="4">
+							Nenhuma meta popular disponível no momento
+						</Text>
 					)}
-					{popularGoals.map((goal, idx) => (
-						<PublicGoal handleFavoriteGoal={handleFavoriteGoal} goal={goal} key={idx} />
-					))}
 				</Grid>
 				<Text as="h2" fontSize="2xl" fontWeight="medium" mb="4">
 					🏆 Descubra os principais usuários do Metagame!
 				</Text>
 				<Grid templateColumns={isMobile ? '1fr' : 'repeat(2, 1fr)'} gap="8" mb="3em">
-					{ranking.length <= 0 && (
+					{!ranking ? (
 						<>
 							<Skeleton height="56px" width="100%" borderRadius={10} />
 							<Skeleton height="56px" width="100%" borderRadius={10} />
 						</>
-					)}
-					{ranking.map((user, idx) => (
-						<Flex
-							flexDir="row"
-							alignItems="center"
-							justifyContent="space-between"
-							background="#FFFFFF"
-							color="primary"
-							minW="50%"
-							borderRadius="8px"
-							p="3"
-							fontWeight="bold"
-							_dark={{ bg: 'gray.700', color: 'gray.200' }}
-							key={idx}
-						>
-							<Flex alignItems="center">
-								<Avatar
-									w="2rem"
-									h="2rem"
-									src={user.userinfo.image_url}
-									referrerPolicy="no-referrer"
-									name={user?.username}
-									borderRadius="50%"
-									mr="4"
-								/>
-								<Link href={`/profile/${user.username}`}>
-									<Text cursor="pointer">{user.username}</Text>
-								</Link>
+					) : ranking.length > 0 ? (
+						ranking.map((user, idx) => (
+							<Flex
+								flexDir="row"
+								alignItems="center"
+								justifyContent="space-between"
+								background="#FFFFFF"
+								color="primary"
+								minW="50%"
+								borderRadius="8px"
+								p="3"
+								fontWeight="bold"
+								_dark={{ bg: 'gray.700', color: 'gray.200' }}
+								key={idx}
+							>
+								<Flex alignItems="center">
+									<Avatar
+										w="2rem"
+										h="2rem"
+										src={user.userinfo.image_url}
+										referrerPolicy="no-referrer"
+										name={user?.username}
+										borderRadius="50%"
+										mr="4"
+									/>
+									<Link href={`/profile/${user.username}`}>
+										<Text cursor="pointer">{user.username}</Text>
+									</Link>
+								</Flex>
+								<Text color="secondary">
+									{user.points} {user.points === 1 ? 'ponto' : 'pontos'}
+								</Text>
 							</Flex>
-							<Text color="secondary">
-								{user.points} {user.points === 1 ? 'ponto' : 'pontos'}
-							</Text>
-						</Flex>
-					))}
+						))
+					) : (
+						<Text as="h3" fontSize="xl" fontWeight="medium" mb="4">
+							Classificação indisponível no momento
+						</Text>
+					)}
+
+					{}
 				</Grid>
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Text as="h2" fontSize="2xl" fontWeight="medium" mb="4">
 						Mídias mais populares
 					</Text>
 					<Flex gap="4" flexWrap="wrap" justifyContent={isMobile ? 'center' : 'flex-start'}>
-						{popularMedias.length <= 0 && (
+						{!popularMedias ? (
 							<>
 								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
 								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
@@ -124,13 +136,16 @@ export default function HomeComponent() {
 								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
 								<Skeleton height={180} width={120} margin="0 10px" borderRadius={10} />
 							</>
+						) : popularMedias.length > 0 ? (
+							popularMedias
+								.slice(0, 8)
+								.filter((el) => !el.is_active)
+								.map((media, idx) => <Media media={media} key={idx} />)
+						) : (
+							<Text as="h3" fontSize="xl" fontWeight="medium" mb="4">
+								Nenhuma mídia popular disponível no momento
+							</Text>
 						)}
-						{popularMedias
-							.slice(0, 8)
-							.filter((el) => !el.is_active)
-							.map((media, idx) => (
-								<Media media={media} key={idx} />
-							))}
 					</Flex>
 				</Flex>
 			</Flex>

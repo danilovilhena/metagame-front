@@ -54,6 +54,14 @@ export default function Activities({ userProfile = null }) {
 		return <></>;
 	}
 
+	if (activities.length <= 0) {
+		return (
+			<Text as="h3" fontSize="xl" fontWeight="medium" mb="4">
+				Nenhuma atividade cadastrada
+			</Text>
+		);
+	}
+
 	return (
 		<SimpleGrid columns={['1', '2']} spacing="4">
 			{activities?.map((item, idx) => (

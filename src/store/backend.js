@@ -11,7 +11,7 @@ export const backendSlice = createSlice({
 		popularGoals: [],
 		popularMedias: [],
 		ranking: [],
-		userRanking: [],
+		userRanking: 0,
 		goal: [],
 		goalMedias: [],
 	},

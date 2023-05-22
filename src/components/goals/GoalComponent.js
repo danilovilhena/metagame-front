@@ -51,51 +51,66 @@ export default function GoalComponent() {
 				<Flex flexDirection="column" marginTop="1.5em" mb="2rem">
 					<Title>Metas atuais</Title>
 					<Grid templateColumns={isWideVersion ? 'repeat(2, 1fr)' : '1fr'} gap="4">
-						{goals.length <= 0 && (
+						{!goals ? (
 							<>
 								<Skeleton height="80px" width="100%" borderRadius="10px" />
 								<Skeleton height="80px" width="100%" borderRadius="10px" />
 							</>
+						) : goals.length > 0 ? (
+							goals
+								.filter((el) => el.is_active)
+								.map((goal, idx) => (
+									<PersonalGoal goal={goal} key={idx} handleFavoriteGoal={handleFavoriteGoal} />
+								))
+						) : (
+							<Text as="h3" fontSize="xl" fontWeight="medium" mb="4">
+								Nenhuma meta sendo feita no momento
+							</Text>
 						)}
-						{goals
-							.filter((el) => el.is_active)
-							.map((goal, idx) => (
-								<PersonalGoal goal={goal} key={idx} handleFavoriteGoal={handleFavoriteGoal} />
-							))}
 					</Grid>
 				</Flex>
 				<Flex flexDirection="column" marginTop="1.5em" mb="2rem">
 					<Title>Metas curtidas</Title>
 					<Grid templateColumns={isWideVersion ? 'repeat(2, 1fr)' : '1fr'} gap="4">
-						{favoriteGoals.length <= 0 && (
+						{!favoriteGoals ? (
 							<>
-								<Skeleton height="124px" width="100%" borderRadius="10px" />
-								<Skeleton height="124px" width="100%" borderRadius="10px" />
+								<Skeleton height="80px" width="100%" borderRadius="10px" />
+								<Skeleton height="80px" width="100%" borderRadius="10px" />
 							</>
+						) : favoriteGoals.length > 0 ? (
+							favoriteGoals.map((goal, idx) => (
+								<PublicGoal
+									goal={{ ...goal, is_liked: true }}
+									handleFavoriteGoal={handleFavoriteGoal}
+									key={idx}
+								/> // this element still needs update (after we favorite it)
+							))
+						) : (
+							<Text as="h3" fontSize="xl" fontWeight="medium" mb="4">
+								Nenhuma meta favoritada
+							</Text>
 						)}
-						{favoriteGoals.map((goal, idx) => (
-							<PublicGoal
-								goal={{ ...goal, is_liked: true }}
-								handleFavoriteGoal={handleFavoriteGoal}
-								key={idx}
-							/> // this element still needs update (after we favorite it)
-						))}
 					</Grid>
 				</Flex>
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas finalizadas</Title>
 					<Grid templateColumns={isWideVersion ? 'repeat(2, 1fr)' : '1fr'} gap="4">
-						{goals.length <= 0 && (
+						{!goals ? (
 							<>
 								<Skeleton height="80px" width="100%" borderRadius="10px" />
 								<Skeleton height="80px" width="100%" borderRadius="10px" />
 							</>
+						) : goals.length > 0 ? (
+							goals
+								.filter((el) => !el.is_active)
+								.map((goal, idx) => (
+									<PersonalGoal goal={goal} handleFavoriteGoal={handleFavoriteGoal} key={idx} />
+								))
+						) : (
+							<Text as="h3" fontSize="xl" fontWeight="medium" mb="4">
+								Nenhuma meta finalizada ainda
+							</Text>
 						)}
-						{goals
-							.filter((el) => !el.is_active)
-							.map((goal, idx) => (
-								<PersonalGoal goal={goal} handleFavoriteGoal={handleFavoriteGoal} key={idx} />
-							))}
 					</Grid>
 				</Flex>
 			</Flex>
