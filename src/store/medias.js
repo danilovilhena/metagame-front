@@ -22,11 +22,11 @@ const getMediaContent = async (max_items) => {
 	let data = {};
 
 	let res = await fetch(
-		`https://api.themoviedb.org/3/discover/movie/?api_key=${
+		`https://api.themoviedb.org/3/discover/movie?api_key=${
 			process.env.NEXT_PUBLIC_TMDB
-		}&language=pt-BR&sort_by=popularity.desc&vote_average.gte=7&include_adult=false&include_video=false&page=${
-			Math.random() * 25
-		}`
+		}&language=pt-BR&sort_by=popularity.desc&vote_average.gte=7&include_adult=false&include_video=false&page=${Math.round(
+			Math.random() * 25 + 1
+		)}`
 	);
 	let response = await res.json();
 	data.movies = response.results.slice(0, max_items).map((movie) => {
