@@ -44,17 +44,20 @@ export const authOptions = {
 		async signIn({ user, account }) {
 			// Props of this function are : { user, account, profile, email, credentials }
 			const isNotCredential = account && account.provider !== 'credentials';
-			if (account && isNotCredential) {
-				// Try to create account if its not crecential
-				// It can return error or the user returned
-				await userCreation(user, account.provider);
-				// If it is the first login, the user is already logged in
-			}
-			// Do login for all type of providers
 			try {
+				if (account && isNotCredential) {
+					// Try to create account if its not crecential
+					// It can return error or the user returned
+					await userCreation(user, {
+						provider: account.provider,
+						providerId: account.providerAccountId,
+					});
+					// If it is the first login, the user is already logged in
+				}
+				// Do login for all type of providers
 				const user_logged_in = await api.post('/login', {
 					username: user.email || user.username,
-					password: isNotCredential ? '' : user.password,
+					password: isNotCredential ? account.providerAccountId : user.password,
 					provider: isNotCredential ? account.provider : '',
 				});
 				if (user_logged_in && user_logged_in.data) {
@@ -64,8 +67,6 @@ export const authOptions = {
 			} catch (err) {
 				return '/auth-error';
 			}
-
-			return true;
 		},
 		async session({ token }) {
 			const token_jwt = token.token_jwt;
