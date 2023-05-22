@@ -48,10 +48,7 @@ export const authOptions = {
 				if (account && isNotCredential) {
 					// Try to create account if its not crecential
 					// It can return error or the user returned
-					await userCreation(user, {
-						provider: account.provider,
-						providerId: account.providerAccountId,
-					});
+					await userCreation(user, account.provider, account.providerAccountId);
 					// If it is the first login, the user is already logged in
 				}
 				// Do login for all type of providers
@@ -65,6 +62,9 @@ export const authOptions = {
 					return true;
 				}
 			} catch (err) {
+				if (err.response.status === 401) {
+					return false;
+				}
 				return '/auth-error';
 			}
 		},

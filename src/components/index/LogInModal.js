@@ -50,11 +50,12 @@ export default function LogInModal({
 		const response = await signIn('credentials', {
 			email: cleanEmail,
 			password: cleanPassword,
-			redirect: false,
+			redirect: true,
 		});
-		if (response && response.error) {
-			setSignInError(response.error);
+		if (response && response.status === 403) {
+			setSignInError('Usuário ou senha inválidos.');
 		}
+		console.log(response);
 	};
 
 	useEffect(() => {
