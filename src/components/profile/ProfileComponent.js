@@ -225,7 +225,7 @@ export default function ProfileComponent({ userProfile = null }) {
 				<Flex flexDirection="column" marginTop="1.5em" mb="3rem">
 					<Title>Metas atuais</Title>
 					<Grid templateColumns={['1fr', 'repeat(2, 1fr)']} gap="4">
-						{goals.lenght > 0 ? (
+						{goals.length > 0 ? (
 							isUserProfile ? (
 								goals
 									.filter((goal) => goal.is_active)
