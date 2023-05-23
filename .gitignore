@@ -38,3 +38,7 @@ next-env.d.ts
 
 # eslint
 .eslintcache
+/test-results/
+/playwright-report/
+/playwright/.cache/
+state.json

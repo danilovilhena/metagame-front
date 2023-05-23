@@ -1,50 +1,51 @@
 {
-	"name": "metagame-front",
-	"version": "0.1.0",
-	"private": true,
-	"scripts": {
-		"dev": "next dev",
-		"build": "next build",
-		"start": "next start",
-		"lint": "next lint",
-		"lint-fix": "next lint --fix",
-		"prepare": "husky install"
-	},
-	"dependencies": {
-		"@chakra-ui/icons": "^2.0.10",
-		"@chakra-ui/react": "^2.3.2",
-		"@emotion/react": "^11.10.4",
-		"@emotion/styled": "^11.10.4",
-		"@hookform/resolvers": "^2.9.8",
-		"@reduxjs/toolkit": "^1.9.0",
-		"axios": "^0.27.2",
-		"dompurify": "^3.0.2",
-		"framer-motion": "^7.3.5",
-		"mingcute_icon": "^2.3.0",
-		"moment": "^2.29.4",
-		"moment-precise-range-plugin": "^1.3.0",
-		"next": "12.3.0",
-		"next-auth": "^4.12.2",
-		"nookies": "^2.5.2",
-		"random-words": "^1.2.0",
-		"react": "18.2.0",
-		"react-dom": "18.2.0",
-		"react-hook-form": "^7.37.0",
-		"react-icons": "^4.4.0",
-		"react-redux": "^8.0.5",
-		"victory": "^36.6.8",
-		"yup": "^0.32.11"
-	},
-	"devDependencies": {
-		"eslint": "8.23.1",
-		"eslint-config-next": "12.3.0",
-		"eslint-config-prettier": "^8.5.0",
-		"husky": "^8.0.1",
-		"lint-staged": "^13.0.3",
-		"prettier": "^2.7.1"
-	},
-	"lint-staged": {
-		"*.js": "eslint --cache --fix",
-		"*.{js,css,md}": "prettier --write"
-	}
+  "name": "metagame-front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint-fix": "next lint --fix",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.10",
+    "@chakra-ui/react": "^2.3.2",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@hookform/resolvers": "^2.9.8",
+    "@reduxjs/toolkit": "^1.9.0",
+    "axios": "^0.27.2",
+    "dompurify": "^3.0.2",
+    "framer-motion": "^7.3.5",
+    "mingcute_icon": "^2.3.0",
+    "moment": "^2.29.4",
+    "moment-precise-range-plugin": "^1.3.0",
+    "next": "12.3.0",
+    "next-auth": "^4.12.2",
+    "nookies": "^2.5.2",
+    "random-words": "^1.2.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.37.0",
+    "react-icons": "^4.4.0",
+    "react-redux": "^8.0.5",
+    "victory": "^36.6.8",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.34.0",
+    "eslint": "8.23.1",
+    "eslint-config-next": "12.3.0",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
+  }
 }
