@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getSession } from 'next-auth/react';
+import { getSession, signOut } from 'next-auth/react';
 
 const baseURL =
 	process.env.NODE_ENV === 'development'
@@ -26,6 +26,16 @@ const apiClient = () => {
 		}
 	);
 
+	api.interceptors.response.use(
+		async (response) => {
+			return response;
+		},
+		({ response }) => {
+			if (response.status === 401 && response.config.url === '/me') {
+				signOut();
+			}
+		}
+	);
 	return api;
 };
 

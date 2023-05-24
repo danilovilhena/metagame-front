@@ -136,6 +136,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 					<Menu matchWidth>
 						<MenuButton>
 							<Button
+								as="div"
 								variant="styled"
 								background="primary"
 								width="100%"
@@ -177,6 +178,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 					<Menu matchWidth>
 						<MenuButton>
 							<Button
+								as="div"
 								variant="styled"
 								background="primary"
 								width="100%"

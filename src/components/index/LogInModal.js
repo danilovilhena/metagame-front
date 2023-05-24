@@ -55,7 +55,6 @@ export default function LogInModal({
 		if (response && response.status === 403) {
 			setSignInError('Usuário ou senha inválidos.');
 		}
-		console.log(response);
 	};
 
 	useEffect(() => {

@@ -76,7 +76,7 @@ export const authOptions = {
 				const customSession = { ...response.data, token_jwt };
 				return customSession;
 			} catch (err) {
-				return '/auth-error';
+				return {};
 			}
 		},
 

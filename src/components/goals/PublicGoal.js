@@ -66,7 +66,9 @@ export default function PublicGoal({ goal, handleFavoriteGoal, ...rest }) {
 							{options.map((option, idx) => (
 								<MenuItem
 									key={idx}
-									onClick={() => router.push(`/goal/${goal.id}`)}
+									onClick={() =>
+										router.push({ pathname: `/goal/[goalId]`, query: { goalId: goal.id } })
+									}
 									icon={
 										<Image src={getIcon(option.icon, false, option.extention)} alt={option.name} />
 									}

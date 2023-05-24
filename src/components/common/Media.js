@@ -8,8 +8,9 @@ import Button from './Button';
 import getIcon from 'utils/getIcon';
 import { api } from 'services/api';
 import showToast from 'utils/showToast';
-import { fetchGoals, fetchUserMedias } from 'store/backend';
+import { fetchGoalMedias, fetchGoals, fetchUserMedias } from 'store/backend';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const fetchMovie = async (id) => {
 	const res = await fetch(
@@ -53,6 +54,7 @@ const fetchBook = async (id) => {
 };
 
 export const Media = ({ showBorder = false, showShadow = true, media, ...rest }) => {
+	const router = useRouter();
 	const toast = useToast();
 	const dispatch = useDispatch();
 	const session = useSession();
@@ -82,16 +84,16 @@ export const Media = ({ showBorder = false, showShadow = true, media, ...rest })
 				mediatype: media.mediatype_id,
 				name_on_api: media.name_on_api,
 				id_on_api: media.id_on_api,
-				image_on_api:
-					media.mediatype_id === 3
-						? `https://image.tmdb.org/t/p/w500${media.image_on_api}`
-						: media.image_on_api,
+				image_on_api: media.image_on_api,
 			})
 			.then(() => {
 				showToast(toast, 'Mídia adicionada com sucesso!', 'success');
 				setIsMediaDetalOpen(false);
 				dispatch(fetchUserMedias(session.data.id));
 				dispatch(fetchGoals(session.data.id));
+				if (router.query.goalId) {
+					dispatch(fetchGoalMedias(router.query.goalId));
+				}
 			})
 			.catch((err) => {
 				console.log(err);

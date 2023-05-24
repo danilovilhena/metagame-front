@@ -85,7 +85,7 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 			name: 'Abrir detalhe',
 			icon: 'share',
 			extention: 'png',
-			action: () => router.push(`/goal/${goal.id}`),
+			action: () => router.push({ pathname: `/goal/[goalId]`, query: { goalId: goal.id } }),
 		},
 		{ name: 'Excluir meta', icon: 'trash', action: deleteGoal },
 	];

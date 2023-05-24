@@ -118,6 +118,13 @@ export default function HeaderLoggedIn({ user }) {
 			{isWideVersion ? (
 				<HStack color="primary" spacing="0.5em">
 					{buttons.map((btn, idx) => {
+						if (btn.action) {
+							return (
+								<Button variant="unstyled" onClick={btn.action} padding={0} margin={0} key={idx}>
+									<Image src={btn.icon} alt={btn.alt} />
+								</Button>
+							);
+						}
 						return (
 							<Button variant="unstyled" onClick={btn.action} padding={0} margin={0} key={idx}>
 								<Link href={btn.route ?? ''}>

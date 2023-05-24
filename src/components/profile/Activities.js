@@ -22,7 +22,7 @@ export default function Activities({ userProfile = null }) {
 					<Text as="strong" mx="0.3em" color="secondary">
 						{capitalize(item.name_on_api)}
 					</Text>
-					{mediaTypes[content].conclusion.slice(0, -1)} no dia
+					{mediaTypes[content].conclusion} no dia
 					<Text as="strong" mx="0.3em" color="secondary">
 						{item.register_date}
 					</Text>
@@ -82,11 +82,7 @@ export default function Activities({ userProfile = null }) {
 							height="80px"
 							objectFit="cover"
 							borderRadius="10px"
-							src={
-								item.mediatype === 1
-									? `https://image.tmdb.org/t/p/w500${item.image_on_api}`
-									: item.image_on_api
-							}
+							src={item.image_on_api}
 							mr="1em"
 							alt="Banner"
 						/>

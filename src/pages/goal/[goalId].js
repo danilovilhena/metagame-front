@@ -16,7 +16,7 @@ export default function Goal() {
 	const dispatch = useDispatch();
 	const [isGoalLoaded, setIsGoalLoaded] = useState(false);
 	const [isGoalMediasLoaded, setIsGoalMediasLoaded] = useState(false);
-	const goal_id = router.asPath.split('/goal/')[1];
+	const goal_id = router.query.goalId;
 	const goal = useSelector((state) => state.backend.goal);
 	const goalMedias = useSelector((state) => state.backend.goalMedias);
 
@@ -145,7 +145,7 @@ export default function Goal() {
 				<Text as="strong" width="180px" display="flex" justifyContent="flex-end" textAlign="end">
 					Progresso:{' '}
 					{isGoalLoaded ? (
-						`${progress}%`
+						`${progress.toFixed(2)}%`
 					) : (
 						<Skeleton height="25px" width="80px" borderRadius="10px" ml="5px" />
 					)}
