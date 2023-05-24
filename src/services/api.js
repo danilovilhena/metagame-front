@@ -7,9 +7,7 @@ const baseURL =
 		: 'https://cors-anywhere.herokuapp.com/http://18.229.107.10:8000/api';
 
 const apiClient = () => {
-	const api = axios.create({
-		baseURL: baseURL,
-	});
+	const api = axios.create({ baseURL: baseURL });
 
 	api.interceptors.request.use(
 		async (request) => {
