@@ -52,7 +52,7 @@ export default function LogInModal({
 			password: cleanPassword,
 			redirect: true,
 		});
-		if (response && response.status === 403) {
+		if (response && response?.status === 403) {
 			setSignInError('Usuário ou senha inválidos.');
 		}
 	};

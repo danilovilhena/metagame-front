@@ -29,7 +29,7 @@ const apiClient = () => {
 			return response;
 		},
 		({ response }) => {
-			if (response.status === 401 && response.config.url === '/me') {
+			if (response?.status === 401 && response?.config?.url === '/me') {
 				signOut();
 			}
 		}
