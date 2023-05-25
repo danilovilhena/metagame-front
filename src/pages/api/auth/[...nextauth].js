@@ -65,7 +65,9 @@ export const authOptions = {
 				if (err?.response?.status === 401) {
 					return false;
 				}
-				return '/auth-error';
+				console.log(err);
+				return false;
+				// return '/auth-error';
 			}
 		},
 		async session({ token }) {
