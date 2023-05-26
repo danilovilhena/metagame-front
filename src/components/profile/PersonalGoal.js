@@ -112,9 +112,7 @@ export default function PersonalGoal({ goal, handleFavoriteGoal, ...rest }) {
 						alignItems={['start', 'center']}
 						flex="1"
 					>
-						<Text as="strong" maxWidth="120px">
-							{getTitle(goalType, goal)}
-						</Text>
+						<Text as="strong">{getTitle(goalType, goal)}</Text>
 						<Text>{calcDate()}</Text>
 					</Flex>
 				</Flex>
