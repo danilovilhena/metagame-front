@@ -158,7 +158,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 						min={1}
 						aria-label={`Número de ${mediaSelected.toLowerCase() || mediaTypes[0]?.type}s`}
 						value={Number(goalValue).toString()}
-						onChange={(e) => setGoalValue(e.target.value)}
+						onChange={(e) => setGoalValue(parseInt(e.target.value))}
 					/>
 					<Text
 						display="flex"
@@ -173,7 +173,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 						min={1}
 						aria-label={`Número de ${goalPeriod}`}
 						value={Number(goalLength).toString()}
-						onChange={(e) => setGoalLength(e.target.value)}
+						onChange={(e) => setGoalLength(parseInt(e.target.value))}
 					/>
 					<Menu matchWidth>
 						<MenuButton>
