@@ -63,11 +63,8 @@ export const authOptions = {
 				}
 			} catch (err) {
 				console.log(err);
-				if (err?.response?.status === 401) {
-					return false;
-				}
-				return false;
-				// return '/auth-error';
+				if (err?.response?.status === 401) return false;
+				return '/auth-error';
 			}
 		},
 		async session({ token }) {

@@ -4,7 +4,7 @@ import { getSession } from 'next-auth/react';
 const baseURL =
 	process.env.NODE_ENV === 'development'
 		? 'http://127.0.0.1:8000/api'
-		: 'https://metagame-load-balancer-1799570626.sa-east-1.elb.amazonaws.com/api/';
+		: 'https://api.metagame.website/api/';
 
 const apiClient = () => {
 	const api = axios.create({ baseURL: baseURL });
