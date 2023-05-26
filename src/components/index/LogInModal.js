@@ -19,12 +19,14 @@ import DOMPurify from 'dompurify';
 import Modal from 'components/common/Modal';
 import Button from 'components/common/Button';
 import { Input } from 'components/common/Input';
+import { useRouter } from 'next/router';
 
 export default function LogInModal({
 	isLogInModalOpen,
 	setIsLogInModalOpen,
 	setIsSignUpModalOpen,
 }) {
+	const router = useRouter();
 	const easeIn = keyframes`
 	from {opacity: 0}
 	to {opacity: 1}
@@ -50,10 +52,13 @@ export default function LogInModal({
 		const response = await signIn('credentials', {
 			email: cleanEmail,
 			password: cleanPassword,
-			redirect: true,
+			redirect: false,
 		});
 		if (response && response?.status === 403) {
 			setSignInError('Usuário ou senha inválidos.');
+		}
+		if (response?.status === 200) {
+			router.push('/home');
 		}
 	};
 
@@ -105,7 +110,7 @@ export default function LogInModal({
 									{signInError && (
 										<Alert status="error" borderRadius="0.375em" justifyContent="center">
 											<AlertIcon />
-											<AlertDescription color="black">{signInError}</AlertDescription>
+											<AlertDescription>{signInError}</AlertDescription>
 										</Alert>
 									)}
 								</VStack>
