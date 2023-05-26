@@ -36,7 +36,7 @@ export default function LogInModal({
 	const [signInError, setSignInError] = useState('');
 
 	const LogInFormSchema = yup.object({
-		email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
+		email: yup.string().required('E-mail obrigatório'),
 		password: yup.string().required('Senha obrigatória'),
 	});
 
