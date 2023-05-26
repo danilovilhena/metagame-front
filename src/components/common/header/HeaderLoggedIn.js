@@ -201,11 +201,7 @@ export default function HeaderLoggedIn({ user }) {
 										padding={0}
 										key={idx}
 									>
-										<Image
-											src={getIcon(btn.icon, router.pathname === btn.route)}
-											alt={btn.alt}
-											marginRight="10px"
-										/>
+										<Image src={btn.icon} alt={btn.alt} marginRight="10px" />
 										{btn.alt}
 									</Button>
 								);
@@ -219,11 +215,7 @@ export default function HeaderLoggedIn({ user }) {
 								>
 									<Link href={btn.route ?? ''}>
 										<Flex>
-											<Image
-												src={getIcon(btn.icon, router.pathname === btn.route)}
-												alt={btn.alt}
-												marginRight="10px"
-											/>
+											<Image src={btn.icon} alt={btn.alt} marginRight="10px" />
 											{btn.alt}
 										</Flex>
 									</Link>
