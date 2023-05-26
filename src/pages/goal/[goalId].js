@@ -30,8 +30,8 @@ export default function Goal() {
 
 	const goalTitle = getTitle(goalType, goal);
 	var isLate = Math.floor(new Date(goal.limit_date).getTime() - new Date().getTime());
-	const finishedGoalDate = formatDate(goal.end_date);
-	const goalEndDate = formatDate(goal.limit_date);
+	const finishedGoalDate = goal.end_date && formatDate(goal.end_date);
+	const goalEndDate = goal.limit_date && formatDate(goal.limit_date);
 
 	const mediaTypeVerbText = getConclusion(
 		mediaTypes.find((mediaType) => mediaType.id === goal.mediatype)?.type
