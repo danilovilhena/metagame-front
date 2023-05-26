@@ -87,9 +87,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 		} else {
 			showToast(
 				toast,
-				!(goalValue > 0)
-					? `Preencha a quantidade de ${getGroup(mediaSelected)}`
-					: `Insira um período válido`,
+				!(goalValue > 0) ? `Insira uma quantidade válida` : `Insira um período válido`,
 				'error'
 			);
 		}
@@ -157,6 +155,7 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 					</Menu>
 					<Input
 						type="number"
+						min={1}
 						aria-label={`Número de ${mediaSelected.toLowerCase() || mediaTypes[0]?.type}s`}
 						value={Number(goalValue).toString()}
 						onChange={(e) => setGoalValue(e.target.value)}
@@ -167,10 +166,11 @@ export default function AddGoal({ isModalOpen, setIsModalOpen, closeAllModals })
 						justifyContent={['start', 'center']}
 						minWidth="80px"
 					>
-						{getGroup(mediaSelected || mediaTypes[0]?.type)} em
+						{getGroup(mediaSelected || mediaTypes[0]?.type)}(s) em
 					</Text>
 					<Input
 						type="number"
+						min={1}
 						aria-label={`Número de ${goalPeriod}`}
 						value={Number(goalLength).toString()}
 						onChange={(e) => setGoalLength(e.target.value)}
