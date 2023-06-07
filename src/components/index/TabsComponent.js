@@ -26,6 +26,7 @@ export default function TabsComponent() {
 			color="white"
 			px={{ base: '1rem', sm: '3rem', xl: '11.5em' }}
 			py="3rem"
+			id="tabs"
 			_dark={{ bg: 'gray.900', color: 'gray.200' }}
 		>
 			<Text>Confira as mídias mais populares entre nossos usuários.</Text>
