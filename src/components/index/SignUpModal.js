@@ -1,4 +1,15 @@
-import { Flex, Icon, VStack, Text, keyframes, InputRightAddon, InputGroup } from '@chakra-ui/react';
+import {
+	Flex,
+	Icon,
+	VStack,
+	Text,
+	keyframes,
+	InputRightAddon,
+	InputGroup,
+	Alert,
+	AlertIcon,
+	AlertDescription,
+} from '@chakra-ui/react';
 import { IoLogoGoogle, IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import { signIn } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -11,6 +22,7 @@ import Modal from 'components/common/Modal';
 import Button from 'components/common/Button';
 import { Input } from 'components/common/Input';
 import userCreation from 'utils/userCreation';
+import { useRouter } from 'next/router';
 
 export default function SignUpModal({
 	isSignUpModalOpen,
@@ -21,9 +33,11 @@ export default function SignUpModal({
 	from {opacity: 0}
 	to {opacity: 1}
   `;
+	const router = useRouter();
 	const [showEmailInputs, setShowEmailInputs] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+	const [signUpError, setSignUpError] = useState('');
 
 	const signUpFormSchema = yup.object({
 		name: yup.string().required('Nome obrigatório'),
@@ -55,7 +69,13 @@ export default function SignUpModal({
 			password: cleanPassword,
 		});
 		if (user_created) {
-			await signIn('credentials', { email, password });
+			const response = await signIn('credentials', { email, password, redirect: false });
+			if (response && response?.status === 403) {
+				setSignUpError('Email ou nome de usuário já cadastrados');
+			}
+			if (response?.status === 200) {
+				router.push('/home');
+			}
 		}
 	};
 
@@ -124,6 +144,12 @@ export default function SignUpModal({
 											{showConfirmPassword ? <IoMdEyeOff /> : <IoMdEye />}
 										</InputRightAddon>
 									</InputGroup>
+									{signUpError && (
+										<Alert status="error" borderRadius="0.375em" justifyContent="center">
+											<AlertIcon />
+											<AlertDescription>{signUpError}</AlertDescription>
+										</Alert>
+									)}
 									<Button variant="styled" width="100%" type="submit">
 										Criar conta
 									</Button>

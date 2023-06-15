@@ -62,10 +62,6 @@ export const authOptions = {
 					return true;
 				}
 			} catch (err) {
-				if (err?.response?.status === 401) {
-					return false;
-				}
-				console.log(err);
 				return false;
 				// return '/auth-error';
 			}

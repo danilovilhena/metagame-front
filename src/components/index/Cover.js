@@ -27,8 +27,8 @@ export default function Cover() {
 					fontSize={{ base: '2em', sm: '3em' }}
 					align={{ base: 'center', lg: 'left' }}
 				>
-					<Highlight query="filmes" styles={{ color: 'secondary' }}>
-						Uma nova maneira de consumir os filmes que você sempre quis
+					<Highlight query="entretenimento" styles={{ color: 'secondary' }}>
+						Uma nova maneira de consumir o entretenimento que você sempre quis
 					</Highlight>
 				</Text>
 				<Flex mt="2em" flexDirection={{ base: 'column', md: 'row' }}>
@@ -49,9 +49,7 @@ export default function Cover() {
 						>
 							1
 						</Text>
-						<Text flex="1">
-							Crie metas ou por busque por metas populares de livros, filmes e jogos
-						</Text>
+						<Text flex="1">Crie ou navegue pelas metas populares criadas pelos usuários.</Text>
 					</Flex>
 					<Flex
 						flexDirection={{ base: 'row', md: 'column' }}
@@ -70,7 +68,7 @@ export default function Cover() {
 						>
 							2
 						</Text>
-						<Text flex="1">Defina em quanto tempo você deseja completar essa meta</Text>
+						<Text flex="1">Defina qual o tempo de conclusão para cada meta.</Text>
 					</Flex>
 					<Flex flexDirection={{ base: 'row', md: 'column' }}>
 						<Text
@@ -85,9 +83,7 @@ export default function Cover() {
 						>
 							3
 						</Text>
-						<Text flex="1">
-							A cada livro, filme ou jogo consumido, acompanhe seu progresso na meta
-						</Text>
+						<Text flex="1">Acompanhe seu progresso a cada livro, filme ou jogo consumido.</Text>
 					</Flex>
 				</Flex>
 			</Flex>
