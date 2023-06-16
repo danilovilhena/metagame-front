@@ -121,7 +121,7 @@ export default function HeaderLoggedIn({ user }) {
 						if (btn.action) {
 							return (
 								<Button variant="unstyled" onClick={btn.action} padding={0} margin={0} key={idx}>
-									<Image src={btn.icon} alt={btn.alt} />
+									<Image src={btn.icon} alt={btn.alt} /> Adicionar
 								</Button>
 							);
 						}

@@ -25,7 +25,7 @@ export default function SearchComponent({ searchResult = null }) {
 				_dark={{ bg: 'gray.900', color: 'gray.200' }}
 			>
 				<Flex width="100%" justifyContent="space-between" mb="1em">
-					<Title>Resultados encontrados</Title>
+					<Title>Filtro de usuários e metas</Title>
 				</Flex>
 				{searchResult && searchResult.length > 0 ? (
 					<Flex flexWrap="wrap" gap={4}>
