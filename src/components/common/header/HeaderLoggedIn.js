@@ -15,6 +15,7 @@ import {
 	useColorMode,
 	useBreakpointValue,
 	VStack,
+	Text,
 } from '@chakra-ui/react';
 import { IoMdSearch } from 'react-icons/io';
 import { signOut } from 'next-auth/react';
@@ -121,7 +122,10 @@ export default function HeaderLoggedIn({ user }) {
 						if (btn.action) {
 							return (
 								<Button variant="unstyled" onClick={btn.action} padding={0} margin={0} key={idx}>
-									<Image src={btn.icon} alt={btn.alt} /> Adicionar
+									<Image src={btn.icon} alt={btn.alt} />{' '}
+									<Text color={'gray.700'} _dark={{ color: 'gray.200' }}>
+										Adicionar
+									</Text>
 								</Button>
 							);
 						}
